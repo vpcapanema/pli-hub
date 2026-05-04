@@ -11,29 +11,49 @@
     />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      :root {
+        --navy: #1c3d59;
+        --deep: #003b5a;
+        --blue: #116593;
+        --green: #3ec26e;
+        --green-dk: #2a9450;
+        --bg: #eef1f5;
+        --surface: #fff;
+        --border: #d5dce6;
+        --text: #1a1a2e;
+        --muted: #4f5d6e;
+      }
       body {
         font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--text);
       }
       .card-hover {
         transition: all 0.3s ease;
       }
       .card-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(28, 61, 89, 0.15);
       }
       .gradient-bg {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 100%);
+      }
+      .theme-header {
+        color: var(--navy);
+      }
+      .theme-divider {
+        background: linear-gradient(to right, var(--blue), var(--green));
       }
     </style>
   </head>
-  <body class="bg-gray-50 min-h-screen">
+  <body class="h-screen flex flex-col">
     <!-- Header -->
-    <header class="gradient-bg text-white py-12 px-4">
-      <div class="max-w-6xl mx-auto text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+    <header class="gradient-bg text-white py-6 px-4 flex-shrink-0">
+      <div class="max-w-7xl mx-auto text-center">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">
           <i class="fas fa-cubes mr-3"></i>PLI Hub
         </h1>
-        <p class="text-xl text-purple-100 max-w-2xl mx-auto">
+        <p class="text-base text-blue-100 max-w-2xl mx-auto">
           Central de Aplicações Web - Acesse todas as aplicações do PLI em um só
           lugar
         </p>
@@ -41,321 +61,335 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-12">
-      <!-- Search Bar -->
-      <div class="mb-12">
-        <div class="relative max-w-xl mx-auto">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Buscar aplicações..."
-            class="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-purple-500 focus:outline-none text-lg shadow-sm"
-          />
-          <i
-            class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"
-          ></i>
-        </div>
-      </div>
-
-      <!-- Applications Grid -->
-      <div id="appsGrid" class="space-y-8">
-        <!-- SIGMA-PLI -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Sistemas de Gestão"
-          data-name="SIGMA-PLI"
-        >
+    <main class="flex-1 overflow-auto px-4 py-6">
+      <div class="max-w-7xl mx-auto">
+        <!-- Applications Grid -->
+        <div id="appsGrid" class="space-y-6">
+          <!-- SIGMA-PLI -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Sistemas Maiores"
+            data-name="SIGMA-PLI"
           >
-            <i class="fas fa-project-diagram text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(135deg, var(--blue), var(--deep));
+              "
+            >
+              <i class="fas fa-project-diagram text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              SIGMA-PLI
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Sistema de Gestão e Monitoramento de Acidentes
+            </p>
+            <a
+              href="http://56.125.163.194/"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--blue)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">SIGMA-PLI</h3>
-          <p class="text-gray-600 mb-4">
-            Sistema de Gestão e Monitoramento de Acidentes
-          </p>
-          <a
-            href="http://56.125.163.194/"
-            target="_blank"
-            class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- SRA PLI Starter -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Sistemas de Gestão"
-          data-name="SRA PLI Starter"
-        >
+          <!-- SRA PLI Starter -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Sistemas Maiores"
+            data-name="SRA PLI Starter"
           >
-            <i class="fas fa-rocket text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--green),
+                  var(--green-dk)
+                );
+              "
+            >
+              <i class="fas fa-rocket text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              SRA PLI Starter
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Sistema de Recursos Aéreos - Versão Starter
+            </p>
+            <a
+              href="https://sra-pli-starter.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--green)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            SRA PLI Starter
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Sistema de Recursos Aéreos - Versão Starter
-          </p>
-          <a
-            href="https://sra-pli-starter.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Acidentes Infosiga -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Análise de Acidentes"
-          data-name="Acidentes Infosiga"
-        >
+          <!-- Sistema Apoio Tomada Decisão -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Sistemas Maiores"
+            data-name="Sistema Apoio Decisão"
           >
-            <i class="fas fa-car-crash text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(135deg, var(--navy), var(--deep));
+              "
+            >
+              <i class="fas fa-lightbulb text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Sistema Apoio Decisão
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Ferramenta de Construção de Sistema de Apoio à Tomada de Decisão
+            </p>
+            <a
+              href="https://ferramenta-construcao-sistema-apoio.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--blue)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Acidentes Infosiga
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Análise Exploratória de Acidentes - Infosiga
-          </p>
-          <a
-            href="https://acidentes-infosiga.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-red-600 hover:text-red-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Calculadora Aderência -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Ferramentas de Cálculo"
-          data-name="Calculadora Aderência 2.0"
-        >
+          <!-- Acidentes Infosiga -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Análises Exploratórias"
+            data-name="Acidentes Infosiga"
           >
-            <i class="fas fa-calculator text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="background: linear-gradient(135deg, #dc2626, #991b1b)"
+            >
+              <i class="fas fa-car-crash text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Acidentes Infosiga
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Análise Exploratória de Acidentes - Infosiga
+            </p>
+            <a
+              href="https://acidentes-infosiga.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: #dc2626"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Calculadora Aderência 2.0
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Calculadora de Aderência de Indicadores
-          </p>
-          <a
-            href="https://calculadora-aderencia-indicadores-2-0.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- AHP Tool Calculator -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Ferramentas de Cálculo"
-          data-name="AHP Tool Calculator"
-        >
+          <!-- Acidentes DER Análise -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Análises Exploratórias"
+            data-name="Acidentes DER"
           >
-            <i class="fas fa-balance-scale text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="background: linear-gradient(135deg, #ec4899, #db2777)"
+            >
+              <i class="fas fa-chart-bar text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Acidentes DER
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Análise Exploratória de Acidentes - DER
+            </p>
+            <a
+              href="https://acidentes-der-analise-exploratoria.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: #ec4899"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            AHP Tool Calculator
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Ferramenta de Análise Hierárquica (AHP)
-          </p>
-          <a
-            href="https://vpc-geoser-ahp-tool-calculator.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Sistema Apoio Tomada Decisão -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Ferramentas de Decisão"
-          data-name="Sistema Apoio Decisão"
-        >
+          <!-- Densidade Malha SP -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Análises Exploratórias"
+            data-name="Densidade Malha SP"
           >
-            <i class="fas fa-lightbulb text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(135deg, var(--blue), var(--deep));
+              "
+            >
+              <i class="fas fa-road text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Densidade Malha SP
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Análise de Densidade de Malha Estadual - SP
+            </p>
+            <a
+              href="https://densidade-de-malha-estadual-sp.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--blue)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Sistema Apoio Decisão
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Ferramenta de Construção de Sistema de Apoio à Tomada de Decisão
-          </p>
-          <a
-            href="https://ferramenta-construcao-sistema-apoio.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-orange-600 hover:text-orange-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Acidentes DER Análise -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Análise de Acidentes"
-          data-name="Acidentes DER"
-        >
+          <!-- Calculadora Aderência -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Ferramentas Analíticas e de Produção"
+            data-name="Calculadora Aderência 2.0"
           >
-            <i class="fas fa-chart-bar text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--green),
+                  var(--green-dk)
+                );
+              "
+            >
+              <i class="fas fa-calculator text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Calculadora Aderência 2.0
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Calculadora de Aderência de Indicadores
+            </p>
+            <a
+              href="https://calculadora-aderencia-indicadores-2-0.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--green)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Acidentes DER
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Análise Exploratória de Acidentes - DER
-          </p>
-          <a
-            href="https://acidentes-der-analise-exploratoria.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-pink-600 hover:text-pink-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Densidade Malha SP -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Infraestrutura"
-          data-name="Densidade Malha SP"
-        >
+          <!-- AHP Tool Calculator -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Ferramentas Analíticas e de Produção"
+            data-name="AHP Tool Calculator"
           >
-            <i class="fas fa-road text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(135deg, var(--navy), var(--deep));
+              "
+            >
+              <i class="fas fa-balance-scale text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              AHP Tool Calculator
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Ferramenta de Análise Hierárquica (AHP)
+            </p>
+            <a
+              href="https://vpc-geoser-ahp-tool-calculator.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--blue)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Densidade Malha SP
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Análise de Densidade de Malha Estadual - SP
-          </p>
-          <a
-            href="https://densidade-de-malha-estadual-sp.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Formulário Embarcadores -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Formulários"
-          data-name="Formulário Embarcadores"
-        >
+          <!-- Formulário Embarcadores -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Ferramentas Analíticas e de Produção"
+            data-name="Formulário Embarcadores"
           >
-            <i class="fas fa-clipboard-list text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(135deg, var(--blue), var(--deep));
+              "
+            >
+              <i class="fas fa-clipboard-list text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Formulário Embarcadores
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Formulário de Entrevista com Embarcadores
+            </p>
+            <a
+              href="https://formulario-entrevista-embarcadores.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--blue)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Formulário Embarcadores
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Formulário de Entrevista com Embarcadores
-          </p>
-          <a
-            href="https://formulario-entrevista-embarcadores.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-cyan-600 hover:text-cyan-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
 
-        <!-- Vinícius Capanema Professional -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Profissional"
-          data-name="Portfólio Profissional"
-        >
+          <!-- Relatórios D11 -->
           <div
-            class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-4"
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Ferramentas Analíticas e de Produção"
+            data-name="Relatórios D11"
           >
-            <i class="fas fa-user-tie text-white text-2xl"></i>
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  var(--green),
+                  var(--green-dk)
+                );
+              "
+            >
+              <i class="fas fa-folder-open text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              Relatórios D11
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Documentos de Execução - Silvio
+            </p>
+            <a
+              href="relatorios_d11.html"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: var(--green)"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
           </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Portfólio Profissional
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Currículo e Portfólio - Vinícius Capanema
-          </p>
-          <a
-            href="https://vinicius-capanema-professional.onrender.com"
-            target="_blank"
-            class="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
         </div>
-
-        <!-- Relatórios D11 -->
-        <div
-          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
-          data-theme="Relatórios"
-          data-name="Relatórios D11"
-        >
-          <div
-            class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-4"
-          >
-            <i class="fas fa-folder-open text-white text-2xl"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            Relatórios D11
-          </h3>
-          <p class="text-gray-600 mb-4">Documentos de Execução - Silvio</p>
-          <a
-            href="relatorios_d11.html"
-            target="_blank"
-            class="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
-          >
-            Acessar <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- No Results Message -->
-      <div id="noResults" class="hidden text-center py-12">
-        <i class="fas fa-search text-gray-300 text-6xl mb-4"></i>
-        <p class="text-gray-500 text-xl">Nenhuma aplicação encontrada</p>
       </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-      <div class="max-w-6xl mx-auto px-4 text-center">
-        <p class="text-gray-400">
+    <footer
+      class="flex-shrink-0 py-4 px-4"
+      style="background: var(--navy); color: #e8f0f8"
+    >
+      <div class="max-w-7xl mx-auto text-center">
+        <p class="text-sm mb-1">
           <i class="fas fa-code mr-2"></i>PLI Hub - Central de Aplicações Web
         </p>
-        <p class="text-gray-500 text-sm mt-2">
+        <p class="text-xs" style="color: rgba(255, 255, 255, 0.6)">
+          Desenvolvido por <strong>Vinicius do Prado Capanema</strong> -
+          <strong>VPC-GEOSER</strong>
+        </p>
+        <p class="text-xs mt-1" style="color: rgba(255, 255, 255, 0.5)">
           © 2026 - Todos os direitos reservados
         </p>
       </div>
@@ -386,8 +420,20 @@
           });
         });
 
-        // Sort themes alphabetically
-        const sortedThemes = Object.keys(grouped).sort();
+        // Sort themes in custom order
+        const themeOrder = [
+          "Sistemas Maiores",
+          "Análises Exploratórias",
+          "Ferramentas Analíticas e de Produção",
+        ];
+        const sortedThemes = Object.keys(grouped).sort((a, b) => {
+          const indexA = themeOrder.indexOf(a);
+          const indexB = themeOrder.indexOf(b);
+          if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+          if (indexA !== -1) return -1;
+          if (indexB !== -1) return 1;
+          return a.localeCompare(b);
+        });
 
         // Clear the grid
         appsGrid.innerHTML = "";
@@ -396,19 +442,19 @@
         sortedThemes.forEach((theme) => {
           // Create theme header
           const themeHeader = document.createElement("div");
-          themeHeader.className = "mb-6";
+          themeHeader.className = "mb-4";
           themeHeader.innerHTML = `
-            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
-              <i class="fas fa-folder text-purple-600 mr-3"></i>${theme}
+            <h2 class="text-xl font-bold theme-header flex items-center">
+              <i class="fas fa-folder mr-3" style="color: var(--blue);"></i>${theme}
             </h2>
-            <div class="h-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full mt-2"></div>
+            <div class="h-1 theme-divider rounded-full mt-2" style="width: 60px;"></div>
           `;
           appsGrid.appendChild(themeHeader);
 
           // Create grid for cards in this theme
           const cardsGrid = document.createElement("div");
           cardsGrid.className =
-            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4";
 
           grouped[theme].forEach((card) => {
             cardsGrid.appendChild(card);
@@ -417,39 +463,6 @@
           appsGrid.appendChild(cardsGrid);
         });
       }
-
-      // Search functionality
-      const searchInput = document.getElementById("searchInput");
-      const noResults = document.getElementById("noResults");
-
-      searchInput.addEventListener("input", function () {
-        const searchTerm = this.value.toLowerCase();
-        const appCards = document.querySelectorAll(".app-card");
-        let visibleCount = 0;
-
-        appCards.forEach((card) => {
-          const title = card.querySelector("h3").textContent.toLowerCase();
-          const description = card.querySelector("p").textContent.toLowerCase();
-          const theme = card.getAttribute("data-theme") || "";
-
-          if (
-            title.includes(searchTerm) ||
-            description.includes(searchTerm) ||
-            theme.toLowerCase().includes(searchTerm)
-          ) {
-            card.style.display = "block";
-            visibleCount++;
-          } else {
-            card.style.display = "none";
-          }
-        });
-
-        if (visibleCount === 0) {
-          noResults.classList.remove("hidden");
-        } else {
-          noResults.classList.add("hidden");
-        }
-      });
 
       // Initialize grouping on page load
       document.addEventListener("DOMContentLoaded", groupAndSortCards);
