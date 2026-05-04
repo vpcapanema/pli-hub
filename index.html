@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLI Hub - Central de Aplicações</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-12 px-4">
+      <div class="max-w-6xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          <i class="fas fa-cubes mr-3"></i>PLI Hub
+        </h1>
+        <p class="text-xl text-purple-100 max-w-2xl mx-auto">
+          Central de Aplicações Web - Acesse todas as aplicações do PLI em um só
+          lugar
+        </p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-12">
+      <!-- Search Bar -->
+      <div class="mb-12">
+        <div class="relative max-w-xl mx-auto">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar aplicações..."
+            class="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-purple-500 focus:outline-none text-lg shadow-sm"
+          />
+          <i
+            class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"
+          ></i>
+        </div>
+      </div>
+
+      <!-- Applications Grid -->
+      <div
+        id="appsGrid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- SIGMA-PLI -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-project-diagram text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">SIGMA-PLI</h3>
+          <p class="text-gray-600 mb-4">
+            Sistema de Gestão e Monitoramento de Acidentes
+          </p>
+          <a
+            href="https://sigma-pli.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- SRA PLI Starter -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-rocket text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            SRA PLI Starter
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Sistema de Recursos Aéreos - Versão Starter
+          </p>
+          <a
+            href="https://sra-pli-starter.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Acidentes Infosiga -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-car-crash text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Acidentes Infosiga
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Análise Exploratória de Acidentes - Infosiga
+          </p>
+          <a
+            href="https://acidentes-infosiga.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-red-600 hover:text-red-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Calculadora Aderência -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-calculator text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Calculadora Aderência 2.0
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Calculadora de Aderência de Indicadores
+          </p>
+          <a
+            href="https://calculadora-aderencia-indicadores-2-0.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- AHP Tool Calculator -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-balance-scale text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            AHP Tool Calculator
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Ferramenta de Análise Hierárquica (AHP)
+          </p>
+          <a
+            href="https://vpc-geoser-ahp-tool-calculator.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Sistema Apoio Tomada Decisão -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-lightbulb text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Sistema Apoio Decisão
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Ferramenta de Construção de Sistema de Apoio à Tomada de Decisão
+          </p>
+          <a
+            href="https://ferramenta-construcao-sistema-apoio.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-orange-600 hover:text-orange-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Acidentes DER Análise -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-chart-bar text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Acidentes DER
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Análise Exploratória de Acidentes - DER
+          </p>
+          <a
+            href="https://acidentes-der-analise-exploratoria.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-pink-600 hover:text-pink-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Densidade Malha SP -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-road text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Densidade Malha SP
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Análise de Densidade de Malha Estadual - SP
+          </p>
+          <a
+            href="https://densidade-de-malha-estadual-sp.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Formulário Embarcadores -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-clipboard-list text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Formulário Embarcadores
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Formulário de Entrevista com Embarcadores
+          </p>
+          <a
+            href="https://formulario-entrevista-embarcadores.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-cyan-600 hover:text-cyan-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- Vinícius Capanema Professional -->
+        <div
+          class="app-card bg-white rounded-2xl p-6 shadow-md card-hover border border-gray-100"
+        >
+          <div
+            class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-4"
+          >
+            <i class="fas fa-user-tie text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Portfólio Profissional
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Currículo e Portfólio - Vinícius Capanema
+          </p>
+          <a
+            href="https://vinicius-capanema-professional.onrender.com"
+            target="_blank"
+            class="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium"
+          >
+            Acessar <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- No Results Message -->
+      <div id="noResults" class="hidden text-center py-12">
+        <i class="fas fa-search text-gray-300 text-6xl mb-4"></i>
+        <p class="text-gray-500 text-xl">Nenhuma aplicação encontrada</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <p class="text-gray-400">
+          <i class="fas fa-code mr-2"></i>PLI Hub - Central de Aplicações Web
+        </p>
+        <p class="text-gray-500 text-sm mt-2">
+          © 2026 - Todos os direitos reservados
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Search functionality
+      const searchInput = document.getElementById("searchInput");
+      const appCards = document.querySelectorAll(".app-card");
+      const noResults = document.getElementById("noResults");
+
+      searchInput.addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        let visibleCount = 0;
+
+        appCards.forEach((card) => {
+          const title = card.querySelector("h3").textContent.toLowerCase();
+          const description = card.querySelector("p").textContent.toLowerCase();
+
+          if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            card.style.display = "block";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        if (visibleCount === 0) {
+          noResults.classList.remove("hidden");
+        } else {
+          noResults.classList.add("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
