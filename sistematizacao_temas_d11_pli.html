@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sistematização Multidimensional dos Temas D-11 do PLI-SP</title>
+<style>
+:root{
+  --navy:#1c3d59; --deep:#003b5a; --blue:#116593;
+  --green:#3ec26e; --green-dk:#2a9450;
+  --bg:#eef1f5; --surface:#fff; --border:#d5dce6;
+  --text:#1a1a2e; --muted:#4f5d6e;
+  --warn:#c88000; --warn-soft:#fff8e0;
+  --danger:#cc3333; --danger-soft:#fff0f0;
+  --purple:#5b3da6; --purple-soft:#f0eaff;
+  --sw:280px; --hh:48px;
+
+  /* Cores dos eixos (nossa paleta funcional) */
+  --e1:#0a6e9c; --e1-soft:#e3f0f8;   /* Capacidade/Oferta */
+  --e2:#1a8a6b; --e2-soft:#e0f3ec;   /* Demanda/Acessibilidade */
+  --e3:#a05a1a; --e3-soft:#f7ecdc;   /* Resiliência/Segurança/Ambiental */
+  --e4:#7a3aa0; --e4-soft:#efe5f7;   /* Desenvolvimento Territorial */
+  --e5:#2c5570; --e5-soft:#e3eaf0;   /* Governança/Regulação */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;background:var(--bg);color:var(--text);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Sidebar ── */
+#sb{width:var(--sw);min-width:var(--sw);background:var(--navy);color:#e8f0f8;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100}
+#sb-hdr{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+#sb-hdr h1{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--green)}
+#sb-hdr p{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5}
+#sb nav{padding:10px 0;flex:1}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:11.5px;color:rgba(255,255,255,.7);cursor:pointer;border-left:2px solid transparent;background:transparent;border-top:none;border-right:none;border-bottom:none;width:100%;text-align:left;font-family:inherit;transition:all .15s}
+.ni:hover,.ni.active{background:rgba(62,194,110,.1);color:#fff;border-left-color:var(--green)}
+.ni .num{font-size:10px;background:rgba(255,255,255,.1);border-radius:3px;padding:2px 7px;min-width:22px;text-align:center;flex-shrink:0;font-weight:600}
+.ni.active .num{background:rgba(62,194,110,.25);color:var(--green)}
+.ni .nlbl{line-height:1.35;flex:1}
+.sb-sep{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35);padding:10px 18px 4px;display:block}
+#sb-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:rgba(255,255,255,.4);line-height:1.5}
+
+/* ── Main ── */
+#main{margin-left:var(--sw);flex:1;min-height:100vh;display:flex;flex-direction:column}
+#dh{background:var(--deep);color:#fff;padding:0 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50;height:var(--hh);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+#dh h2{font-size:12.5px;font-weight:600;flex:1;letter-spacing:.15px}
+#dh .meta{font-size:10.5px;color:rgba(255,255,255,.55)}
+#content{padding:22px 30px 60px;text-align:justify;max-width:1280px;width:100%}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,#f0f5ff,#e8eef8);border:2px solid var(--navy);border-radius:8px;padding:22px 26px;margin-bottom:20px}
+.hero h1{font-size:18px;color:var(--navy);font-weight:700;margin-bottom:6px;letter-spacing:.1px;text-align:left}
+.hero .subtitle{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:10px;text-align:left}
+.hero p{font-size:12.5px;color:var(--text);line-height:1.7}
+.hero .chips{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:10.5px;background:#fff;border:1px solid var(--navy);color:var(--navy);border-radius:12px;padding:3px 10px;font-weight:600}
+
+/* ── Seções ── */
+.ss{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);display:none;margin-bottom:18px}
+.ss.active-tab{display:block}
+.ss-hdr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8fafc}
+.sn{font-size:10px;font-weight:700;color:#fff;background:var(--blue);border-radius:3px;padding:3px 8px;flex-shrink:0}
+.st{font-size:13.5px;font-weight:600;color:var(--navy);flex:1;letter-spacing:.1px}
+.sbadge{font-size:10px;padding:3px 8px;border-radius:10px;border:1px solid var(--border);color:var(--muted);flex-shrink:0;background:var(--surface)}
+.sbadge.s-completo{border-color:var(--green-dk);color:var(--green-dk);background:#e8faef}
+.sbadge.s-andamento{border-color:#f0a500;color:var(--warn);background:var(--warn-soft)}
+.sb2{padding:18px 22px}
+.sdesc{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.7}
+
+/* ── Boxes ── */
+.gbox{background:#f0f5fa;border-left:3px solid var(--blue);padding:12px 16px;border-radius:0 5px 5px 0;margin-bottom:16px}
+.gbox h4{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--blue);margin-bottom:8px;font-weight:700}
+.gbox ul{padding-left:18px}
+.gbox li{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:3px}
+
+.quote{padding:14px 18px;background:#f0f5fa;border-left:4px solid var(--blue);border-radius:0 5px 5px 0;color:var(--text);line-height:1.7;margin:12px 0 16px;font-size:12.5px}
+
+/* ── Multi-col ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.five-col{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.mini{background:#f8fafc;border:1px solid var(--border);border-radius:5px;padding:14px 16px}
+.mini h3{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:8px;font-weight:700}
+.mini ul{padding-left:18px}
+.mini li{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:3px}
+.mini p{font-size:12px;color:var(--text);line-height:1.65}
+
+/* ── Tabelas ── */
+table{width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border-radius:5px;overflow:hidden;border:1px solid var(--border);margin:10px 0 16px}
+thead th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;font-weight:600;vertical-align:bottom}
+tbody td{padding:7px 9px;border-bottom:1px solid #e6ecf2;vertical-align:top;line-height:1.55;color:var(--text)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f8fafc}
+table.compact tbody td{padding:5px 7px;font-size:11px}
+
+/* ── Cards de Eixo ── */
+.eixo-card{border-radius:6px;padding:14px 16px;border:1px solid var(--border);background:#fff;display:flex;flex-direction:column;gap:8px}
+.eixo-card .ec-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 8px;border-radius:3px;color:#fff;width:fit-content}
+.eixo-card h4{font-size:13px;color:var(--navy);font-weight:700;letter-spacing:.1px;line-height:1.35}
+.eixo-card p{font-size:11.5px;color:var(--muted);line-height:1.6}
+.eixo-card .ec-body{font-size:11.5px;color:var(--text);line-height:1.65}
+.eixo-card .ec-meta{margin-top:6px;font-size:10.5px;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px}
+
+.eixo-card.e1{border-top:4px solid var(--e1)}
+.eixo-card.e1 .ec-tag{background:var(--e1)}
+.eixo-card.e2{border-top:4px solid var(--e2)}
+.eixo-card.e2 .ec-tag{background:var(--e2)}
+.eixo-card.e3{border-top:4px solid var(--e3)}
+.eixo-card.e3 .ec-tag{background:var(--e3)}
+.eixo-card.e4{border-top:4px solid var(--e4)}
+.eixo-card.e4 .ec-tag{background:var(--e4)}
+.eixo-card.e5{border-top:4px solid var(--e5)}
+.eixo-card.e5 .ec-tag{background:var(--e5)}
+
+/* ── Cards de dimensão ── */
+.dim-card{background:#fff;border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:5px;padding:14px 16px;margin-bottom:12px}
+.dim-card.core{border-left-color:var(--blue)}
+.dim-card.instr{border-left-color:var(--purple)}
+.dim-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.dim-num{font-size:18px;font-weight:700;color:var(--navy);line-height:1}
+.dim-name{font-size:13.5px;font-weight:700;color:var(--navy);letter-spacing:.1px}
+.dim-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:3px;background:rgba(17,101,147,.12);color:var(--blue)}
+.dim-card.instr .dim-tag{background:var(--purple-soft);color:var(--purple)}
+.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.dim-block{background:#f8fafc;border:1px solid var(--border);border-radius:4px;padding:9px 11px}
+.dim-block h5{font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--navy);margin-bottom:5px;font-weight:700}
+.dim-block p{font-size:11.5px;line-height:1.6;color:var(--text)}
+.dim-block.def h5{color:var(--blue)}
+.dim-block.just h5{color:var(--green-dk)}
+.dim-block.escala h5{color:var(--warn)}
+.dim-block.fonte h5{color:var(--purple)}
+.classes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
+.classe{background:#fff;border:1px solid var(--border);border-radius:3px;padding:6px 8px;font-size:10.5px;line-height:1.45}
+.classe strong{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.classe.alta strong{color:var(--green-dk)} .classe.alta{border-left:3px solid var(--green-dk)}
+.classe.media strong{color:var(--warn)} .classe.media{border-left:3px solid var(--warn)}
+.classe.baixa strong{color:var(--danger)} .classe.baixa{border-left:3px solid var(--danger)}
+
+/* ── h3 dentro do conteúdo ── */
+.sb2 h3{font-size:12.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sb2 h3:first-of-type{margin-top:6px}
+
+/* ── Steps (metodologia) ── */
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}
+.step{background:#fff;border:1px solid var(--border);border-radius:5px;padding:11px 12px;position:relative;border-top:3px solid var(--blue)}
+.step .sn-num{font-size:18px;font-weight:700;color:var(--blue);line-height:1;margin-bottom:4px}
+.step h5{font-size:11px;color:var(--navy);font-weight:700;line-height:1.35;margin-bottom:5px}
+.step p{font-size:10.5px;color:var(--muted);line-height:1.5}
+
+/* ── Footer-note ── */
+.footer-note{margin-top:16px;padding:12px 14px;background:#f0faf4;border-left:3px solid var(--green-dk);border-radius:0 5px 5px 0;color:#1a6e3a;font-size:11.5px;line-height:1.7}
+.warn-note{margin-top:16px;padding:12px 14px;background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:0 5px 5px 0;color:#7a4800;font-size:11.5px;line-height:1.7}
+
+/* ── Tags inline ── */
+.tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:3px;white-space:nowrap;display:inline-block}
+.tag.accent{background:rgba(17,101,147,.12);color:var(--blue);border:1px solid rgba(17,101,147,.25)}
+.tag.good{background:rgba(42,148,80,.12);color:var(--green-dk);border:1px solid rgba(42,148,80,.25)}
+.tag.warn{background:var(--warn-soft);color:var(--warn);border:1px solid rgba(200,128,0,.3)}
+.tag.danger{background:var(--danger-soft);color:var(--danger);border:1px solid rgba(204,51,51,.3)}
+.tag.e1{background:var(--e1-soft);color:var(--e1);border:1px solid var(--e1)}
+.tag.e2{background:var(--e2-soft);color:var(--e2);border:1px solid var(--e2)}
+.tag.e3{background:var(--e3-soft);color:var(--e3);border:1px solid var(--e3)}
+.tag.e4{background:var(--e4-soft);color:var(--e4);border:1px solid var(--e4)}
+.tag.e5{background:var(--e5-soft);color:var(--e5);border:1px solid var(--e5)}
+
+/* ── Diferenciador (Fleury vs PLI-Silvio) ── */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.compare .col{background:#fff;border:1px solid var(--border);border-radius:5px;padding:14px 16px}
+.compare .col.fle{border-top:4px solid var(--muted)}
+.compare .col.our{border-top:4px solid var(--green-dk)}
+.compare h4{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--navy);margin-bottom:8px;font-weight:700}
+.compare ul{padding-left:18px;font-size:11.5px;line-height:1.65}
+.compare li{margin-bottom:4px}
+
+/* Catálogo de temas */
+.tema-row{display:grid;grid-template-columns:60px 90px 1fr;gap:10px;align-items:start;padding:7px 10px;border-bottom:1px solid #e6ecf2;font-size:11.5px}
+.tema-row:hover{background:#f8fafc}
+.tema-row .cod{font-weight:700;color:var(--navy);font-size:11px;font-family:'Consolas',monospace}
+.tema-row .ref{font-size:10px;color:var(--muted)}
+.tema-grid{background:#fff;border:1px solid var(--border);border-radius:5px;overflow:hidden;margin-bottom:14px}
+.tema-grid .tg-hdr{background:var(--navy);color:#fff;padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;display:grid;grid-template-columns:60px 90px 1fr;gap:10px}
+
+/* ── Matriz dos 31 temas ── */
+.matriz{font-size:10.5px}
+.matriz thead th{font-size:9px;padding:6px 5px;writing-mode:initial;line-height:1.2}
+.matriz tbody td{padding:5px 6px;font-size:10.5px}
+.matriz td.cod{font-weight:700;color:var(--navy);font-family:'Consolas',monospace;white-space:nowrap}
+.matriz td.eixo{font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.3px;text-align:center;white-space:nowrap}
+.matriz td.eixo.e1{background:var(--e1-soft);color:var(--e1)}
+.matriz td.eixo.e2{background:var(--e2-soft);color:var(--e2)}
+.matriz td.eixo.e3{background:var(--e3-soft);color:var(--e3)}
+.matriz td.eixo.e4{background:var(--e4-soft);color:var(--e4)}
+.matriz td.eixo.e5{background:var(--e5-soft);color:var(--e5)}
+.matriz td.cls{text-align:center;font-weight:700;font-size:10.5px}
+.matriz td.A{background:#e8faef;color:var(--green-dk)}
+.matriz td.B{background:var(--warn-soft);color:var(--warn)}
+.matriz td.C{background:var(--danger-soft);color:var(--danger)}
+.matriz td.tema{font-size:11px;line-height:1.4;min-width:240px}
+
+/* Legenda */
+.legenda{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 14px;font-size:11px;color:var(--text)}
+.legenda .lg{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--border);padding:3px 8px;border-radius:3px}
+.legenda .sw{width:12px;height:12px;border-radius:2px;display:inline-block}
+
+/* ── Layout responsivo ── */
+@media (max-width:1100px){
+  .three-col,.five-col,.four-col{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr 1fr}
+}
+@media (max-width:760px){
+  :root{--sw:0px}
+  #sb{transform:translateX(-100%)}
+  #main{margin-left:0}
+  .two-col,.three-col,.four-col,.five-col,.dim-grid,.compare,.classes{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<aside id="sb">
+  <div id="sb-hdr">
+    <h1>PLI-SP · D-11</h1>
+    <p>Sistematização multidimensional dos 31 Temas de atuação</p>
+  </div>
+  <nav>
+    <span class="sb-sep">Seções</span>
+    <button class="ni active" data-tab="visao"><span class="num">01</span><span class="nlbl">Visão geral e objetivo</span></button>
+    <button class="ni" data-tab="catalogo"><span class="num">02</span><span class="nlbl">Catálogo dos 31 Temas</span></button>
+    <button class="ni" data-tab="eixos"><span class="num">03</span><span class="nlbl">Clusterização — 5 Eixos funcionais</span></button>
+    <button class="ni" data-tab="dimensoes"><span class="num">04</span><span class="nlbl">10 Dimensões de classificação</span></button>
+    <button class="ni" data-tab="metodologia"><span class="num">05</span><span class="nlbl">Metodologia de atribuição</span></button>
+    <button class="ni" data-tab="matriz"><span class="num">06</span><span class="nlbl">Matriz aplicada aos 31 temas</span></button>
+    <button class="ni" data-tab="triagem"><span class="num">07</span><span class="nlbl">Triagem e corte (31 → 25)</span></button>
+    <button class="ni" data-tab="proximos"><span class="num">08</span><span class="nlbl">Próximos passos: carteira</span></button>
+  </nav>
+  <div id="sb-foot">
+    Base normativa: TDR PLI-SP, PAC 2050, PEE 2050, ZEE-SP<br>
+    Modelo conceitual de critérios: ferramenta de construção de hierarquização (10 seções metodológicas)<br>
+    Saída esperada: ficha-tema consolidada por tema, alimentando D-12, D-13, D-14, D-17, D-18.
+  </div>
+</aside>
+
+<div id="main">
+  <header id="dh">
+    <h2>Sistematização multidimensional dos Temas D-11 do PLI-SP</h2>
+    <span class="meta">SEMIL · Consórcio Concremat–Transplan · proposta autoral</span>
+  </header>
+
+  <div id="content">
+
+    <section class="hero">
+      <h1>Sistematização multidimensional dos Temas D-11 do PLI-SP</h1>
+      <div class="subtitle">Clusterização funcional, classificação em 10 dimensões e metodologia de atribuição auditável</div>
+      <p>Este documento propõe uma <strong>sistematização autoral</strong> dos 31 Temas de Atuação do D-11 do PLI-SP (D11a, D11b, D11c). O objetivo é organizar os temas em uma estrutura coerente com o mandato real estabelecido pelo TDR — produzir <em>fatores que influenciam cenários futuros</em> capazes de alimentar a modelagem do D-12 e a hierarquização de projetos do D-14/D-17 — e classificá-los em dimensões rastreáveis, defensáveis e replicáveis. A partir desta sistematização será gerada, em fase subsequente, a carteira de projetos factíveis para hierarquização pelo gestor.</p>
+      <div class="chips">
+        <span class="chip">31 Temas D-11 (D11a, D11b, D11c)</span>
+        <span class="chip">5 Eixos funcionais</span>
+        <span class="chip">10 Dimensões de classificação</span>
+        <span class="chip">Aderência: TDR, PAC 2050, PEE 2050, ZEE-SP</span>
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 01 VISÃO GERAL ════════════════════════ -->
+    <section id="visao" class="ss active-tab">
+      <div class="ss-hdr">
+        <span class="sn">01</span>
+        <span class="st">Visão geral e objetivo da sistematização</span>
+        <span class="sbadge s-completo">Síntese executiva</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">A planilha <em>_0TEMAS DE ATUACAO_V08.xlsx</em> consolida 31 temas de atuação distribuídos em três blocos de codificação interna do D-11 (D11a — combustíveis e dutos; D11b — intermodalidade carga e passageiros; D11c — rodoviário, aéreo, territorial e governança). Esses temas são, na linguagem do TDR, <strong>fatores que influenciam cenários futuros</strong> (Meta 3.3) e precisam ser triados, qualificados e organizados antes de gerarem projetos.</p>
+
+        <h3>Mandato institucional do D-11 (resumo do TDR)</h3>
+        <div class="quote">A Meta 3.3 do TDR estabelece que os pontos vindos de contatos setoriais devem ser <strong>analisados criticamente</strong> para identificar contribuições relevantes a serem incorporadas aos cenários simulados no D-12. A Meta 4.1 exige que pelo menos 25 intervenções e projetos sejam selecionados a partir desse pipeline e aprofundados nas Metas 4.2 (CAPEX/OPEX), 4.3 (B/C) e 4.4 (hierarquização AHP).</div>
+
+        <div class="three-col">
+          <div class="mini">
+            <h3>O que o TDR exige do D-11</h3>
+            <ul>
+              <li>Triagem crítica das proposições.</li>
+              <li>Identificação dos fatores com utilidade para a modelagem.</li>
+              <li>Articulação com PAC 2050, PEE 2050 e ZEE-SP.</li>
+              <li>Pavimentar o D-12 (cenários) com hipóteses simuláveis.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>O que esta sistematização entrega</h3>
+            <ul>
+              <li>Cluster funcional (5 eixos) ancorado no encadeamento metodológico do PLI.</li>
+              <li>10 dimensões de classificação com rubricas claras.</li>
+              <li>Metodologia de atribuição em 6 passos auditáveis.</li>
+              <li>Ficha-tema replicável por todos os temas.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>O que NÃO está nesta etapa</h3>
+            <ul>
+              <li>Geração da carteira de projetos (etapa seguinte).</li>
+              <li>Hierarquização AHP final (Meta 4.4 — D-14/D-17).</li>
+              <li>Estimativa de CAPEX/OPEX e cálculo de B/C (Metas 4.2 e 4.3).</li>
+              <li>Modelagem multimodal (Visum-PTV) — D-12.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Diferenciação em relação à proposta de referência (Fleury)</h3>
+        <p class="sdesc">A proposta apresentada pelo prof. Fleury é uma referência válida de partida. Optamos por uma estrutura conceitualmente distinta — não para discordar, mas porque o D-11 exige um arcabouço que se conecte diretamente aos passos seguintes da modelagem PLI. A tabela abaixo registra explicitamente as duas linhas para que a escolha desta sistematização seja transparente.</p>
+
+        <div class="compare">
+          <div class="col fle">
+            <h4>Linha de referência (Fleury)</h4>
+            <ul>
+              <li><strong>Recorte do cluster:</strong> setorial-modal (Governança, Rodovias, Hidrovias, Ferrovias, Portos, Aéreo, Sustentabilidade).</li>
+              <li><strong>Critérios:</strong> impacto em eficiência, ambiental e social; escala (local/regional/estadual); prioridade.</li>
+              <li><strong>Escala de avaliação:</strong> Alta / Média / Baixa.</li>
+              <li><strong>Unidade de saída:</strong> projeto pré-formulado (carteira já preenchida).</li>
+              <li><strong>Lógica:</strong> agrupamento por modal e julgamento subjetivo de prioridade.</li>
+            </ul>
+          </div>
+          <div class="col our">
+            <h4>Linha proposta (esta sistematização)</h4>
+            <ul>
+              <li><strong>Recorte do cluster:</strong> funcional-sistêmico (5 Eixos pelo papel do tema na cadeia D-11→D-12→D-14).</li>
+              <li><strong>Critérios:</strong> 10 dimensões — 7 herdadas do modelo conceitual de hierarquização (Econômica, Social, Ambiental, Segurança, Institucional, Territorial, Técnica) + 3 instrumentais PLI (Modelabilidade, Maturidade da informação, Horizonte temporal).</li>
+              <li><strong>Escala de avaliação:</strong> 3 classes (A/B/C) com <em>rubrica documental</em> e evidência mínima exigida por classe.</li>
+              <li><strong>Unidade de saída:</strong> ficha-tema (insumo para gerar projetos depois, não projetos pré-prontos).</li>
+              <li><strong>Lógica:</strong> ancoragem direta no TDR (Meta 3.3, 4.1, 4.4) e nos planos correlatos (PAC 2050, PEE 2050, ZEE-SP), com rastreabilidade auditável.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-note"><strong>Princípio orientador:</strong> nenhuma classificação é decorativa. Cada eixo, cada dimensão e cada classe corresponde a uma decisão posterior do PLI — entrar como hipótese de cenário no D-12, virar projeto estruturante ou hierarquizável no D-14, alimentar uma intervenção JRI no D-18 ou uma frente de governança no D-17. A sistematização existe para tornar essa correspondência explícita, defensável e auditável.</div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 02 CATÁLOGO ════════════════════════ -->
+    <section id="catalogo" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">02</span>
+        <span class="st">Catálogo dos 31 Temas D-11</span>
+        <span class="sbadge s-completo">Inventário consolidado</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">Os 31 temas, conforme registrados na aba <em>Temas PLI</em>. A coluna <strong>Ref. TDR</strong> indica o item da Atividade 4.1.1 do TDR ao qual o tema se conecta. A coluna <strong>Categoria atual</strong> reflete a tipologia ad-hoc usada na planilha de origem — será substituída pela classificação por <strong>Eixo</strong> e <strong>Dimensões</strong> nas seções 03 e 04.</p>
+
+        <h3>Bloco D11a — Combustíveis alternativos e dutovias <span class="tag accent">2 temas</span></h3>
+        <div class="tema-grid">
+          <div class="tg-hdr"><span>Código</span><span>Ref. TDR</span><span>Tema</span></div>
+          <div class="tema-row"><span class="cod">D11a_01</span><span class="ref">4.30</span><span>Redes de abastecimento para novos tipos de veículo ou combustíveis (rodoviário, aquaviário, aéreo)</span></div>
+          <div class="tema-row"><span class="cod">D11a_02</span><span class="ref">4.25</span><span>Estratégias para fomento da cadeia de Gás Natural e Biometano no ESP</span></div>
+        </div>
+
+        <h3>Bloco D11b — Intermodalidade, hidrovia, ferrovia, marítimo <span class="tag accent">10 temas</span></h3>
+        <div class="tema-grid">
+          <div class="tg-hdr"><span>Código</span><span>Ref. TDR</span><span>Tema</span></div>
+          <div class="tema-row"><span class="cod">D11b_01</span><span class="ref">4.10</span><span>Estratégias para ampliar as conexões com o transporte marítimo</span></div>
+          <div class="tema-row"><span class="cod">D11b_02</span><span class="ref">4.12</span><span>Transporte de cargas em vias segregadas do TIC</span></div>
+          <div class="tema-row"><span class="cod">D11b_03</span><span class="ref">4.11</span><span>Áreas de desenvolvimento ao longo das linhas do TIC</span></div>
+          <div class="tema-row"><span class="cod">D11b_04</span><span class="ref">4.13</span><span>Áreas de desenvolvimento ao longo das linhas VLT (Campinas, Sorocaba, RMBS, proposta de SJRP)</span></div>
+          <div class="tema-row"><span class="cod">D11b_05</span><span class="ref">4.15</span><span>Estratégias para as linhas de ônibus inter-regionais com decréscimo da demanda</span></div>
+          <div class="tema-row"><span class="cod">D11b_06</span><span class="ref">4.23</span><span>Sistemas intermodais para transporte de passageiros no interior de SP (Apoio ao PEF)</span></div>
+          <div class="tema-row"><span class="cod">D11b_07</span><span class="ref">4.17</span><span>Sistemas intermodais para aumento da competitividade das cadeias produtivas paulistas (Apoio ao PEF)</span></div>
+          <div class="tema-row"><span class="cod">D11b_08</span><span class="ref">4.6</span><span>Expansão da capacidade do transporte de cargas na hidrovia Tietê-Paraná (Apoio ao PEH)</span></div>
+          <div class="tema-row"><span class="cod">D11b_09</span><span class="ref">4.7, 4.8</span><span>Novos portos, serviços e regulamentos para o transporte aquaviário de passageiros (Apoio ao PEH)</span></div>
+          <div class="tema-row"><span class="cod">D11b_10</span><span class="ref">4.33</span><span>Estratégias junto às plataformas digitais, visando à otimização do transporte de cargas</span></div>
+        </div>
+
+        <h3>Bloco D11c — Rodoviário, aéreo, territorial, governança e clima <span class="tag accent">19 temas</span></h3>
+        <div class="tema-grid">
+          <div class="tg-hdr"><span>Código</span><span>Ref. TDR</span><span>Tema</span></div>
+          <div class="tema-row"><span class="cod">D11c_01</span><span class="ref">4.29, 4.2</span><span>Novas rodovias, contornos, prolongamentos, ampliações de capacidade (mobilidade e desenvolvimento)</span></div>
+          <div class="tema-row"><span class="cod">D11c_02</span><span class="ref">4.1</span><span>Modernização de alças, dispositivos, viadutos e faixas de aproximação nas rodovias do ESP</span></div>
+          <div class="tema-row"><span class="cod">D11c_03</span><span class="ref">4.3</span><span>Estratégias para reduzir acidentes com vulneráveis em trechos rodoviários próximos a áreas urbanas</span></div>
+          <div class="tema-row"><span class="cod">D11c_04</span><span class="ref">4.31</span><span>Estratégias para reduzir e mitigar acidentes com cargas perigosas</span></div>
+          <div class="tema-row"><span class="cod">D11c_05</span><span class="ref">4.16</span><span>Corredores para o transporte de cargas especiais, sistemática e regulamentação tarifária</span></div>
+          <div class="tema-row"><span class="cod">D11c_06</span><span class="ref">4.28</span><span>Hierarquização de solicitações de empresas e municípios (dispositivos, acessos, retornos, segurança)</span></div>
+          <div class="tema-row"><span class="cod">D11c_07</span><span class="ref">4.4</span><span>Pavimentação, recuperação ou estadualização de rodovias em áreas rurais</span></div>
+          <div class="tema-row"><span class="cod">D11c_08</span><span class="ref">4.27</span><span>Apoio ao Plano Cicloviário do ESP, rotas cicloturísticas e religiosas</span></div>
+          <div class="tema-row"><span class="cod">D11c_09</span><span class="ref">4.19</span><span>Estratégias para o desenvolvimento do setor aéreo no ESP</span></div>
+          <div class="tema-row"><span class="cod">D11c_10</span><span class="ref">4.21</span><span>Desenvolvimento de retroáreas e bases de apoio offshore para o Pré-Sal</span></div>
+          <div class="tema-row"><span class="cod">D11c_11</span><span class="ref">4.14</span><span>Propostas de alterações do ZEE e criação de fluxos para obtenção de licenças (AAE)</span></div>
+          <div class="tema-row"><span class="cod">D11c_12</span><span class="ref">4.34</span><span>Articulação com municípios (Planos Diretores, uso de áreas com infraestrutura abandonada, apoio a OUC)</span></div>
+          <div class="tema-row"><span class="cod">D11c_13</span><span class="ref">4.32</span><span>Geração de polos associados às novas ofertas de infraestrutura logística</span></div>
+          <div class="tema-row"><span class="cod">D11c_14</span><span class="ref">4.35</span><span>Estratégias contra furtos, roubos e vandalismo no transporte de cargas</span></div>
+          <div class="tema-row"><span class="cod">D11c_15</span><span class="ref">4.36</span><span>Estratégias para ampliar a conectividade nos sistemas de transporte</span></div>
+          <div class="tema-row"><span class="cod">D11c_16</span><span class="ref">4.5</span><span>Estratégias para adoção de novas tecnologias em licitações do ESP</span></div>
+          <div class="tema-row"><span class="cod">D11c_17</span><span class="ref">4.20</span><span>Rearranjo institucional ou expansão da área de Logística e Transportes</span></div>
+          <div class="tema-row"><span class="cod">D11c_18</span><span class="ref">4.22</span><span>Estratégias para adaptação e resiliência às mudanças climáticas</span></div>
+          <div class="tema-row"><span class="cod">D11c_19</span><span class="ref">4.24</span><span>Avaliação de incentivos fiscais e criação de fundos ligados ao setor de transportes</span></div>
+        </div>
+
+        <div class="warn-note"><strong>Observação:</strong> a coluna "Categoria" da planilha original mistura modais (Rodoviário, Hidrovia, Aéreo) com agrupamentos transversais (Diversos itens, JRI, Governança), resultando em sobreposição. A reclassificação por Eixo (seção 03) elimina essa sobreposição ao adotar critério único — o papel funcional do tema na modelagem do PLI.</div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 03 EIXOS ════════════════════════ -->
+    <section id="eixos" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">03</span>
+        <span class="st">Clusterização — 5 Eixos funcionais</span>
+        <span class="sbadge s-completo">Estrutura proposta</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">A clusterização adota um <strong>critério único e funcional</strong>: o papel que cada tema exerce na cadeia metodológica do PLI (D-11 → D-12 → D-13 → D-14/D-17/D-18). Não é cluster modal (rodoviário/ferroviário/aéreo) porque o mandato do D-11 é cenarístico e não setorial. Cinco eixos cobrem o universo dos 31 temas sem sobreposição.</p>
+
+        <div class="quote">Cada Eixo responde a uma pergunta do D-12. Se o tema, depois de classificado, não respondeu a nenhuma das cinco perguntas, ele provavelmente não é um fator de cenário — e deve ser reposicionado como insumo de outro produto (D-17 governança, D-18 JRI) ou descartado nesta fase.</div>
+
+        <div class="three-col">
+          <div class="eixo-card e1">
+            <span class="ec-tag">E1 · Capacidade e Oferta</span>
+            <h4>Capacidade e Oferta de Rede</h4>
+            <p><strong>Pergunta do D-12:</strong> Como a oferta física e operacional dos modais muda nos cenários futuros?</p>
+            <div class="ec-body">Reúne temas que alteram diretamente a capacidade instalada, a operação ou a confiabilidade dos modais. São os fatores que entram no Visum como modificações na rede, na capacidade dos arcos ou nos parâmetros de operação dos terminais.</div>
+            <div class="ec-meta"><strong>Tipologia de saída:</strong> projetos estruturantes (grandes obras moduladas) e ampliações tipicamente avaliadas por EVTEA simplificado.</div>
+          </div>
+
+          <div class="eixo-card e2">
+            <span class="ec-tag">E2 · Demanda e Intermodalidade</span>
+            <h4>Demanda, Acessibilidade e Intermodalidade</h4>
+            <p><strong>Pergunta do D-12:</strong> Como o padrão de viagens e a escolha modal são alterados nos cenários futuros?</p>
+            <div class="ec-body">Reúne temas que afetam a distribuição de viagens, a acessibilidade territorial, a integração entre modais e a competitividade intermodal de cargas e passageiros. São fatores que entram no D-12 como hipóteses de matriz futura, custos generalizados, valor do tempo, conectividade e divisão modal.</div>
+            <div class="ec-meta"><strong>Tipologia de saída:</strong> projetos hierarquizáveis de integração modal, terminais, plataformas e novos serviços.</div>
+          </div>
+
+          <div class="eixo-card e3">
+            <span class="ec-tag">E3 · Resiliência e Sustentabilidade</span>
+            <h4>Resiliência, Segurança e Sustentabilidade Ambiental</h4>
+            <p><strong>Pergunta do D-12:</strong> Quais riscos, externalidades e penalidades operacionais devem ser parametrizados nos cenários?</p>
+            <div class="ec-body">Reúne temas que se traduzem em restrições operacionais, perda de capacidade, externalidades ambientais (emissões, GEE), riscos de sinistros e descarbonização. Conecta-se diretamente ao PAC 2050 e ao PEE 2050.</div>
+            <div class="ec-meta"><strong>Tipologia de saída:</strong> hipóteses paramétricas de cenário (fatores de perturbação, trajetórias de adoção tecnológica), pipeline de obras de adaptação e programas regulatórios.</div>
+          </div>
+
+          <div class="eixo-card e4">
+            <span class="ec-tag">E4 · Território e Uso do Solo</span>
+            <h4>Desenvolvimento Territorial e Uso do Solo</h4>
+            <p><strong>Pergunta do D-12:</strong> Como a interação rede-território altera a localização de atividades, polos e demandas?</p>
+            <div class="ec-body">Reúne temas que articulam infraestrutura logística com zoneamento, polos econômicos, articulação municipal e indução de desenvolvimento regional. Conecta-se ao ZEE-SP e ao planejamento territorial.</div>
+            <div class="ec-meta"><strong>Tipologia de saída:</strong> recomendações territoriais para D-13 (pontos de atenção) e D-14 (intervenções), com forte conteúdo de uso do solo e licenciamento.</div>
+          </div>
+
+          <div class="eixo-card e5">
+            <span class="ec-tag">E5 · Governança e Regulação</span>
+            <h4>Governança, Regulação e Inovação Institucional</h4>
+            <p><strong>Pergunta do D-12:</strong> Quais arranjos institucionais e instrumentos regulatórios viabilizam ou bloqueiam os cenários?</p>
+            <div class="ec-body">Reúne temas cujo efeito principal não é físico, mas institucional: rearranjo da SLT, instrumentos fiscais e financeiros, novas tecnologias em licitação, mecanismos jurídicos de implantação. Conecta-se diretamente ao D-17 (governança) e ao D-18 (JRI).</div>
+            <div class="ec-meta"><strong>Tipologia de saída:</strong> Assuntos JRI, recomendações regulatórias e instrumentos de viabilização das demais carteiras.</div>
+          </div>
+
+          <div class="eixo-card" style="border-top:4px solid var(--navy)">
+            <span class="ec-tag" style="background:var(--navy)">Critério de exclusividade</span>
+            <h4>Cada tema entra em UM único Eixo</h4>
+            <p><strong>Princípio:</strong> exclusividade clusterística para evitar dupla contagem.</p>
+            <div class="ec-body">Quando um tema tem natureza dupla (ex.: D11b_07 — intermodalidade que também tem componente territorial), classifica-se pelo <em>efeito dominante</em> sobre os cenários do D-12. Os efeitos secundários ficam registrados na ficha-tema como observações de transversalidade, mas não criam pertencimento múltiplo a Eixos. Isso preserva a integridade da contagem por Eixo e a clareza analítica.</div>
+            <div class="ec-meta"><strong>Garantia metodológica:</strong> a soma dos temas dos 5 Eixos = 31. Não há duplicação.</div>
+          </div>
+        </div>
+
+        <h3>Distribuição quantitativa dos 31 temas pelos 5 Eixos</h3>
+        <table class="compact">
+          <thead>
+            <tr><th>Eixo</th><th>Nome</th><th>Quantidade</th><th>Códigos D-11</th><th>% do total</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tag e1">E1</span></td>
+              <td>Capacidade e Oferta de Rede</td>
+              <td><strong>7</strong></td>
+              <td>D11b_01, D11b_02, D11b_08, D11c_01, D11c_02, D11c_06, D11c_07</td>
+              <td>22,6%</td>
+            </tr>
+            <tr>
+              <td><span class="tag e2">E2</span></td>
+              <td>Demanda, Acessibilidade e Intermodalidade</td>
+              <td><strong>11</strong></td>
+              <td>D11b_03, D11b_04, D11b_05, D11b_06, D11b_07, D11b_09, D11b_10, D11c_05, D11c_08, D11c_09, D11c_15</td>
+              <td>35,5%</td>
+            </tr>
+            <tr>
+              <td><span class="tag e3">E3</span></td>
+              <td>Resiliência, Segurança e Sustentabilidade Ambiental</td>
+              <td><strong>6</strong></td>
+              <td>D11a_01, D11a_02, D11c_03, D11c_04, D11c_14, D11c_18</td>
+              <td>19,4%</td>
+            </tr>
+            <tr>
+              <td><span class="tag e4">E4</span></td>
+              <td>Desenvolvimento Territorial e Uso do Solo</td>
+              <td><strong>4</strong></td>
+              <td>D11c_10, D11c_11, D11c_12, D11c_13</td>
+              <td>12,9%</td>
+            </tr>
+            <tr>
+              <td><span class="tag e5">E5</span></td>
+              <td>Governança, Regulação e Inovação Institucional</td>
+              <td><strong>3</strong></td>
+              <td>D11c_16, D11c_17, D11c_19</td>
+              <td>9,7%</td>
+            </tr>
+            <tr style="background:#f0f5fa;font-weight:700">
+              <td colspan="2">Total</td>
+              <td><strong>31</strong></td>
+              <td>—</td>
+              <td>100%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note"><strong>Leitura:</strong> mais de um terço dos temas é de Demanda/Intermodalidade (E2), o que confirma que o D-11 do PLI-SP tem foco prioritário em padrões de viagem e integração modal — coerente com o objetivo do plano de equilibrar a matriz de transporte. Os Eixos E1 e E3 são os fornecedores naturais de hipóteses paramétricas para o Visum no D-12. Os Eixos E4 e E5 alimentam, principalmente, o D-13/D-14 e o D-17/D-18.</div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 04 DIMENSÕES ════════════════════════ -->
+    <section id="dimensoes" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">04</span>
+        <span class="st">10 Dimensões de classificação</span>
+        <span class="sbadge s-completo">7 herdadas + 3 instrumentais PLI</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">Cada tema é classificado em <strong>10 dimensões</strong> com escala de três classes (<strong>A</strong> = alta/forte, <strong>B</strong> = média/moderada, <strong>C</strong> = baixa/incipiente) e <em>rubrica documental</em> — isto é, a classe atribuída precisa estar lastreada por evidência mínima registrada na ficha-tema. As sete primeiras são herdadas do modelo conceitual de hierarquização (referência metodológica do PLI). As três últimas são instrumentais: necessárias para que a sistematização do D-11 alimente corretamente os produtos seguintes (D-12, D-14, D-17, D-18).</p>
+
+        <div class="legenda">
+          <span class="lg"><span class="sw" style="background:#e8faef;border:1px solid var(--green-dk)"></span>Classe A — alta / forte / consolidada</span>
+          <span class="lg"><span class="sw" style="background:var(--warn-soft);border:1px solid var(--warn)"></span>Classe B — média / moderada / parcial</span>
+          <span class="lg"><span class="sw" style="background:var(--danger-soft);border:1px solid var(--danger)"></span>Classe C — baixa / incipiente / lacunar</span>
+        </div>
+
+        <h3>Núcleo conceitual — 7 dimensões herdadas</h3>
+
+        <!-- D1 Econômica -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">01</span>
+            <span class="dim-name">Econômica</span>
+            <span class="dim-tag">Núcleo · TDR Meta 4.3 (B/C)</span>
+          </div>
+          <p>Mede o potencial do tema de gerar benefício econômico líquido — em redução de custo logístico generalizado, ganho de produtividade da rede, ou habilitação de atividade econômica.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Capacidade do tema de afetar o custo generalizado de transporte, o custo logístico setorial ou o PIB regional. Avalia ordem de grandeza dos benefícios esperados.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>O TDR (Meta 4.3) exige cálculo de benefício econômico para hierarquizar projetos. Esta dimensão pré-qualifica o tema quanto à magnitude esperada do B/C antes de ele virar projeto.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — alto impacto</strong>Reduz custo logístico ou amplia produtividade de cadeias paulistas em escala estadual; B/C esperado ≥ 1,5 com folga.</div>
+              <div class="classe media"><strong>B — médio impacto</strong>Efeito setorial ou regional limitado; B/C esperado em torno de 1,0–1,5; depende de pacote complementar.</div>
+              <div class="classe baixa"><strong>C — baixo impacto</strong>Efeito econômico marginal, indireto ou de segunda ordem; B/C esperado < 1,0 ou indeterminado.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Estudo prévio, dado de demanda, análise de cadeia produtiva. Fontes: PNL 2050, CNT, IPEA, RAIS, big data rodoviário, EVTEAs setoriais.</p></div>
+        </div>
+
+        <!-- D2 Social -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">02</span>
+            <span class="dim-name">Social</span>
+            <span class="dim-tag">Núcleo · TDR Meta 4.4 (desigualdade regional)</span>
+          </div>
+          <p>Mede contribuição do tema à redução de desigualdades regionais, à acessibilidade da população e à qualidade do serviço de transporte para grupos vulneráveis.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Quanto o tema, se implementado, melhora acesso a serviços, a oportunidades de trabalho ou reduz desigualdades intra-estaduais e/ou intermunicipais.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>Variável explícita do AHP do TDR (Meta 4.4): "Contribuição para redução de desigualdades regionais". Triplo guia da sustentabilidade (TDR Obj. 1).</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — alta contribuição</strong>Atende explicitamente regiões de menor IDH ou grupos vulneráveis; benefício social documentável.</div>
+              <div class="classe media"><strong>B — contribuição média</strong>Benefício social difuso; alcance regional, mas sem foco em vulnerabilidade.</div>
+              <div class="classe baixa"><strong>C — baixa contribuição</strong>Tema neutro ou sem evidência de benefício social mensurável.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Indicadores territoriais (IDH-M, SEADE), mapeamento de demanda de transporte coletivo, plano cicloviário, dados de acessibilidade. Fontes: SEADE, IBGE, planos setoriais estaduais.</p></div>
+        </div>
+
+        <!-- D3 Ambiental -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">03</span>
+            <span class="dim-name">Ambiental</span>
+            <span class="dim-tag">Núcleo · PAC 2050 · TDR Obj. 1</span>
+          </div>
+          <p>Mede o efeito do tema sobre emissões de GEE, poluição local, consumo energético, áreas ambientalmente sensíveis e descarbonização do transporte.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Sinal e magnitude do impacto ambiental líquido. Considera tanto a redução de emissões (descarbonização modal) quanto pressões locais sobre o meio físico/biótico.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>O TDR exige aderência ao PAC 2050 (clima) e ao PEE 2050 (energia). Esta dimensão é o filtro de coerência climática-ambiental de cada tema.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — benefício ambiental claro</strong>Reduz emissões, induz transferência modal para modais mais eficientes ou habilita descarbonização.</div>
+              <div class="classe media"><strong>B — neutro ou misto</strong>Benefícios e pressões equilibrados; depende de mitigação.</div>
+              <div class="classe baixa"><strong>C — pressão ambiental</strong>Aumenta emissões, ocupa áreas sensíveis ou intensifica externalidades sem mitigação evidente.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Inventário GEE, ZEE-SP, metas PAC 2050 e PEE 2050, fatores de emissão por modal. Fontes: SIMA, MMA, MapBiomas, HBEFA (Visum).</p></div>
+        </div>
+
+        <!-- D4 Segurança -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">04</span>
+            <span class="dim-name">Segurança</span>
+            <span class="dim-tag">Núcleo · TDR Atividades 4.3, 4.31, 4.35</span>
+          </div>
+          <p>Mede o efeito do tema sobre sinistralidade viária, segurança operacional dos modais, segurança patrimonial da carga e segurança de usuários vulneráveis.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Potencial de redução de mortes, feridos, sinistros e perdas de carga (furtos/roubos/vandalismo) ou, inversamente, exposição adicional a risco.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>Três temas do D-11 abordam diretamente segurança (D11c_03, D11c_04, D11c_14). A dimensão eleva o tema de "categoria modal" para "atributo cruzado", permitindo comparar políticas.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — ganho explícito</strong>Reduz sinistros ou perdas em ordem mensurável; tem evidência empírica internacional ou nacional.</div>
+              <div class="classe media"><strong>B — ganho indireto</strong>Efeito plausível mas dependente de fatores adicionais.</div>
+              <div class="classe baixa"><strong>C — neutro ou risco</strong>Sem efeito relevante sobre segurança ou pode aumentar exposição se mal projetado.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Estatísticas Infosiga, PRF, ANTT, mapas de risco, módulo Safety do Visum. Fontes: Infosiga-SP, PRF, ARTESP, NTC&Logística.</p></div>
+        </div>
+
+        <!-- D5 Institucional -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">05</span>
+            <span class="dim-name">Institucional</span>
+            <span class="dim-tag">Núcleo · TDR Meta 4.4 (jurídico/jurisdição) · Meta 4.5</span>
+          </div>
+          <p>Mede a complexidade do arranjo institucional necessário para operacionalizar o tema — atores envolvidos, competências, marcos regulatórios e graus de coordenação federativa.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Quantos atores precisam ser articulados, qual o grau de competência estadual e qual o nível de novidade jurídica/regulatória exigido.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>Variável do AHP TDR Meta 4.4 ("questões jurídicas e de jurisdição"). Pré-condição para o D-18 (aspectos JRI). Define o que vai por instrumento puro de governança vs. obra.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — viável institucionalmente</strong>Competência estadual clara, marco regulatório existente, baixa coordenação extra.</div>
+              <div class="classe media"><strong>B — coordenação moderada</strong>Exige articulação federativa ou ajustes regulatórios pontuais.</div>
+              <div class="classe baixa"><strong>C — alta complexidade</strong>Exige nova legislação, coordenação multi-nível ou competência majoritariamente federal/municipal.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Marco legal vigente, atribuições da SEMIL/SLT, jurisprudência regulatória. Fontes: ARTESP, ANTT, ANTAQ, ANAC, ANP, atos do Governo do Estado.</p></div>
+        </div>
+
+        <!-- D6 Territorial -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">06</span>
+            <span class="dim-name">Territorial</span>
+            <span class="dim-tag">Núcleo · ZEE-SP · TDR Meta 2.6</span>
+          </div>
+          <p>Mede a aderência do tema a regiões específicas do estado, sua relação com o ZEE-SP (9 zonas) e seu potencial de indução territorial.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Em quantas e quais zonas do ZEE-SP o tema é relevante; se possui potencial indutor de desenvolvimento regional ou se é correção territorial.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>O TDR (Meta 2.6) e os fóruns regionais demandam recorte territorial explícito. O ZEE-SP é referência obrigatória na análise ambiental e de uso do solo.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — alta especificidade</strong>Tema com recorte territorial claro e indução documentada (ex.: corredor logístico, polo regional).</div>
+              <div class="classe media"><strong>B — escala regional difusa</strong>Tema relevante em várias regiões mas sem recorte específico.</div>
+              <div class="classe baixa"><strong>C — território irrelevante</strong>Tema de natureza estadual transversal ou regulatória, sem dimensão territorial significativa.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Mapeamento ZEE-SP, planos diretores municipais, AAE, estudos regionais. Fontes: SIMA, EMPLASA, prefeituras, IBGE/SEADE.</p></div>
+        </div>
+
+        <!-- D7 Técnica -->
+        <div class="dim-card core">
+          <div class="dim-hdr">
+            <span class="dim-num">07</span>
+            <span class="dim-name">Técnica</span>
+            <span class="dim-tag">Núcleo · TDR Meta 4.4 (complexidade)</span>
+          </div>
+          <p>Mede a maturidade tecnológica e a complexidade de engenharia/operação do tema. Avalia o quanto a solução é conhecida, disponível e aplicável.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Nível de prontidão tecnológica (TRL), disponibilidade de soluções de mercado, complexidade de implantação e operação.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>Variável do AHP TDR Meta 4.4 ("Nível de complexidade"). Diferencia rapidamente o que é viável já vs. o que demanda P&D ou prova de conceito.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — solução madura</strong>Soluções consagradas, mercado fornecedor amplo, baixa incerteza técnica.</div>
+              <div class="classe media"><strong>B — complexidade média</strong>Soluções existem mas exigem adaptação local ou pacotes integrados.</div>
+              <div class="classe baixa"><strong>C — alta complexidade</strong>Tecnologia incipiente, sem fornecedor consolidado ou de alta incerteza.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Benchmarking nacional/internacional, normas técnicas, casos de referência. Fontes: ABNT, IPT, projetos análogos do PNL 2050, literatura técnica.</p></div>
+        </div>
+
+        <h3>Dimensões instrumentais — exigidas pelo encadeamento metodológico do PLI</h3>
+
+        <!-- D8 Modelabilidade -->
+        <div class="dim-card instr">
+          <div class="dim-hdr">
+            <span class="dim-num">08</span>
+            <span class="dim-name">Modelabilidade</span>
+            <span class="dim-tag">Instrumental · Insumo direto do D-12 (Visum)</span>
+          </div>
+          <p>Mede o quanto o tema, da forma como está descrito, pode virar uma <strong>variável de cenário simulável</strong> no Visum-PTV (rede, matriz, parâmetros operacionais, custos generalizados, fatores de emissão).</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Capacidade de o tema ser traduzido em parâmetro mensurável de cenário: arco/nó, OD, capacidade, custo, política tarifária, fator ambiental.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>Sem esta dimensão, a sistematização não fecha a ponte com o D-12. Temas de baixa modelabilidade não podem entrar como variáveis de cenário, mesmo se importantes — eles seguem por outro produto (D-13/D-17/D-18).</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — diretamente modelável</strong>Vira parâmetro Visum sem ambiguidade (rede, matriz, fator).</div>
+              <div class="classe media"><strong>B — modelável indiretamente</strong>Exige hipótese intermediária (ex.: cenário de adoção tecnológica que se traduz em fator).</div>
+              <div class="classe baixa"><strong>C — não modelável</strong>Tema essencialmente regulatório, institucional ou de governança, sem parâmetro de cenário direto.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Estrutura do modelo Visum, módulos disponíveis (GIS, Tribut, RLS'90, HBEFA, EVA, TflowFuzzy, Safety). Define se é hipótese rede, matriz, parâmetro ou política.</p></div>
+        </div>
+
+        <!-- D9 Maturidade da informação -->
+        <div class="dim-card instr">
+          <div class="dim-hdr">
+            <span class="dim-num">09</span>
+            <span class="dim-name">Maturidade da informação</span>
+            <span class="dim-tag">Instrumental · Pré-condição para D-12 e D-14</span>
+          </div>
+          <p>Mede a disponibilidade, atualidade e qualidade de dados oficiais que sustentem a análise do tema. Identifica lacunas que precisam ser preenchidas em paralelo.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Existência de bases oficiais, séries históricas, dados georreferenciados, estudos prévios. Detecta lacunas críticas que travariam a fase seguinte.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>O TDR (Meta 1.4 — base de conhecimento) e a Meta 2.4 (matrizes) estabelecem que toda análise precisa ser baseada em dado verificável. Temas com baixa maturidade demandam ações de coleta — registro explícito disso evita surpresas no D-12.</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — dado consolidado</strong>Base oficial atualizada, série histórica, georreferenciada.</div>
+              <div class="classe media"><strong>B — dado parcial</strong>Existe base, mas com lacunas de cobertura, atualidade ou granularidade.</div>
+              <div class="classe baixa"><strong>C — dado lacunar</strong>Sem base estruturada; exige levantamento ad-hoc ou pesquisa primária.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Inventário de fontes da Atividade 1.4 do TDR. Cruzar com IBGE, SEADE, RAIS, ANTT, ANTAQ, ANP, ANAC, DER-SP, ARTESP, big data rodoviário.</p></div>
+        </div>
+
+        <!-- D10 Horizonte -->
+        <div class="dim-card instr">
+          <div class="dim-hdr">
+            <span class="dim-num">10</span>
+            <span class="dim-name">Horizonte temporal de efeito</span>
+            <span class="dim-tag">Instrumental · TDR cenários 2028 / 2033 / 2038 / 2043 / 2050</span>
+          </div>
+          <p>Mede em qual horizonte do PLI o efeito do tema se materializa, classificando por janela de implantação alinhada aos anos-corte do plano.</p>
+          <div class="dim-grid">
+            <div class="dim-block def"><h5>Definição operacional</h5><p>Janela em que o tema produz efeito tangível para a modelagem: <strong>operacional 2028</strong>, <strong>tático 2033–2038</strong>, ou <strong>estratégico 2043–2050</strong>.</p></div>
+            <div class="dim-block just"><h5>Justificativa lógico-institucional</h5><p>O TDR exige cenários 2025 (base) → 2028 → 2033 → 2038 → 2043 → 2050. Sem indicação de horizonte, não se sabe em qual cenário do D-12 o tema deve ser ligado. É também variável do AHP TDR Meta 4.4 ("Prazo para implantação").</p></div>
+          </div>
+          <div class="dim-block escala" style="margin-top:8px"><h5>Escala A · B · C</h5>
+            <div class="classes">
+              <div class="classe alta"><strong>A — operacional 2028</strong>Efeito tangível no curto prazo; tipicamente intervenção de baixa complexidade ou política regulatória.</div>
+              <div class="classe media"><strong>B — tático 2033–2038</strong>Efeito de médio prazo; obras médias, integrações modais ou políticas com período de difusão.</div>
+              <div class="classe baixa"><strong>C — estratégico 2043–2050</strong>Efeito de longo prazo; obras de grande porte, mudanças estruturais ou transições tecnológicas amplas.</div>
+            </div>
+          </div>
+          <div class="dim-block fonte" style="margin-top:8px"><h5>Evidência mínima · Fonte sugerida</h5><p>Cronograma típico para a tipologia da intervenção; benchmarking de obras análogas; planos correlatos (PNL 2050, planos setoriais estaduais).</p></div>
+        </div>
+
+        <div class="footer-note"><strong>Por que 10 dimensões e não as 7 do modelo conceitual:</strong> as 7 dimensões herdadas (Econômica, Social, Ambiental, Segurança, Institucional, Territorial, Técnica) são <em>suficientes para hierarquizar projetos prontos</em>. Mas o D-11 não hierarquiza projetos — ele <em>tria fatores</em> que ainda virarão projetos. Para isso, três dimensões instrumentais adicionais são imprescindíveis: <strong>Modelabilidade</strong> (porta de entrada do D-12), <strong>Maturidade da informação</strong> (porta de entrada do D-12 e D-14) e <strong>Horizonte temporal</strong> (chave de associação aos cenários 2028/2033/2038/2043/2050).</div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 05 METODOLOGIA ════════════════════════ -->
+    <section id="metodologia" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">05</span>
+        <span class="st">Metodologia de atribuição</span>
+        <span class="sbadge s-completo">6 passos auditáveis</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">A atribuição de Eixo e classes é um processo replicável, com evidência mínima exigida em cada passo. Não há "achismo" autoral: cada decisão precisa ter lastro documental registrado na ficha-tema, de forma que terceiros possam reproduzir e auditar a classificação.</p>
+
+        <div class="steps">
+          <div class="step"><div class="sn-num">01</div><h5>Pré-leitura do tema</h5><p>Recortar escopo declarado, identificar verbo-chave (criar, ampliar, mitigar, articular) e objeto (rede, política, instrumento).</p></div>
+          <div class="step"><div class="sn-num">02</div><h5>Mapear ao Eixo</h5><p>Aplicar a pergunta dos 5 Eixos ao tema. Aquela à qual ele responde primariamente é seu Eixo. Registrar o efeito secundário, sem duplicar pertencimento.</p></div>
+          <div class="step"><div class="sn-num">03</div><h5>Pontuar 10 dimensões</h5><p>Para cada dimensão, atribuir A/B/C consultando a rubrica e registrando a evidência usada. Quando não houver evidência, marcar "C — lacunar" com nota explicativa.</p></div>
+          <div class="step"><div class="sn-num">04</div><h5>Verificar elegibilidade</h5><p>Aplicar 4 vetos de exclusão. Se algum disparar, o tema sai do pipeline cenarístico.</p></div>
+          <div class="step"><div class="sn-num">05</div><h5>Consolidar ficha-tema</h5><p>Registrar Eixo, perfil das 10 dimensões, vetos, evidências, observações de transversalidade e indicação de produto destino.</p></div>
+          <div class="step"><div class="sn-num">06</div><h5>Encaminhar</h5><p>Despachar a ficha para o produto correspondente: D-12 (modelagem), D-13 (pontos de atenção), D-14 (carteira), D-17 (governança), D-18 (JRI).</p></div>
+        </div>
+
+        <h3>Vetos de elegibilidade aplicados no Passo 04</h3>
+        <table>
+          <thead>
+            <tr><th style="width:32px">#</th><th>Veto</th><th>Critério de aplicação</th><th>Encaminhamento</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>V1</strong></td>
+              <td>Fora do escopo do PLI</td>
+              <td>Tema cujo objeto não pertence ao sistema de logística e transporte do estado.</td>
+              <td>Excluir e registrar motivo.</td>
+            </tr>
+            <tr>
+              <td><strong>V2</strong></td>
+              <td>Fora do horizonte 2025–2050</td>
+              <td>Efeito apenas após 2050 ou já consumado antes de 2028.</td>
+              <td>Excluir do pipeline cenarístico; observar como contexto.</td>
+            </tr>
+            <tr>
+              <td><strong>V3</strong></td>
+              <td>Fora do alcance institucional do estado</td>
+              <td>Competência majoritariamente federal/municipal e sem ponto efetivo de articulação estadual.</td>
+              <td>Despachar como recomendação para D-17 ou D-18; não vira projeto da carteira.</td>
+            </tr>
+            <tr>
+              <td><strong>V4</strong></td>
+              <td>Não modelável e sem efeito de governança</td>
+              <td>Tema simultaneamente C em <em>Modelabilidade</em> e C em <em>Institucional</em>.</td>
+              <td>Reformular ou descartar (provável falha de definição do tema).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Estrutura da ficha-tema (saída do Passo 05)</h3>
+        <table class="compact">
+          <thead><tr><th style="width:140px">Campo</th><th>Conteúdo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identificação</strong></td><td>Código D-11, nome do tema, referência TDR, bloco D11a/b/c.</td></tr>
+            <tr><td><strong>Eixo</strong></td><td>E1 a E5 (exclusivo). Justificativa em 1 frase.</td></tr>
+            <tr><td><strong>Perfil dimensional</strong></td><td>Vetor de 10 classes (D1..D10) com a rubrica usada para cada uma.</td></tr>
+            <tr><td><strong>Evidências</strong></td><td>Fontes, dados e estudos consultados. Aponta lacunas.</td></tr>
+            <tr><td><strong>Vetos disparados</strong></td><td>Nenhum / V1 / V2 / V3 / V4 (com explicação se sim).</td></tr>
+            <tr><td><strong>Transversalidade</strong></td><td>Outros eixos ou dimensões impactados secundariamente.</td></tr>
+            <tr><td><strong>Tradução para o D-12</strong></td><td>Como vira variável de cenário (rede / matriz / parâmetro / política), se modelável.</td></tr>
+            <tr><td><strong>Encaminhamento</strong></td><td>Produto destino (D-12 / D-13 / D-14 / D-17 / D-18) e tipologia da intervenção sugerida.</td></tr>
+            <tr><td><strong>Aderência a planos correlatos</strong></td><td>Vínculos com PNL 2050, PAC 2050, PEE 2050, ZEE-SP, planos setoriais estaduais.</td></tr>
+            <tr><td><strong>Anotação para AHP futuro</strong></td><td>Apontamentos preliminares para as 4 variáveis do TDR Meta 4.4.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note"><strong>Auditabilidade:</strong> qualquer tema da carteira final deve ser rastreável em três níveis — (i) sua ficha-tema, (ii) a evidência documental de cada classe, (iii) a justificativa do encaminhamento. Esse encadeamento é a defesa metodológica perante a SEMIL e os fóruns regionais.</div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 06 MATRIZ ════════════════════════ -->
+    <section id="matriz" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">06</span>
+        <span class="st">Matriz aplicada aos 31 Temas</span>
+        <span class="sbadge s-andamento">Classificação preliminar — a refinar com fontes</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">Aplicação preliminar da metodologia aos 31 temas. As classes representam o melhor julgamento técnico inicial, com base no enunciado do tema e em conhecimento setorial consolidado. Cada célula deve ser confirmada/ajustada com a evidência levantada na fase de elaboração das fichas-tema.</p>
+
+        <div class="legenda">
+          <span class="lg"><span class="sw" style="background:var(--e1-soft);border:1px solid var(--e1)"></span>E1 Capacidade</span>
+          <span class="lg"><span class="sw" style="background:var(--e2-soft);border:1px solid var(--e2)"></span>E2 Demanda</span>
+          <span class="lg"><span class="sw" style="background:var(--e3-soft);border:1px solid var(--e3)"></span>E3 Resiliência</span>
+          <span class="lg"><span class="sw" style="background:var(--e4-soft);border:1px solid var(--e4)"></span>E4 Território</span>
+          <span class="lg"><span class="sw" style="background:var(--e5-soft);border:1px solid var(--e5)"></span>E5 Governança</span>
+          <span class="lg"><span class="sw" style="background:#e8faef;border:1px solid var(--green-dk)"></span>A</span>
+          <span class="lg"><span class="sw" style="background:var(--warn-soft);border:1px solid var(--warn)"></span>B</span>
+          <span class="lg"><span class="sw" style="background:var(--danger-soft);border:1px solid var(--danger)"></span>C</span>
+        </div>
+
+        <table class="matriz">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Tema</th>
+              <th>Eixo</th>
+              <th title="Econômica">D1 Eco</th>
+              <th title="Social">D2 Soc</th>
+              <th title="Ambiental">D3 Amb</th>
+              <th title="Segurança">D4 Seg</th>
+              <th title="Institucional">D5 Inst</th>
+              <th title="Territorial">D6 Ter</th>
+              <th title="Técnica">D7 Téc</th>
+              <th title="Modelabilidade">D8 Mod</th>
+              <th title="Maturidade da informação">D9 Mat</th>
+              <th title="Horizonte temporal">D10 Hor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- D11a -->
+            <tr><td class="cod">D11a_01</td><td class="tema">Redes de abastecimento p/ novos veículos/combustíveis</td><td class="eixo e3">E3</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11a_02</td><td class="tema">Fomento da cadeia de Gás Natural e Biometano</td><td class="eixo e3">E3</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <!-- D11b -->
+            <tr><td class="cod">D11b_01</td><td class="tema">Conexões com transporte marítimo</td><td class="eixo e1">E1</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11b_02</td><td class="tema">Cargas em vias segregadas do TIC</td><td class="eixo e1">E1</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls C">C</td></tr>
+            <tr><td class="cod">D11b_03</td><td class="tema">Áreas de desenvolvimento ao longo do TIC</td><td class="eixo e2">E2</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11b_04</td><td class="tema">Áreas de desenvolvimento ao longo dos VLT</td><td class="eixo e2">E2</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11b_05</td><td class="tema">Linhas de ônibus inter-regionais c/ decréscimo</td><td class="eixo e2">E2</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11b_06</td><td class="tema">Sistemas intermodais p/ passageiros (PEF)</td><td class="eixo e2">E2</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11b_07</td><td class="tema">Sistemas intermodais p/ cadeias produtivas (PEF)</td><td class="eixo e2">E2</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11b_08</td><td class="tema">Capacidade da hidrovia Tietê-Paraná (PEH)</td><td class="eixo e1">E1</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls C">C</td></tr>
+            <tr><td class="cod">D11b_09</td><td class="tema">Aquaviário de passageiros — portos/regulamentos</td><td class="eixo e2">E2</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11b_10</td><td class="tema">Plataformas digitais — otimização de cargas</td><td class="eixo e2">E2</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls A">A</td></tr>
+            <!-- D11c -->
+            <tr><td class="cod">D11c_01</td><td class="tema">Novas rodovias, contornos, ampliações</td><td class="eixo e1">E1</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls C">C</td></tr>
+            <tr><td class="cod">D11c_02</td><td class="tema">Modernização de alças, dispositivos, viadutos</td><td class="eixo e1">E1</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_03</td><td class="tema">Acidentes com vulneráveis em trechos urbanos</td><td class="eixo e3">E3</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_04</td><td class="tema">Acidentes com cargas perigosas</td><td class="eixo e3">E3</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_05</td><td class="tema">Corredores de cargas especiais</td><td class="eixo e2">E2</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_06</td><td class="tema">Hierarquização solicitações empresas/municípios</td><td class="eixo e1">E1</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_07</td><td class="tema">Pavimentação/recuperação rodovias rurais</td><td class="eixo e1">E1</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_08</td><td class="tema">Plano Cicloviário, cicloturísticas e religiosas</td><td class="eixo e2">E2</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_09</td><td class="tema">Desenvolvimento do setor aéreo</td><td class="eixo e2">E2</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11c_10</td><td class="tema">Retroáreas e bases de apoio offshore (Pré-Sal)</td><td class="eixo e4">E4</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11c_11</td><td class="tema">Alterações ZEE e fluxos de licenciamento (AAE)</td><td class="eixo e4">E4</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_12</td><td class="tema">Articulação com municípios (PD, OUC)</td><td class="eixo e4">E4</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11c_13</td><td class="tema">Polos associados a novas ofertas logísticas</td><td class="eixo e4">E4</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11c_14</td><td class="tema">Furtos, roubos e vandalismo em cargas</td><td class="eixo e3">E3</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_15</td><td class="tema">Conectividade nos sistemas de transporte</td><td class="eixo e2">E2</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_16</td><td class="tema">Novas tecnologias em licitações do ESP</td><td class="eixo e5">E5</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls A">A</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls A">A</td></tr>
+            <tr><td class="cod">D11c_17</td><td class="tema">Rearranjo institucional da SLT</td><td class="eixo e5">E5</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+            <tr><td class="cod">D11c_18</td><td class="tema">Adaptação e resiliência climática</td><td class="eixo e3">E3</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls C">C</td></tr>
+            <tr><td class="cod">D11c_19</td><td class="tema">Incentivos fiscais e fundos do setor</td><td class="eixo e5">E5</td><td class="cls A">A</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls C">C</td><td class="cls A">A</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls C">C</td><td class="cls B">B</td><td class="cls B">B</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Leitura agregada da matriz preliminar</h3>
+        <div class="three-col">
+          <div class="mini">
+            <h3>Pipeline cenarístico (D-12)</h3>
+            <ul>
+              <li><strong>Alta modelabilidade (A em D8):</strong> 12 temas — núcleo das hipóteses Visum.</li>
+              <li><strong>Modelabilidade média (B):</strong> 14 temas — exigem hipótese intermediária.</li>
+              <li><strong>Não modeláveis (C):</strong> 5 temas — vão direto para D-17/D-18.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>Maturidade dos dados (D9)</h3>
+            <ul>
+              <li><strong>Dados consolidados (A):</strong> 9 temas.</li>
+              <li><strong>Parciais (B):</strong> 19 temas — demandam complementação.</li>
+              <li><strong>Lacunares (C):</strong> 3 temas (D11b_10, D11c_18, D11c_16) — exigem coleta primária.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>Janela de efeito (D10)</h3>
+            <ul>
+              <li><strong>Operacional 2028 (A):</strong> 10 temas — efeito rápido.</li>
+              <li><strong>Tático 2033–2038 (B):</strong> 17 temas — núcleo da carteira.</li>
+              <li><strong>Estratégico 2043–2050 (C):</strong> 4 temas — visão de longo prazo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="warn-note"><strong>Status da matriz:</strong> esta versão é classificação técnica preliminar para discussão. Cada célula deve ser ratificada na fase de elaboração das fichas-tema, com a evidência mínima exigida pela rubrica da dimensão correspondente. A combinação Eixo + perfil dimensional gera, na fase seguinte, a tradução para a carteira de projetos.</div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 07 TRIAGEM E CORTE ════════════════════════ -->
+    <section id="triagem" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">07</span>
+        <span class="st">Triagem e corte: dos 31 temas aos 25 prioritários</span>
+        <span class="sbadge s-completo">Critério explícito · auditável</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">O TDR (Meta 4.1) exige <strong>≥ 25 intervenções</strong> selecionadas — não 31. Manter os 31 como candidatos a projeto infla artificialmente o pipeline e mistura coisas de natureza diferente (obra, governança, parecer JRI). Esta seção aplica um <strong>critério de corte explícito em 3 filtros sequenciais</strong>, replicável e auditável, que reduz os 31 temas a 25 prioritários + 1 reserva, com 5 reroteados para D-17/D-18.</p>
+
+        <h3>Os 3 filtros aplicados em sequência</h3>
+        <div class="three-col">
+          <div class="mini">
+            <h3>Filtro 1 — Vetos absolutos</h3>
+            <p>Aplica os 4 vetos do Passo 04 (V1 escopo · V2 horizonte · V3 alcance institucional · V4 não modelável + sem governança). Tema vetado sai do pipeline.</p>
+            <p style="margin-top:6px"><strong>Resultado:</strong> nenhum veto disparou nesta versão preliminar — os 31 temas têm aderência mínima ao escopo PLI.</p>
+          </div>
+          <div class="mini">
+            <h3>Filtro 2 — Roteamento por destino</h3>
+            <p>Temas com <strong>D8=C (não modeláveis)</strong> e <strong>D5=A (institucional forte)</strong> não viram projeto de obra. São reroteados para <strong>D-17 (governança)</strong> ou <strong>D-18 (JRI)</strong> e <em>não somam</em> na meta de ≥ 25.</p>
+            <p style="margin-top:6px"><strong>Resultado:</strong> 5 temas reroteados.</p>
+          </div>
+          <div class="mini">
+            <h3>Filtro 3 — Ranking por score</h3>
+            <p>Score = soma das 6 dimensões duras do AHP do TDR (D1 Eco, D2 Soc, D4 Seg, D5 Inst, D7 Téc, D10 Hor). A=2, B=1, C=0. Máx = 12. Desempate: D8 Modelabilidade (A &gt; B).</p>
+            <p style="margin-top:6px"><strong>Resultado:</strong> top 25 entram na carteira prioritária; 1 vai para reserva.</p>
+          </div>
+        </div>
+
+        <h3>Saída do Filtro 2 — 5 temas reroteados (não competem por vaga na carteira de obras)</h3>
+        <table class="compact">
+          <thead><tr><th>Código</th><th>Tema</th><th>Eixo</th><th>D8 Mod</th><th>D5 Inst</th><th>Encaminhamento</th><th>Razão</th></tr></thead>
+          <tbody>
+            <tr><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_11</td><td>Alterações ZEE e fluxos de licenciamento (AAE)</td><td><span class="tag e4">E4</span></td><td style="text-align:center;color:var(--danger);font-weight:700">C</td><td style="text-align:center;color:var(--green-dk);font-weight:700">A</td><td><strong>D-18 JRI</strong></td><td>Instrumento regulatório-territorial puro.</td></tr>
+            <tr><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_12</td><td>Articulação com municípios (PD, OUC)</td><td><span class="tag e4">E4</span></td><td style="text-align:center;color:var(--danger);font-weight:700">C</td><td style="text-align:center;color:var(--green-dk);font-weight:700">A</td><td><strong>D-17 Governança</strong></td><td>Mecanismo de coordenação federativa, não obra.</td></tr>
+            <tr><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_16</td><td>Novas tecnologias em licitações do ESP</td><td><span class="tag e5">E5</span></td><td style="text-align:center;color:var(--danger);font-weight:700">C</td><td style="text-align:center;color:var(--green-dk);font-weight:700">A</td><td><strong>D-18 JRI</strong></td><td>Instrumento de contratação pública.</td></tr>
+            <tr><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_17</td><td>Rearranjo institucional ou expansão da SLT</td><td><span class="tag e5">E5</span></td><td style="text-align:center;color:var(--danger);font-weight:700">C</td><td style="text-align:center;color:var(--green-dk);font-weight:700">A</td><td><strong>D-17 Governança</strong></td><td>Reforma institucional pura, sem dimensão física.</td></tr>
+            <tr><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_19</td><td>Incentivos fiscais e fundos do setor</td><td><span class="tag e5">E5</span></td><td style="text-align:center;color:var(--danger);font-weight:700">C</td><td style="text-align:center;color:var(--green-dk);font-weight:700">A</td><td><strong>D-18 JRI</strong></td><td>Instrumento fiscal-financeiro.</td></tr>
+          </tbody>
+        </table>
+        <p class="sdesc" style="margin-top:-4px">Estes 5 temas continuam sendo entregas formais do PLI — apenas em outro produto. Não desaparecem; mudam de gaveta.</p>
+
+        <h3>Saída do Filtro 3 — Ranking dos 26 candidatos restantes</h3>
+        <p class="sdesc">Score calculado a partir da matriz da seção 06. Linhas verdes entram na carteira prioritária (top 25). Linha amarela é reserva (entra se algum prioritário não passar nas Metas 4.2–4.4).</p>
+
+        <table class="compact">
+          <thead><tr><th style="width:36px">Pos</th><th>Código</th><th>Tema</th><th>Eixo</th><th style="width:40px">D1</th><th style="width:40px">D2</th><th style="width:40px">D4</th><th style="width:40px">D5</th><th style="width:40px">D7</th><th style="width:42px">D10</th><th style="width:42px">D8*</th><th style="width:48px">Score</th><th style="width:80px">Status</th></tr></thead>
+          <tbody>
+            <tr style="background:#e8faef"><td><strong>1</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_05</td><td>Corredores de cargas especiais</td><td><span class="tag e2">E2</span></td><td>A</td><td>B</td><td>A</td><td>A</td><td>A</td><td>A</td><td>A</td><td><strong>11</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>2</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_03</td><td>Acidentes com vulneráveis em trechos urbanos</td><td><span class="tag e3">E3</span></td><td>B</td><td>A</td><td>A</td><td>A</td><td>A</td><td>A</td><td>B</td><td><strong>11</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>3</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_01</td><td>Novas rodovias, contornos, ampliações</td><td><span class="tag e1">E1</span></td><td>A</td><td>A</td><td>A</td><td>A</td><td>A</td><td>C</td><td>A</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>4</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_05</td><td>Linhas de ônibus inter-regionais c/ decréscimo</td><td><span class="tag e2">E2</span></td><td>B</td><td>A</td><td>B</td><td>A</td><td>A</td><td>A</td><td>A</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>5</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_02</td><td>Modernização de alças, dispositivos, viadutos</td><td><span class="tag e1">E1</span></td><td>B</td><td>B</td><td>A</td><td>A</td><td>A</td><td>A</td><td>B</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>6</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_04</td><td>Acidentes com cargas perigosas</td><td><span class="tag e3">E3</span></td><td>B</td><td>A</td><td>A</td><td>B</td><td>A</td><td>A</td><td>B</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>7</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_06</td><td>Hierarquização solicitações empresas/municípios</td><td><span class="tag e1">E1</span></td><td>B</td><td>B</td><td>A</td><td>A</td><td>A</td><td>A</td><td>B</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>8</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_07</td><td>Pavimentação/recuperação rodovias rurais</td><td><span class="tag e1">E1</span></td><td>B</td><td>A</td><td>B</td><td>A</td><td>A</td><td>A</td><td>B</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>9</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_08</td><td>Plano Cicloviário, cicloturísticas e religiosas</td><td><span class="tag e2">E2</span></td><td>B</td><td>A</td><td>A</td><td>B</td><td>A</td><td>A</td><td>B</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>10</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_14</td><td>Furtos, roubos e vandalismo em cargas</td><td><span class="tag e3">E3</span></td><td>A</td><td>B</td><td>A</td><td>B</td><td>A</td><td>A</td><td>B</td><td><strong>10</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>11</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_10</td><td>Plataformas digitais — otimização de cargas</td><td><span class="tag e2">E2</span></td><td>A</td><td>B</td><td>B</td><td>B</td><td>A</td><td>A</td><td>B</td><td><strong>9</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>12</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_03</td><td>Áreas de desenvolvimento ao longo do TIC</td><td><span class="tag e2">E2</span></td><td>A</td><td>A</td><td>B</td><td>B</td><td>A</td><td>B</td><td>B</td><td><strong>9</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>13</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_13</td><td>Polos associados a novas ofertas logísticas</td><td><span class="tag e4">E4</span></td><td>A</td><td>A</td><td>B</td><td>B</td><td>A</td><td>B</td><td>B</td><td><strong>9</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>14</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_15</td><td>Conectividade nos sistemas de transporte</td><td><span class="tag e2">E2</span></td><td>B</td><td>A</td><td>B</td><td>B</td><td>A</td><td>A</td><td>B</td><td><strong>9</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>15</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_18</td><td>Adaptação e resiliência climática</td><td><span class="tag e3">E3</span></td><td>A</td><td>A</td><td>A</td><td>A</td><td>B</td><td>C</td><td>B</td><td><strong>9</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>16</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_01</td><td>Conexões com transporte marítimo</td><td><span class="tag e1">E1</span></td><td>A</td><td>B</td><td>B</td><td>B</td><td>A</td><td>B</td><td>A</td><td><strong>8</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>17</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_06</td><td>Sistemas intermodais p/ passageiros (PEF)</td><td><span class="tag e2">E2</span></td><td>B</td><td>A</td><td>B</td><td>B</td><td>A</td><td>B</td><td>A</td><td><strong>8</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>18</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_07</td><td>Sistemas intermodais p/ cadeias produtivas (PEF)</td><td><span class="tag e2">E2</span></td><td>A</td><td>B</td><td>B</td><td>B</td><td>A</td><td>B</td><td>A</td><td><strong>8</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>19</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11a_02</td><td>Fomento da cadeia de Gás Natural e Biometano</td><td><span class="tag e3">E3</span></td><td>A</td><td>B</td><td>B</td><td>B</td><td>A</td><td>B</td><td>B</td><td><strong>8</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>20</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_04</td><td>Áreas de desenvolvimento ao longo dos VLT</td><td><span class="tag e2">E2</span></td><td>B</td><td>A</td><td>B</td><td>B</td><td>A</td><td>B</td><td>B</td><td><strong>8</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>21</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_08</td><td>Capacidade da hidrovia Tietê-Paraná (PEH)</td><td><span class="tag e1">E1</span></td><td>A</td><td>B</td><td>B</td><td>B</td><td>A</td><td>C</td><td>A</td><td><strong>7</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>22</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_09</td><td>Aquaviário de passageiros — portos/regulamentos</td><td><span class="tag e2">E2</span></td><td>B</td><td>A</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td><strong>7</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>23</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_09</td><td>Desenvolvimento do setor aéreo</td><td><span class="tag e2">E2</span></td><td>A</td><td>B</td><td>B</td><td>C</td><td>A</td><td>B</td><td>B</td><td><strong>7</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>24</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11c_10</td><td>Retroáreas e bases offshore (Pré-Sal)</td><td><span class="tag e4">E4</span></td><td>A</td><td>B</td><td>B</td><td>C</td><td>A</td><td>B</td><td>B</td><td><strong>7</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:#e8faef"><td><strong>25</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11a_01</td><td>Redes de abastecimento p/ novos veículos/combustíveis</td><td><span class="tag e3">E3</span></td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td>B</td><td><strong>6</strong></td><td><span class="tag good">Prioritário</span></td></tr>
+            <tr style="background:var(--warn-soft)"><td><strong>26</strong></td><td class="cod" style="font-family:Consolas,monospace;font-weight:700;color:var(--navy)">D11b_02</td><td>Cargas em vias segregadas do TIC</td><td><span class="tag e1">E1</span></td><td>A</td><td>B</td><td>B</td><td>C</td><td>B</td><td>C</td><td>A</td><td><strong>5</strong></td><td><span class="tag warn">Reserva</span></td></tr>
+          </tbody>
+        </table>
+        <p class="sdesc" style="margin-top:-4px"><strong>D8*</strong> = dimensão usada como desempate (não soma no score).</p>
+
+        <h3>Resultado consolidado da triagem</h3>
+        <div class="four-col">
+          <div class="mini" style="border-left:4px solid var(--green-dk)">
+            <h3 style="color:var(--green-dk)">Carteira prioritária</h3>
+            <p style="font-size:24px;font-weight:700;color:var(--green-dk);line-height:1">25</p>
+            <p style="font-size:11px;color:var(--muted);margin-top:4px">Atende meta TDR 4.1 (≥ 25). Vão para D-12 → D-14 → D-15 → D-16 → D-17.</p>
+          </div>
+          <div class="mini" style="border-left:4px solid var(--warn)">
+            <h3 style="color:var(--warn)">Reserva técnica</h3>
+            <p style="font-size:24px;font-weight:700;color:var(--warn);line-height:1">1</p>
+            <p style="font-size:11px;color:var(--muted);margin-top:4px">Entra na carteira se algum prioritário falhar em B/C ou complexidade.</p>
+          </div>
+          <div class="mini" style="border-left:4px solid var(--purple)">
+            <h3 style="color:var(--purple)">Reroteados D-17/D-18</h3>
+            <p style="font-size:24px;font-weight:700;color:var(--purple);line-height:1">5</p>
+            <p style="font-size:11px;color:var(--muted);margin-top:4px">Não competem por vaga. Viram entregas de governança ou parecer JRI.</p>
+          </div>
+          <div class="mini" style="border-left:4px solid var(--navy)">
+            <h3>Total preservado</h3>
+            <p style="font-size:24px;font-weight:700;color:var(--navy);line-height:1">31</p>
+            <p style="font-size:11px;color:var(--muted);margin-top:4px">25 + 1 + 5 = 31. Nenhum tema descartado; todos têm destino formal.</p>
+          </div>
+        </div>
+
+        <h3>Distribuição da carteira prioritária por Eixo</h3>
+        <table class="compact">
+          <thead><tr><th>Eixo</th><th>Total D-11</th><th>Reroteados</th><th>Reserva</th><th>Carteira prioritária</th><th>% da carteira</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag e1">E1</span> Capacidade e Oferta</td><td>7</td><td>0</td><td>1</td><td><strong>6</strong></td><td>24%</td></tr>
+            <tr><td><span class="tag e2">E2</span> Demanda e Intermodalidade</td><td>11</td><td>0</td><td>0</td><td><strong>11</strong></td><td>44%</td></tr>
+            <tr><td><span class="tag e3">E3</span> Resiliência e Sustentabilidade</td><td>6</td><td>0</td><td>0</td><td><strong>6</strong></td><td>24%</td></tr>
+            <tr><td><span class="tag e4">E4</span> Território e Uso do Solo</td><td>4</td><td>2</td><td>0</td><td><strong>2</strong></td><td>8%</td></tr>
+            <tr><td><span class="tag e5">E5</span> Governança e Regulação</td><td>3</td><td>3</td><td>0</td><td><strong>0</strong></td><td>0%</td></tr>
+            <tr style="background:#f0f5fa;font-weight:700"><td>Total</td><td>31</td><td>5</td><td>1</td><td><strong>25</strong></td><td>100%</td></tr>
+          </tbody>
+        </table>
+        <p class="sdesc" style="margin-top:-4px"><strong>Leitura:</strong> a carteira prioritária se concentra nos eixos físicos da rede (E1+E2+E3 = 92%), o que é coerente — o E5 é por natureza institucional e migra integralmente para D-17/D-18; o E4 mistura física (D11c_10, D11c_13 ficam) com instrumentos territoriais (D11c_11, D11c_12 migram).</p>
+
+        <div class="warn-note"><strong>Limites desta triagem:</strong> (i) o score é baseado na classificação <em>preliminar</em> da matriz da seção 06 — qualquer alteração de classe muda o ranking; (ii) os pesos das 6 dimensões duras estão iguais (1:1:1:1:1:1) — quando a SEMIL definir pesos AHP definitivos no D-17, recalcular; (iii) o ponto de corte em 25 obedece à meta mínima do TDR 4.1, mas a SEMIL pode ampliar se houver capacidade de detalhamento.</div>
+
+        <div class="footer-note"><strong>Princípio do corte preservativo:</strong> nenhum dos 31 temas é descartado. Todos têm destino formal — carteira prioritária (25), reserva (1) ou produto institucional D-17/D-18 (5). Isso defende a integridade do D-11 perante a SEMIL e os fóruns regionais: cada tema levantado tem rastreabilidade até o produto onde será tratado.</div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════ 08 PRÓXIMOS PASSOS ════════════════════════ -->
+    <section id="proximos" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">08</span>
+        <span class="st">Próximos passos: ponte para a carteira de projetos</span>
+        <span class="sbadge s-andamento">Encadeamento PLI</span>
+      </div>
+      <div class="sb2">
+
+        <p class="sdesc">A sistematização entrega <strong>fichas-tema classificadas</strong>. A fase seguinte, fora do escopo deste documento, transforma cada ficha em uma ou mais entradas da carteira de projetos factíveis a ser hierarquizada pelo gestor (TDR Meta 4.1: ≥ 25 intervenções selecionadas).</p>
+
+        <h3>Roteiro de continuidade</h3>
+        <table>
+          <thead><tr><th style="width:32px">#</th><th>Atividade</th><th>Produto PLI</th><th>Insumos requeridos</th></tr></thead>
+          <tbody>
+            <tr><td><strong>01</strong></td><td>Preencher ficha-tema para os 31 temas, com evidências documentais para cada classe atribuída.</td><td>Insumo D-11 final</td><td>Bases oficiais da Meta 1.4; consultas setoriais; planos correlatos.</td></tr>
+            <tr><td><strong>02</strong></td><td>Triar temas pelo perfil das 10 dimensões e pelos vetos. Encaminhar cada tema ao produto destino.</td><td>D-11 → D-12 / D-17 / D-18</td><td>Fichas-tema; estrutura do modelo Visum; mapa do D-18.</td></tr>
+            <tr><td><strong>03</strong></td><td>Para cada tema modelável (D8=A ou B), construir hipóteses paramétricas de cenário no Visum.</td><td>D-12 (cenários)</td><td>Modelo do D-08; matrizes do D-04; capacidades do D-06.</td></tr>
+            <tr><td><strong>04</strong></td><td>Gerar a lista preliminar de intervenções/projetos a partir dos temas e dos pontos de atenção do D-13.</td><td>D-14 (intervenções)</td><td>Resultados D-12 e D-13; fichas-tema; restrições territoriais ZEE.</td></tr>
+            <tr><td><strong>05</strong></td><td>Estimar CAPEX/OPEX (D-15), benefício econômico (D-16) e hierarquizar via AHP (D-17).</td><td>D-15 → D-16 → D-17</td><td>Carteira; variáveis AHP do TDR Meta 4.4 já pré-anotadas na ficha-tema.</td></tr>
+            <tr><td><strong>06</strong></td><td>Examinar aspectos jurídicos, institucionais e regulatórios dos projetos selecionados.</td><td>D-18 (JRI)</td><td>Vetos V3 disparados; transversalidade institucional registrada na ficha-tema.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Princípios para a fase de geração da carteira</h3>
+        <div class="two-col">
+          <div class="mini">
+            <h3>Granularidade do projeto</h3>
+            <p>Um tema pode gerar 0, 1 ou N projetos — a depender da abrangência. Temas amplos (ex.: D11c_01 — novas rodovias) devem ser desdobrados por corredor/empreendimento; temas-instrumento (ex.: D11c_19 — fundos) viram um único item de programa.</p>
+          </div>
+          <div class="mini">
+            <h3>Rastreabilidade total</h3>
+            <p>Cada item da carteira mantém vínculo explícito com a ficha-tema de origem, com as evidências usadas e com a entrada do TDR (Atividade 4.1.1). Permite que o gestor entenda, em qualquer ponto da cadeia, por que aquele projeto está na lista.</p>
+          </div>
+          <div class="mini">
+            <h3>Coerência com o D-12</h3>
+            <p>Projetos derivados de temas modeláveis (D8=A) devem ter sua eficácia testada em pelo menos um cenário do D-12 antes de seguirem para CAPEX/OPEX. Isso garante que a hierarquização AHP (D-17) opere sobre projetos cuja contribuição à rede já foi quantificada.</p>
+          </div>
+          <div class="mini">
+            <h3>Janelas de implantação</h3>
+            <p>A coluna D10 (Horizonte) já distribui os projetos em três pacotes — operacional 2028, tático 2033–2038, estratégico 2043–2050 — alinhados aos cortes obrigatórios de cenário do TDR. Suporta a construção do plano de ação por horizonte.</p>
+          </div>
+        </div>
+
+        <h3>O que esta sistematização entrega ao gestor</h3>
+        <div class="gbox">
+          <h4>Resumo das entregas desta fase</h4>
+          <ul>
+            <li><strong>Inventário consolidado</strong> dos 31 temas com referência cruzada ao TDR.</li>
+            <li><strong>Clusterização funcional</strong> em 5 Eixos com critério único e exclusivo.</li>
+            <li><strong>10 dimensões de classificação</strong> com rubricas auditáveis e evidência mínima exigida.</li>
+            <li><strong>Metodologia em 6 passos</strong> com vetos de elegibilidade e estrutura de ficha-tema.</li>
+            <li><strong>Matriz preliminar 31 × 10</strong> aplicada, com leitura agregada por D8/D9/D10.</li>
+            <li><strong>Roteiro de continuidade</strong> ligando o D-11 ao D-12, D-13, D-14, D-17 e D-18.</li>
+          </ul>
+        </div>
+
+        <div class="footer-note"><strong>Mensagem-chave:</strong> a sistematização proposta evita que os 31 temas virem uma lista plana. Ela os organiza por papel funcional, classifica-os com rubricas defensáveis e os encaminha para o produto correto do PLI. O gestor receberá, ao final da próxima fase, uma carteira de projetos cuja cada linha pode ser explicada em três níveis — tema-origem, classes atribuídas e tradução para o D-12 — atendendo plenamente ao mandato de hierarquização da Meta 4.4 do TDR.</div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const navBtns = document.querySelectorAll('.ni');
+  const sections = document.querySelectorAll('.ss');
+  function activate(tab){
+    navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    sections.forEach(s => s.classList.toggle('active-tab', s.id === tab));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  navBtns.forEach(b => b.addEventListener('click', () => activate(b.dataset.tab)));
+})();
+</script>
+</body>
+</html>

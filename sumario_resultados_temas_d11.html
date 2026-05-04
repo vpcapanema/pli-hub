@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sumário dos Resultados · Temas D-11 filtrados (PLI-SP)</title>
+<style>
+:root{
+  --navy:#1c3d59; --deep:#003b5a; --blue:#116593;
+  --green:#3ec26e; --green-dk:#2a9450;
+  --bg:#eef1f5; --surface:#fff; --border:#d5dce6;
+  --text:#1a1a2e; --muted:#4f5d6e;
+  --warn:#c88000; --warn-soft:#fff8e0;
+  --danger:#cc3333; --danger-soft:#fff0f0;
+  --purple:#5b3da6; --purple-soft:#f0eaff;
+  --e1:#0a6e9c; --e1-soft:#e3f0f8;
+  --e2:#1a8a6b; --e2-soft:#e0f3ec;
+  --e3:#a05a1a; --e3-soft:#f7ecdc;
+  --e4:#7a3aa0; --e4-soft:#efe5f7;
+  --e5:#2c5570; --e5-soft:#e3eaf0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.65}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#dh{background:var(--deep);color:#fff;padding:0 26px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50;height:48px;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+#dh h2{font-size:12.5px;font-weight:600;flex:1;letter-spacing:.15px}
+#dh .meta{font-size:10.5px;color:rgba(255,255,255,.55)}
+#dh a.back{font-size:10.5px;color:var(--green);background:rgba(62,194,110,.12);padding:5px 10px;border-radius:3px;font-weight:600;margin-left:8px}
+
+main{max-width:1180px;margin:0 auto;padding:24px 28px 60px}
+
+.hero{background:linear-gradient(135deg,#f0f5ff,#e8eef8);border:2px solid var(--navy);border-radius:8px;padding:22px 26px;margin-bottom:22px}
+.hero h1{font-size:19px;color:var(--navy);font-weight:700;margin-bottom:6px}
+.hero .subtitle{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:10px}
+.hero p{font-size:12.5px;color:var(--text);line-height:1.7;text-align:justify}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--border);border-radius:6px;padding:14px 16px;border-top:4px solid var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.kpi.green{border-top-color:var(--green-dk)}
+.kpi.warn{border-top-color:var(--warn)}
+.kpi.purple{border-top-color:var(--purple)}
+.kpi.navy{border-top-color:var(--navy)}
+.kpi h4{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:6px;font-weight:700}
+.kpi .num{font-size:30px;font-weight:700;line-height:1;color:var(--navy)}
+.kpi.green .num{color:var(--green-dk)} .kpi.warn .num{color:var(--warn)} .kpi.purple .num{color:var(--purple)}
+.kpi p{font-size:10.5px;color:var(--muted);line-height:1.5;margin-top:6px}
+
+/* Seções */
+.ss{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:18px}
+.ss-hdr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8fafc}
+.sn{font-size:10px;font-weight:700;color:#fff;background:var(--blue);border-radius:3px;padding:3px 8px;flex-shrink:0}
+.st{font-size:13.5px;font-weight:600;color:var(--navy);flex:1;letter-spacing:.1px}
+.sb2{padding:18px 22px}
+.sb2 h3{font-size:12.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sb2 h3:first-child{margin-top:0}
+.sdesc{font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.7;text-align:justify}
+
+/* Tabelas */
+table{width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border-radius:5px;overflow:hidden;border:1px solid var(--border);margin:8px 0 16px}
+thead th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+tbody td{padding:7px 9px;border-bottom:1px solid #e6ecf2;vertical-align:top;line-height:1.55}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f8fafc}
+table.compact tbody td{padding:5px 8px;font-size:11px}
+td.cod{font-weight:700;color:var(--navy);font-family:'Consolas',monospace;white-space:nowrap}
+td.score{text-align:center;font-weight:700;font-size:13px;color:var(--navy)}
+td.pos{text-align:center;font-weight:700;color:var(--muted)}
+
+/* Tags eixo */
+.tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:3px;display:inline-block;white-space:nowrap}
+.tag.e1{background:var(--e1-soft);color:var(--e1);border:1px solid var(--e1)}
+.tag.e2{background:var(--e2-soft);color:var(--e2);border:1px solid var(--e2)}
+.tag.e3{background:var(--e3-soft);color:var(--e3);border:1px solid var(--e3)}
+.tag.e4{background:var(--e4-soft);color:var(--e4);border:1px solid var(--e4)}
+.tag.e5{background:var(--e5-soft);color:var(--e5);border:1px solid var(--e5)}
+.tag.good{background:rgba(42,148,80,.12);color:var(--green-dk);border:1px solid rgba(42,148,80,.25)}
+.tag.warn{background:var(--warn-soft);color:var(--warn);border:1px solid rgba(200,128,0,.3)}
+.tag.purple{background:var(--purple-soft);color:var(--purple);border:1px solid rgba(91,61,166,.3)}
+
+/* Linhas coloridas por status */
+tr.r-prio{background:#f5fdf8}
+tr.r-prio:hover{background:#e8faef}
+tr.r-res{background:#fffaef}
+tr.r-res:hover{background:var(--warn-soft)}
+tr.r-rer{background:#f8f4ff}
+tr.r-rer:hover{background:var(--purple-soft)}
+
+/* Barras de distribuição */
+.bars{margin:8px 0 16px}
+.bar-row{display:grid;grid-template-columns:200px 1fr 60px;gap:10px;align-items:center;margin-bottom:6px;font-size:11.5px}
+.bar-row .lbl{color:var(--text);font-weight:600}
+.bar-row .bar-bg{height:18px;background:#eef2f7;border-radius:3px;overflow:hidden;position:relative}
+.bar-row .bar-fg{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:#fff}
+.bar-row .bar-fg.e1{background:var(--e1)} .bar-row .bar-fg.e2{background:var(--e2)} .bar-row .bar-fg.e3{background:var(--e3)} .bar-row .bar-fg.e4{background:var(--e4)} .bar-row .bar-fg.e5{background:var(--e5)}
+.bar-row .val{font-weight:700;color:var(--navy);text-align:right;font-size:11.5px}
+
+/* Mini cards */
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.mini{background:#f8fafc;border:1px solid var(--border);border-radius:5px;padding:13px 15px}
+.mini h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--navy);margin-bottom:8px;font-weight:700}
+.mini ul{padding-left:18px;margin:0}
+.mini li{font-size:11.5px;line-height:1.7;color:var(--text);margin-bottom:3px}
+.mini p{font-size:11.5px;line-height:1.65;color:var(--text);margin:0}
+
+/* Notas */
+.footer-note{margin:14px 0;padding:12px 14px;background:#f0faf4;border-left:3px solid var(--green-dk);border-radius:0 5px 5px 0;color:#1a6e3a;font-size:11.5px;line-height:1.7}
+.warn-note{margin:14px 0;padding:12px 14px;background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:0 5px 5px 0;color:#7a4800;font-size:11.5px;line-height:1.7}
+
+/* Legenda */
+.legenda{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 12px;font-size:11px}
+.legenda .lg{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);padding:3px 8px;border-radius:3px}
+.legenda .sw{width:14px;height:14px;border-radius:2px;display:inline-block}
+
+@media (max-width:900px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .three-col,.two-col{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:140px 1fr 50px}
+}
+</style>
+</head>
+<body>
+
+<header id="dh">
+  <h2>Sumário dos Resultados · Temas D-11 filtrados</h2>
+  <span class="meta">PLI-SP · SEMIL · Concremat–Transplan</span>
+  <a class="back" href="resumo_metodologia_temas_d11.html">↗ Metodologia</a>
+  <a class="back" href="sistematizacao_temas_d11_pli.html">← Versão completa</a>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Sumário dos resultados — Triagem dos 31 Temas D-11</h1>
+    <div class="subtitle">Carteira prioritária, reserva técnica e reroteamentos para D-17/D-18</div>
+    <p>Resultado consolidado da aplicação dos 3 filtros descritos na <a href="resumo_metodologia_temas_d11.html">metodologia</a>. Os 31 temas foram preservados — nenhum descartado — e cada um recebeu destino formal: 25 entram na carteira prioritária para hierarquização (Meta TDR 4.1), 1 fica em reserva técnica, e 5 migram para entregas institucionais nos produtos D-17 (governança) e D-18 (JRI).</p>
+  </section>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi navy"><h4>Total de temas D-11</h4><div class="num">31</div><p>Inventário completo da aba <em>Temas PLI</em>.</p></div>
+    <div class="kpi green"><h4>Carteira prioritária</h4><div class="num">25</div><p>Atende meta TDR 4.1 (≥ 25). Vai para D-12 → D-14 → D-17.</p></div>
+    <div class="kpi warn"><h4>Reserva técnica</h4><div class="num">1</div><p>Aciona se algum prioritário falhar nas Metas 4.2–4.4.</p></div>
+    <div class="kpi purple"><h4>Reroteados D-17/D-18</h4><div class="num">5</div><p>Não competem por vaga. Viram entregas institucionais.</p></div>
+  </div>
+
+  <!-- 01 Distribuição por Eixo -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">01</span><span class="st">Distribuição da carteira prioritária por Eixo</span></div>
+    <div class="sb2">
+      <p class="sdesc">A carteira prioritária se concentra nos eixos físicos da rede (E1+E2+E3 = 92%), o que é coerente — o E5 é por natureza institucional e migra integralmente para D-17/D-18; o E4 mistura casos físicos (mantidos) com instrumentos territoriais (migrados).</p>
+      <div class="bars">
+        <div class="bar-row"><span class="lbl"><span class="tag e2">E2</span> Demanda e Intermodalidade</span><div class="bar-bg"><div class="bar-fg e2" style="width:100%">11 temas</div></div><span class="val">44%</span></div>
+        <div class="bar-row"><span class="lbl"><span class="tag e1">E1</span> Capacidade e Oferta</span><div class="bar-bg"><div class="bar-fg e1" style="width:54.5%">6 temas</div></div><span class="val">24%</span></div>
+        <div class="bar-row"><span class="lbl"><span class="tag e3">E3</span> Resiliência e Sustentabilidade</span><div class="bar-bg"><div class="bar-fg e3" style="width:54.5%">6 temas</div></div><span class="val">24%</span></div>
+        <div class="bar-row"><span class="lbl"><span class="tag e4">E4</span> Território e Uso do Solo</span><div class="bar-bg"><div class="bar-fg e4" style="width:18.2%">2 temas</div></div><span class="val">8%</span></div>
+        <div class="bar-row"><span class="lbl"><span class="tag e5">E5</span> Governança e Regulação</span><div class="bar-bg"><div class="bar-fg e5" style="width:0%">0</div></div><span class="val">0%</span></div>
+      </div>
+      <table class="compact">
+        <thead><tr><th>Eixo</th><th>Total D-11</th><th>Reroteados</th><th>Reserva</th><th>Prioritários</th><th>% carteira</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag e1">E1</span> Capacidade e Oferta</td><td>7</td><td>0</td><td>1</td><td><strong>6</strong></td><td>24%</td></tr>
+          <tr><td><span class="tag e2">E2</span> Demanda e Intermodalidade</td><td>11</td><td>0</td><td>0</td><td><strong>11</strong></td><td>44%</td></tr>
+          <tr><td><span class="tag e3">E3</span> Resiliência e Sustentabilidade</td><td>6</td><td>0</td><td>0</td><td><strong>6</strong></td><td>24%</td></tr>
+          <tr><td><span class="tag e4">E4</span> Território e Uso do Solo</td><td>4</td><td>2</td><td>0</td><td><strong>2</strong></td><td>8%</td></tr>
+          <tr><td><span class="tag e5">E5</span> Governança e Regulação</td><td>3</td><td>3</td><td>0</td><td><strong>0</strong></td><td>0%</td></tr>
+          <tr style="background:#f0f5fa;font-weight:700"><td>Total</td><td>31</td><td>5</td><td>1</td><td><strong>25</strong></td><td>100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 02 Carteira Prioritária -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">02</span><span class="st">Carteira prioritária — 25 temas selecionados</span></div>
+    <div class="sb2">
+      <p class="sdesc">Ranking pelo score AHP (D1+D2+D4+D5+D7+D10, A=2/B=1/C=0, máx 12). Temas vão para o pipeline D-12 (cenários) → D-14 (intervenções) → D-15 (CAPEX/OPEX) → D-16 (B/C) → D-17 (hierarquização AHP final).</p>
+      <table class="compact">
+        <thead><tr><th style="width:36px">Pos</th><th style="width:90px">Código</th><th>Tema</th><th style="width:60px">Eixo</th><th style="width:48px">Score</th><th style="width:90px">Status</th></tr></thead>
+        <tbody>
+          <tr class="r-prio"><td class="pos">1</td><td class="cod">D11c_05</td><td>Corredores de cargas especiais</td><td><span class="tag e2">E2</span></td><td class="score">11</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">2</td><td class="cod">D11c_03</td><td>Acidentes com vulneráveis em trechos urbanos</td><td><span class="tag e3">E3</span></td><td class="score">11</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">3</td><td class="cod">D11c_01</td><td>Novas rodovias, contornos, ampliações</td><td><span class="tag e1">E1</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">4</td><td class="cod">D11b_05</td><td>Linhas de ônibus inter-regionais com decréscimo</td><td><span class="tag e2">E2</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">5</td><td class="cod">D11c_02</td><td>Modernização de alças, dispositivos, viadutos</td><td><span class="tag e1">E1</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">6</td><td class="cod">D11c_04</td><td>Acidentes com cargas perigosas</td><td><span class="tag e3">E3</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">7</td><td class="cod">D11c_06</td><td>Hierarquização solicitações empresas/municípios</td><td><span class="tag e1">E1</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">8</td><td class="cod">D11c_07</td><td>Pavimentação/recuperação rodovias rurais</td><td><span class="tag e1">E1</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">9</td><td class="cod">D11c_08</td><td>Plano Cicloviário, cicloturísticas e religiosas</td><td><span class="tag e2">E2</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">10</td><td class="cod">D11c_14</td><td>Furtos, roubos e vandalismo em cargas</td><td><span class="tag e3">E3</span></td><td class="score">10</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">11</td><td class="cod">D11b_10</td><td>Plataformas digitais — otimização de cargas</td><td><span class="tag e2">E2</span></td><td class="score">9</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">12</td><td class="cod">D11b_03</td><td>Áreas de desenvolvimento ao longo do TIC</td><td><span class="tag e2">E2</span></td><td class="score">9</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">13</td><td class="cod">D11c_13</td><td>Polos associados a novas ofertas logísticas</td><td><span class="tag e4">E4</span></td><td class="score">9</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">14</td><td class="cod">D11c_15</td><td>Conectividade nos sistemas de transporte</td><td><span class="tag e2">E2</span></td><td class="score">9</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">15</td><td class="cod">D11c_18</td><td>Adaptação e resiliência climática</td><td><span class="tag e3">E3</span></td><td class="score">9</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">16</td><td class="cod">D11b_01</td><td>Conexões com transporte marítimo</td><td><span class="tag e1">E1</span></td><td class="score">8</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">17</td><td class="cod">D11b_06</td><td>Sistemas intermodais para passageiros (PEF)</td><td><span class="tag e2">E2</span></td><td class="score">8</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">18</td><td class="cod">D11b_07</td><td>Sistemas intermodais para cadeias produtivas (PEF)</td><td><span class="tag e2">E2</span></td><td class="score">8</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">19</td><td class="cod">D11a_02</td><td>Fomento da cadeia de Gás Natural e Biometano</td><td><span class="tag e3">E3</span></td><td class="score">8</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">20</td><td class="cod">D11b_04</td><td>Áreas de desenvolvimento ao longo dos VLT</td><td><span class="tag e2">E2</span></td><td class="score">8</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">21</td><td class="cod">D11b_08</td><td>Capacidade da hidrovia Tietê-Paraná (PEH)</td><td><span class="tag e1">E1</span></td><td class="score">7</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">22</td><td class="cod">D11b_09</td><td>Aquaviário de passageiros — portos/regulamentos</td><td><span class="tag e2">E2</span></td><td class="score">7</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">23</td><td class="cod">D11c_09</td><td>Desenvolvimento do setor aéreo</td><td><span class="tag e2">E2</span></td><td class="score">7</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">24</td><td class="cod">D11c_10</td><td>Retroáreas e bases offshore (Pré-Sal)</td><td><span class="tag e4">E4</span></td><td class="score">7</td><td><span class="tag good">Prioritário</span></td></tr>
+          <tr class="r-prio"><td class="pos">25</td><td class="cod">D11a_01</td><td>Redes de abastecimento para novos veículos/combustíveis</td><td><span class="tag e3">E3</span></td><td class="score">6</td><td><span class="tag good">Prioritário</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 Reserva -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">03</span><span class="st">Reserva técnica — 1 tema</span></div>
+    <div class="sb2">
+      <p class="sdesc">Tema imediatamente abaixo do corte. Entra na carteira prioritária se algum dos 25 falhar em CAPEX/OPEX (D-15), B/C (D-16) ou apresentar inviabilidade na hierarquização AHP (D-17).</p>
+      <table class="compact">
+        <thead><tr><th style="width:36px">Pos</th><th style="width:90px">Código</th><th>Tema</th><th style="width:60px">Eixo</th><th style="width:48px">Score</th><th style="width:90px">Status</th></tr></thead>
+        <tbody>
+          <tr class="r-res"><td class="pos">26</td><td class="cod">D11b_02</td><td>Cargas em vias segregadas do TIC</td><td><span class="tag e1">E1</span></td><td class="score">5</td><td><span class="tag warn">Reserva</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 04 Reroteados -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">04</span><span class="st">Reroteados D-17 / D-18 — 5 temas</span></div>
+    <div class="sb2">
+      <p class="sdesc">Temas com <strong>D8=C (não modeláveis)</strong> e <strong>D5=A (institucional forte)</strong>. Não viram projeto de obra, mas continuam sendo entregas formais do PLI: alimentam o D-17 (governança) ou o D-18 (aspectos jurídicos, institucionais e regulatórios).</p>
+      <table class="compact">
+        <thead><tr><th style="width:90px">Código</th><th>Tema</th><th style="width:60px">Eixo</th><th style="width:120px">Encaminhamento</th><th>Razão do reroteamento</th></tr></thead>
+        <tbody>
+          <tr class="r-rer"><td class="cod">D11c_11</td><td>Alterações ZEE e fluxos de licenciamento (AAE)</td><td><span class="tag e4">E4</span></td><td><span class="tag purple">D-18 JRI</span></td><td>Instrumento regulatório-territorial puro.</td></tr>
+          <tr class="r-rer"><td class="cod">D11c_12</td><td>Articulação com municípios (Planos Diretores, OUC)</td><td><span class="tag e4">E4</span></td><td><span class="tag purple">D-17 Governança</span></td><td>Mecanismo de coordenação federativa, não obra.</td></tr>
+          <tr class="r-rer"><td class="cod">D11c_16</td><td>Novas tecnologias em licitações do ESP</td><td><span class="tag e5">E5</span></td><td><span class="tag purple">D-18 JRI</span></td><td>Instrumento de contratação pública.</td></tr>
+          <tr class="r-rer"><td class="cod">D11c_17</td><td>Rearranjo institucional ou expansão da SLT</td><td><span class="tag e5">E5</span></td><td><span class="tag purple">D-17 Governança</span></td><td>Reforma institucional pura, sem dimensão física.</td></tr>
+          <tr class="r-rer"><td class="cod">D11c_19</td><td>Incentivos fiscais e fundos do setor</td><td><span class="tag e5">E5</span></td><td><span class="tag purple">D-18 JRI</span></td><td>Instrumento fiscal-financeiro.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 Leituras agregadas -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">05</span><span class="st">Leituras agregadas da carteira prioritária</span></div>
+    <div class="sb2">
+      <div class="three-col">
+        <div class="mini">
+          <h4>Por modelabilidade (D8)</h4>
+          <ul>
+            <li><strong>A — diretamente Visum:</strong> 12 temas</li>
+            <li><strong>B — indiretamente:</strong> 12 temas</li>
+            <li><strong>C — não modelável:</strong> 1 tema (D11c_18)</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4>Por horizonte temporal (D10)</h4>
+          <ul>
+            <li><strong>A — operacional 2028:</strong> 10 temas</li>
+            <li><strong>B — tático 2033–2038:</strong> 12 temas</li>
+            <li><strong>C — estratégico 2043–2050:</strong> 3 temas</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4>Por maturidade da informação (D9)</h4>
+          <ul>
+            <li><strong>A — dado consolidado:</strong> 8 temas</li>
+            <li><strong>B — dado parcial:</strong> 16 temas</li>
+            <li><strong>C — dado lacunar:</strong> 1 tema (D11c_18)</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Pacotes naturais para o plano de ação</h3>
+      <div class="two-col">
+        <div class="mini">
+          <h4>Pacote operacional 2028 (10 temas)</h4>
+          <p>Temas com D10=A. Tipicamente intervenções de baixa complexidade, políticas regulatórias, melhorias incrementais. Permitem demonstrar resultados rápidos do PLI no primeiro ciclo.</p>
+        </div>
+        <div class="mini">
+          <h4>Pacote tático 2033–2038 (12 temas)</h4>
+          <p>Núcleo da carteira. Obras médias, integrações modais, políticas com período de difusão. É onde o B/C (D-16) e o AHP (D-17) farão o trabalho mais relevante de hierarquização.</p>
+        </div>
+        <div class="mini">
+          <h4>Pacote estratégico 2043–2050 (3 temas)</h4>
+          <p>Inclui resiliência climática (D11c_18), grandes obras hidroviárias (D11b_08) e novas rodovias estruturantes (D11c_01). Demandam estudos longos e decisão política antecipada.</p>
+        </div>
+        <div class="mini">
+          <h4>Frente paralela: governança e JRI</h4>
+          <p>Os 5 temas reroteados rodam em paralelo à carteira física, alimentando D-17 e D-18. Sem essa frente, instrumentos como ZEE, fundos setoriais e rearranjo da SLT não saem do papel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Pontos de atenção -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">06</span><span class="st">Pontos de atenção sinalizados pelo resultado</span></div>
+    <div class="sb2">
+      <ul style="padding-left:20px;font-size:12px;line-height:1.75">
+        <li><strong>Concentração em E2 (44%):</strong> a carteira é fortemente puxada por demanda e intermodalidade — coerente com o objetivo do PLI de equilibrar a matriz, mas exige atenção para que projetos de capacidade física (E1) não fiquem subdimensionados.</li>
+        <li><strong>D11c_18 (resiliência climática) na posição 15 com D9=C:</strong> tema crítico do PAC 2050 mas com base de dados ainda lacunar. Demanda pesquisa primária paralela para sustentar a análise no D-12.</li>
+        <li><strong>3 temas de E1 estratégicos 2043–2050:</strong> grandes obras (D11b_08, D11c_01, D11b_02 reserva) precisam de antecipação no cronograma de estudos para caber nos cortes de cenário.</li>
+        <li><strong>Ausência de E5 na carteira física:</strong> não é falha — é design. E5 é integralmente institucional e não deveria competir por vaga na carteira de obras. Sua entrega ocorre via D-17/D-18.</li>
+        <li><strong>Score igual em vários temas (10 e 8):</strong> faixa de empate larga. Quando a SEMIL fixar pesos AHP no D-17, o ranking será refinado e pode haver reordenação dentro destes blocos.</li>
+      </ul>
+      <div class="warn-note"><strong>Status:</strong> classificação preliminar baseada no enunciado dos temas. Cada célula da matriz original (e portanto cada score) deve ser ratificada na fase de elaboração das fichas-tema, com evidência mínima documental.</div>
+      <div class="footer-note"><strong>Conclusão:</strong> a triagem entrega ao gestor uma carteira priorizada e defensável. Cada item da carteira tem rastreabilidade até o tema-origem, ao Eixo, ao perfil dimensional e ao score AHP. Os 6 itens fora da carteira (1 reserva + 5 reroteados) também estão acomodados em destinos formais. Nenhum tema do D-11 fica sem encaminhamento institucional.</div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

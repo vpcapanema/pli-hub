@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resumo da Metodologia · Sistematização dos Temas D-11 do PLI-SP</title>
+<style>
+:root{
+  --navy:#1c3d59; --deep:#003b5a; --blue:#116593;
+  --green:#3ec26e; --green-dk:#2a9450;
+  --bg:#eef1f5; --surface:#fff; --border:#d5dce6;
+  --text:#1a1a2e; --muted:#4f5d6e;
+  --warn:#c88000; --warn-soft:#fff8e0;
+  --danger:#cc3333; --danger-soft:#fff0f0;
+  --purple:#5b3da6; --purple-soft:#f0eaff;
+  --e1:#0a6e9c; --e1-soft:#e3f0f8;
+  --e2:#1a8a6b; --e2-soft:#e0f3ec;
+  --e3:#a05a1a; --e3-soft:#f7ecdc;
+  --e4:#7a3aa0; --e4-soft:#efe5f7;
+  --e5:#2c5570; --e5-soft:#e3eaf0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.65}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#dh{background:var(--deep);color:#fff;padding:0 26px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50;height:48px;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+#dh h2{font-size:12.5px;font-weight:600;flex:1;letter-spacing:.15px}
+#dh .meta{font-size:10.5px;color:rgba(255,255,255,.55)}
+#dh a.back{font-size:10.5px;color:var(--green);background:rgba(62,194,110,.12);padding:5px 10px;border-radius:3px;font-weight:600}
+
+main{max-width:1100px;margin:0 auto;padding:24px 28px 60px}
+
+.hero{background:linear-gradient(135deg,#f0f5ff,#e8eef8);border:2px solid var(--navy);border-radius:8px;padding:22px 26px;margin-bottom:22px}
+.hero h1{font-size:19px;color:var(--navy);font-weight:700;margin-bottom:6px}
+.hero .subtitle{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:10px}
+.hero p{font-size:12.5px;color:var(--text);line-height:1.7;text-align:justify}
+.hero .chips{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:10.5px;background:#fff;border:1px solid var(--navy);color:var(--navy);border-radius:12px;padding:3px 10px;font-weight:600}
+
+.ss{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-bottom:18px}
+.ss-hdr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8fafc}
+.sn{font-size:10px;font-weight:700;color:#fff;background:var(--blue);border-radius:3px;padding:3px 8px;flex-shrink:0}
+.st{font-size:13.5px;font-weight:600;color:var(--navy);flex:1;letter-spacing:.1px}
+.sb2{padding:18px 22px;text-align:justify}
+.sb2 h3{font-size:12.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sb2 h3:first-child{margin-top:0}
+.sb2 p{font-size:12.5px;line-height:1.7;margin-bottom:10px;color:var(--text)}
+
+.quote{padding:14px 18px;background:#f0f5fa;border-left:4px solid var(--blue);border-radius:0 5px 5px 0;color:var(--text);line-height:1.7;margin:12px 0;font-size:12.5px}
+.footer-note{margin:14px 0;padding:12px 14px;background:#f0faf4;border-left:3px solid var(--green-dk);border-radius:0 5px 5px 0;color:#1a6e3a;font-size:11.5px;line-height:1.7}
+.warn-note{margin:14px 0;padding:12px 14px;background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:0 5px 5px 0;color:#7a4800;font-size:11.5px;line-height:1.7}
+
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}
+.step{background:#fff;border:1px solid var(--border);border-radius:5px;padding:11px 12px;border-top:3px solid var(--blue)}
+.step .sn-num{font-size:18px;font-weight:700;color:var(--blue);line-height:1;margin-bottom:4px}
+.step h5{font-size:11px;color:var(--navy);font-weight:700;line-height:1.35;margin-bottom:5px}
+.step p{font-size:10.5px;color:var(--muted);line-height:1.5;margin:0}
+
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.mini{background:#f8fafc;border:1px solid var(--border);border-radius:5px;padding:13px 15px}
+.mini h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--navy);margin-bottom:8px;font-weight:700}
+.mini p{font-size:11.5px;line-height:1.65;margin:0;color:var(--text)}
+.mini ul{padding-left:18px;margin:0}
+.mini li{font-size:11.5px;line-height:1.65;color:var(--text);margin-bottom:3px}
+
+table{width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border-radius:5px;overflow:hidden;border:1px solid var(--border);margin:10px 0 16px}
+thead th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+tbody td{padding:7px 9px;border-bottom:1px solid #e6ecf2;vertical-align:top;line-height:1.55}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f8fafc}
+
+.eixo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0 14px}
+.eixo-mini{border-radius:5px;padding:10px 12px;border:1px solid var(--border);background:#fff;border-top:4px solid var(--blue)}
+.eixo-mini .ec-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#fff;padding:2px 7px;border-radius:3px;display:inline-block;margin-bottom:6px}
+.eixo-mini h5{font-size:11.5px;color:var(--navy);font-weight:700;line-height:1.3;margin-bottom:4px}
+.eixo-mini p{font-size:10.5px;color:var(--muted);line-height:1.5;margin:0}
+.eixo-mini.e1{border-top-color:var(--e1)} .eixo-mini.e1 .ec-tag{background:var(--e1)}
+.eixo-mini.e2{border-top-color:var(--e2)} .eixo-mini.e2 .ec-tag{background:var(--e2)}
+.eixo-mini.e3{border-top-color:var(--e3)} .eixo-mini.e3 .ec-tag{background:var(--e3)}
+.eixo-mini.e4{border-top-color:var(--e4)} .eixo-mini.e4 .ec-tag{background:var(--e4)}
+.eixo-mini.e5{border-top-color:var(--e5)} .eixo-mini.e5 .ec-tag{background:var(--e5)}
+
+.dim-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+.dim-item{background:#fff;border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:4px;padding:9px 11px}
+.dim-item.instr{border-left-color:var(--purple)}
+.dim-item .dh{display:flex;gap:8px;align-items:baseline;margin-bottom:3px}
+.dim-item .dnum{font-size:13px;font-weight:700;color:var(--navy)}
+.dim-item .dname{font-size:11.5px;font-weight:700;color:var(--navy)}
+.dim-item p{font-size:10.5px;color:var(--muted);line-height:1.5;margin:0}
+
+.tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:3px;display:inline-block}
+.tag.good{background:rgba(42,148,80,.12);color:var(--green-dk);border:1px solid rgba(42,148,80,.25)}
+.tag.warn{background:var(--warn-soft);color:var(--warn);border:1px solid rgba(200,128,0,.3)}
+.tag.danger{background:var(--danger-soft);color:var(--danger);border:1px solid rgba(204,51,51,.3)}
+.tag.purple{background:var(--purple-soft);color:var(--purple);border:1px solid rgba(91,61,166,.3)}
+
+@media (max-width:900px){
+  .three-col,.dim-list,.two-col{grid-template-columns:1fr}
+  .eixo-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header id="dh">
+  <h2>Resumo da Metodologia · Sistematização dos Temas D-11</h2>
+  <span class="meta">PLI-SP · SEMIL · Concremat–Transplan</span>
+  <a class="back" href="sistematizacao_temas_d11_pli.html">← Versão completa</a>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Resumo da Metodologia</h1>
+    <div class="subtitle">Como os 31 Temas do D-11 são sistematizados, classificados e triados</div>
+    <p>Esta página condensa, em uma única leitura, a lógica metodológica adotada para sistematizar os 31 Temas de Atuação do D-11 do PLI-SP. A versão completa, com fundamentação detalhada, fichas-tema e matriz aplicada, encontra-se na <a href="sistematizacao_temas_d11_pli.html">página de sistematização integral</a>.</p>
+    <div class="chips">
+      <span class="chip">5 Eixos funcionais</span>
+      <span class="chip">10 Dimensões classificatórias</span>
+      <span class="chip">6 Passos de atribuição</span>
+      <span class="chip">3 Filtros de triagem</span>
+      <span class="chip">Saída: 25 prioritários + 1 reserva + 5 reroteados</span>
+    </div>
+  </section>
+
+  <!-- 01 Mandato -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">01</span><span class="st">Ponto de partida — o mandato do D-11</span></div>
+    <div class="sb2">
+      <p>O D-11 não hierarquiza projetos: ele <strong>tria fatores</strong> que ainda virarão projetos. O TDR (Meta 3.3) determina que os pontos vindos de contatos setoriais sejam analisados criticamente para identificar quais devem ser incorporados aos cenários simulados no D-12. A Meta 4.1 exige pelo menos 25 intervenções selecionadas para aprofundamento nas Metas 4.2 (CAPEX/OPEX), 4.3 (B/C) e 4.4 (hierarquização AHP).</p>
+      <div class="quote"><strong>Pergunta-mãe:</strong> dos 31 temas levantados, quais geram hipóteses simuláveis de cenário, quais viram projetos hierarquizáveis e quais migram para entregas institucionais (D-17/D-18)?</div>
+    </div>
+  </section>
+
+  <!-- 02 Cinco Eixos -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">02</span><span class="st">Clusterização — 5 Eixos funcionais</span></div>
+    <div class="sb2">
+      <p>Critério único e exclusivo: o <strong>papel funcional</strong> do tema na cadeia D-11 → D-12 → D-13 → D-14/D-17/D-18. Não é cluster modal. Cada tema entra em <em>um único</em> eixo (efeito dominante); efeitos secundários ficam registrados como transversalidade na ficha-tema, sem duplicar pertencimento.</p>
+      <div class="eixo-grid">
+        <div class="eixo-mini e1"><span class="ec-tag">E1</span><h5>Capacidade e Oferta de Rede</h5><p>Como muda a oferta física dos modais nos cenários futuros?</p></div>
+        <div class="eixo-mini e2"><span class="ec-tag">E2</span><h5>Demanda, Acessibilidade e Intermodalidade</h5><p>Como muda o padrão de viagens e a divisão modal?</p></div>
+        <div class="eixo-mini e3"><span class="ec-tag">E3</span><h5>Resiliência, Segurança e Sustentabilidade</h5><p>Quais riscos e externalidades parametrizar?</p></div>
+        <div class="eixo-mini e4"><span class="ec-tag">E4</span><h5>Desenvolvimento Territorial e Uso do Solo</h5><p>Como a rede altera localização e desenvolvimento regional?</p></div>
+        <div class="eixo-mini e5"><span class="ec-tag">E5</span><h5>Governança, Regulação e Inovação Institucional</h5><p>Quais arranjos viabilizam ou bloqueiam os cenários?</p></div>
+      </div>
+      <p><strong>Distribuição dos 31 temas:</strong> E1 = 7 · E2 = 11 · E3 = 6 · E4 = 4 · E5 = 3. Soma exata, sem sobreposição.</p>
+    </div>
+  </section>
+
+  <!-- 03 Dez Dimensões -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">03</span><span class="st">10 Dimensões de classificação (rubrica A · B · C)</span></div>
+    <div class="sb2">
+      <p>Cada tema recebe três classes em cada dimensão: <strong>A</strong> (alta/forte), <strong>B</strong> (média/moderada), <strong>C</strong> (baixa/incipiente). A classe atribuída precisa ter evidência mínima documentada na ficha-tema. As 7 primeiras vêm do modelo conceitual de hierarquização do PLI; as 3 últimas são instrumentais — necessárias para o D-11 alimentar corretamente os produtos seguintes.</p>
+      <h3>Núcleo conceitual (7 dimensões)</h3>
+      <div class="dim-list">
+        <div class="dim-item"><div class="dh"><span class="dnum">01</span><span class="dname">Econômica</span></div><p>Impacto sobre custo logístico generalizado e produtividade da rede. Pré-qualifica o B/C esperado (TDR Meta 4.3).</p></div>
+        <div class="dim-item"><div class="dh"><span class="dnum">02</span><span class="dname">Social</span></div><p>Contribuição à redução de desigualdades regionais e à acessibilidade — variável explícita do AHP (TDR Meta 4.4).</p></div>
+        <div class="dim-item"><div class="dh"><span class="dnum">03</span><span class="dname">Ambiental</span></div><p>Efeito sobre emissões GEE, uso energético e áreas sensíveis. Filtro de coerência com PAC 2050 e PEE 2050.</p></div>
+        <div class="dim-item"><div class="dh"><span class="dnum">04</span><span class="dname">Segurança</span></div><p>Sinistralidade viária, segurança operacional e patrimonial. Atributo cruzado entre modais.</p></div>
+        <div class="dim-item"><div class="dh"><span class="dnum">05</span><span class="dname">Institucional</span></div><p>Complexidade do arranjo de atores, marco regulatório e coordenação federativa (TDR Meta 4.4).</p></div>
+        <div class="dim-item"><div class="dh"><span class="dnum">06</span><span class="dname">Territorial</span></div><p>Aderência ao ZEE-SP (9 zonas) e potencial indutor de desenvolvimento regional.</p></div>
+        <div class="dim-item"><div class="dh"><span class="dnum">07</span><span class="dname">Técnica</span></div><p>Maturidade tecnológica, disponibilidade de soluções de mercado e complexidade de implantação.</p></div>
+      </div>
+      <h3>Instrumentais para o encadeamento PLI (3 dimensões)</h3>
+      <div class="dim-list">
+        <div class="dim-item instr"><div class="dh"><span class="dnum">08</span><span class="dname">Modelabilidade</span></div><p>Capacidade do tema de virar variável de cenário no Visum-PTV (rede / matriz / parâmetro / política). Porta de entrada do D-12.</p></div>
+        <div class="dim-item instr"><div class="dh"><span class="dnum">09</span><span class="dname">Maturidade da informação</span></div><p>Disponibilidade de bases oficiais e séries históricas. Detecta lacunas críticas que travariam D-12 e D-14.</p></div>
+        <div class="dim-item instr"><div class="dh"><span class="dnum">10</span><span class="dname">Horizonte temporal</span></div><p>Janela em que o efeito se materializa: operacional 2028 / tático 2033–2038 / estratégico 2043–2050.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Seis Passos -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">04</span><span class="st">Metodologia de atribuição em 6 passos</span></div>
+    <div class="sb2">
+      <p>Processo replicável e auditável. Cada passo gera evidência registrada na ficha-tema, permitindo que terceiros reproduzam a classificação.</p>
+      <div class="steps">
+        <div class="step"><div class="sn-num">01</div><h5>Pré-leitura</h5><p>Recortar escopo, identificar verbo-chave e objeto.</p></div>
+        <div class="step"><div class="sn-num">02</div><h5>Mapear ao Eixo</h5><p>Aplicar a pergunta dos 5 Eixos. O primário define o pertencimento.</p></div>
+        <div class="step"><div class="sn-num">03</div><h5>Pontuar 10 dimensões</h5><p>Atribuir A/B/C com a rubrica e a evidência usada.</p></div>
+        <div class="step"><div class="sn-num">04</div><h5>Verificar elegibilidade</h5><p>Aplicar 4 vetos. Se algum disparar, sai do pipeline.</p></div>
+        <div class="step"><div class="sn-num">05</div><h5>Consolidar ficha-tema</h5><p>Eixo + perfil + vetos + evidências + transversalidade + destino.</p></div>
+        <div class="step"><div class="sn-num">06</div><h5>Encaminhar</h5><p>Despachar para D-12 / D-13 / D-14 / D-17 / D-18.</p></div>
+      </div>
+      <h3>Os 4 vetos de elegibilidade</h3>
+      <table>
+        <thead><tr><th style="width:32px">#</th><th>Veto</th><th>Critério</th><th>Encaminhamento</th></tr></thead>
+        <tbody>
+          <tr><td><strong>V1</strong></td><td>Fora do escopo PLI</td><td>Objeto não pertence ao sistema de logística e transporte do estado.</td><td>Excluir.</td></tr>
+          <tr><td><strong>V2</strong></td><td>Fora do horizonte 2025–2050</td><td>Efeito apenas pós-2050 ou já consumado antes de 2028.</td><td>Excluir do pipeline cenarístico.</td></tr>
+          <tr><td><strong>V3</strong></td><td>Fora do alcance institucional do estado</td><td>Competência majoritariamente federal/municipal sem articulação estadual.</td><td>D-17 ou D-18; sai da carteira.</td></tr>
+          <tr><td><strong>V4</strong></td><td>Não modelável e sem efeito de governança</td><td>C em Modelabilidade <em>e</em> C em Institucional simultaneamente.</td><td>Reformular ou descartar.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 Triagem -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">05</span><span class="st">Triagem em 3 filtros — dos 31 temas aos 25 prioritários</span></div>
+    <div class="sb2">
+      <p>Após a classificação, os 31 temas passam por três filtros sequenciais para gerar a carteira priorizada exigida pela Meta 4.1 do TDR (≥ 25 intervenções).</p>
+      <div class="three-col">
+        <div class="mini">
+          <h4>Filtro 1 · Vetos absolutos</h4>
+          <p>Aplica os 4 vetos do Passo 04. Tema vetado sai do pipeline cenarístico. Nenhum veto disparou na versão preliminar.</p>
+        </div>
+        <div class="mini">
+          <h4>Filtro 2 · Roteamento por destino</h4>
+          <p>Temas com <strong>D8=C + D5=A</strong> (não modeláveis e institucionalmente fortes) migram para D-17/D-18 e <em>não competem</em> por vaga. Resultado: 5 reroteados.</p>
+        </div>
+        <div class="mini">
+          <h4>Filtro 3 · Ranking por score</h4>
+          <p>Score = soma das 6 dimensões duras do AHP do TDR (D1+D2+D4+D5+D7+D10), A=2, B=1, C=0. Máximo = 12. Desempate: D8 Modelabilidade.</p>
+        </div>
+      </div>
+      <div class="footer-note"><strong>Princípio do corte preservativo:</strong> nenhum dos 31 temas é descartado. Todos têm destino formal — carteira prioritária (25), reserva técnica (1) ou produto institucional D-17/D-18 (5). Cada tema mantém rastreabilidade até o produto onde será tratado.</div>
+    </div>
+  </section>
+
+  <!-- 06 Por que essa metodologia -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">06</span><span class="st">Por que esta metodologia e não outra</span></div>
+    <div class="sb2">
+      <div class="two-col">
+        <div class="mini">
+          <h4>Diferença frente a um cluster setorial-modal</h4>
+          <p>Agrupar por modal (rodoviário/ferroviário/aéreo etc.) reproduz a divisão administrativa, mas não responde às perguntas do D-12. O cluster funcional faz cada eixo corresponder a uma pergunta de cenário, ligando o D-11 diretamente à modelagem subsequente.</p>
+        </div>
+        <div class="mini">
+          <h4>Diferença frente a critérios subjetivos</h4>
+          <p>Avaliar temas em "alta/média/baixa prioridade" sem rubrica deixa a classificação à mercê do avaliador. As 10 dimensões com rubrica documental e evidência mínima exigida tornam a classificação <em>auditável</em> e replicável.</p>
+        </div>
+        <div class="mini">
+          <h4>Por que 10 dimensões e não 7</h4>
+          <p>As 7 dimensões herdadas servem para hierarquizar projetos prontos. Mas o D-11 tria fatores que ainda virarão projetos. Por isso 3 dimensões instrumentais são necessárias: Modelabilidade (porta do D-12), Maturidade da informação (lacunas críticas) e Horizonte temporal (chave dos cenários 2028/2033/2038/2043/2050).</p>
+        </div>
+        <div class="mini">
+          <h4>Por que três filtros e não um índice composto</h4>
+          <p>Vetos absolutos não compensam: um tema fora de escopo não é "salvo" por outras notas altas. O roteamento por destino reconhece que carteira de obras e governança são instrumentos diferentes. Só na última etapa o ranking ordena <em>itens comparáveis</em>.</p>
+        </div>
+      </div>
+      <div class="warn-note"><strong>Limites declarados:</strong> (i) classificação preliminar baseada no enunciado dos temas — toda célula deve ser ratificada com evidência na ficha-tema; (ii) pesos das 6 dimensões duras estão iguais — quando a SEMIL fixar pesos AHP no D-17, o ranking deve ser recalculado; (iii) corte em 25 atende ao mínimo do TDR 4.1, mas pode ser ampliado conforme capacidade de detalhamento.</div>
+    </div>
+  </section>
+
+  <!-- 07 Encadeamento -->
+  <section class="ss">
+    <div class="ss-hdr"><span class="sn">07</span><span class="st">Como o D-11 alimenta os produtos seguintes</span></div>
+    <div class="sb2">
+      <table>
+        <thead><tr><th>Saída do D-11</th><th>Destino</th><th>Conteúdo</th></tr></thead>
+        <tbody>
+          <tr><td>Temas modeláveis (D8=A ou B)</td><td><strong>D-12</strong> Cenários</td><td>Hipóteses paramétricas de rede, matriz, custos generalizados, fatores de emissão.</td></tr>
+          <tr><td>Temas territoriais e de risco</td><td><strong>D-13</strong> Pontos de atenção</td><td>Áreas críticas, gargalos, conflitos modais, vulnerabilidades climáticas.</td></tr>
+          <tr><td>25 temas prioritários</td><td><strong>D-14</strong> Carteira</td><td>Intervenções e projetos selecionados para aprofundamento (CAPEX/OPEX, B/C, AHP).</td></tr>
+          <tr><td>Temas institucionais (D8=C, D5=A)</td><td><strong>D-17</strong> Governança</td><td>Recomendações de arranjo, rearranjo SLT, articulação federativa.</td></tr>
+          <tr><td>Temas regulatório-fiscais</td><td><strong>D-18</strong> JRI</td><td>Pareceres jurídicos, instrumentos fiscais, novos marcos regulatórios.</td></tr>
+        </tbody>
+      </table>
+      <div class="footer-note"><strong>Mensagem-chave:</strong> a metodologia transforma uma lista plana de 31 temas em um pipeline auditável onde cada tema sabe exatamente para qual produto do PLI ele caminha — e por quê.</div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

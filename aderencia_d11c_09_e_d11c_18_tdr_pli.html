@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aderência dos temas D11c_09 e D11c_18 ao TDR do PLI-SP e pontos de partida</title>
+<style>
+:root{
+  --navy:#1c3d59; --deep:#003b5a; --blue:#116593;
+  --green:#3ec26e; --green-dk:#2a9450;
+  --bg:#eef1f5; --surface:#fff; --border:#d5dce6;
+  --text:#1a1a2e; --muted:#4f5d6e;
+  --warn:#c88000; --warn-soft:#fff8e0;
+  --danger:#cc3333; --danger-soft:#fff0f0;
+  --sw:260px; --hh:48px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;font-size:13.5px;background:var(--bg);color:var(--text);display:flex;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Sidebar ── */
+#sb{width:var(--sw);min-width:var(--sw);background:var(--navy);color:#e8f0f8;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100}
+#sb-hdr{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+#sb-hdr h1{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--green)}
+#sb-hdr p{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5}
+#sb nav{padding:10px 0;flex:1}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:11.5px;color:rgba(255,255,255,.7);cursor:pointer;border-left:2px solid transparent;text-decoration:none;transition:all .15s;background:transparent;border-top:none;border-right:none;border-bottom:none;width:100%;text-align:left;font-family:inherit}
+.ni:hover,.ni.active{background:rgba(62,194,110,.1);color:#fff;border-left-color:var(--green);text-decoration:none}
+.ni .num{font-size:10px;background:rgba(255,255,255,.1);border-radius:3px;padding:2px 7px;min-width:22px;text-align:center;flex-shrink:0;font-weight:600}
+.ni.active .num{background:rgba(62,194,110,.25);color:var(--green)}
+.ni .nlbl{line-height:1.35;flex:1}
+.sb-sep{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35);padding:10px 18px 4px;display:block}
+#sb-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:rgba(255,255,255,.4);line-height:1.5}
+
+/* ── Main ── */
+#main{margin-left:var(--sw);flex:1;min-height:100vh;display:flex;flex-direction:column}
+#dh{background:var(--deep);color:#fff;padding:0 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50;height:var(--hh);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+#dh h2{font-size:12.5px;font-weight:600;flex:1;letter-spacing:.15px}
+#dh .meta{font-size:10.5px;color:rgba(255,255,255,.55)}
+#content{padding:22px 30px 60px;text-align:justify;max-width:1180px;width:100%}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,#f0f5ff,#e8eef8);border:2px solid var(--navy);border-radius:8px;padding:22px 26px;margin-bottom:20px}
+.hero h1{font-size:18px;color:var(--navy);font-weight:700;margin-bottom:6px;letter-spacing:.1px;text-align:left}
+.hero .subtitle{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:10px;text-align:left}
+.hero p{font-size:12.5px;color:var(--text);line-height:1.7}
+.hero .chips{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:10.5px;background:#fff;border:1px solid var(--navy);color:var(--navy);border-radius:12px;padding:3px 10px;font-weight:600}
+
+/* ── Seções de conteúdo ── */
+.ss{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);display:none;margin-bottom:18px}
+.ss.active-tab{display:block}
+.ss-hdr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);background:#f8fafc}
+.sn{font-size:10px;font-weight:700;color:#fff;background:var(--blue);border-radius:3px;padding:3px 8px;flex-shrink:0}
+.st{font-size:13.5px;font-weight:600;color:var(--navy);flex:1;letter-spacing:.1px}
+.sbadge{font-size:10px;padding:3px 8px;border-radius:10px;border:1px solid var(--border);color:var(--muted);flex-shrink:0;background:var(--surface)}
+.sbadge.s-completo{border-color:var(--green-dk);color:var(--green-dk);background:#e8faef}
+.sbadge.s-andamento{border-color:#f0a500;color:var(--warn);background:var(--warn-soft)}
+.sbadge.s-pendente{border-color:var(--danger);color:var(--danger);background:var(--danger-soft)}
+.sb2{padding:18px 20px}
+.sdesc{font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.7}
+
+/* ── Boxes ── */
+.gbox{background:#f0f5fa;border-left:3px solid var(--blue);padding:12px 16px;border-radius:0 5px 5px 0;margin-bottom:16px}
+.gbox h4{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--blue);margin-bottom:8px;font-weight:700}
+.gbox ul{padding-left:18px}
+.gbox li{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:3px}
+
+.quote{padding:14px 18px;background:#f0f5fa;border-left:4px solid var(--blue);border-radius:0 5px 5px 0;color:var(--text);line-height:1.7;margin:12px 0 16px;font-size:12.5px}
+
+/* ── 2 colunas ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.mini{background:#f8fafc;border:1px solid var(--border);border-radius:5px;padding:14px 16px}
+.mini h3{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:8px;font-weight:700}
+.mini ul{padding-left:18px}
+.mini li{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:3px}
+.mini h3.h-aereo{color:var(--blue)}
+.mini h3.h-clima{color:var(--green-dk)}
+
+/* ── Tabelas ── */
+table{width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border-radius:5px;overflow:hidden;border:1px solid var(--border);margin:10px 0 16px}
+thead th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+tbody td{padding:8px 10px;border-bottom:1px solid #e6ecf2;vertical-align:top;line-height:1.55;color:var(--text)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f8fafc}
+
+/* ── Scorecard lateral (na visão executiva) ── */
+.scorecard{display:grid;gap:8px;margin-bottom:14px}
+.score{background:#f8fafc;border:1px solid var(--border);border-left:3px solid var(--green);border-radius:4px;padding:10px 13px}
+.score strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--green-dk);margin-bottom:3px}
+.score span{font-size:11.5px;color:var(--text);line-height:1.55}
+.legend{background:#f0f5fa;border:1px solid #c5d9ef;border-radius:5px;padding:12px 14px;font-size:11.5px;line-height:1.65;color:var(--text)}
+.legend div{margin-bottom:6px}
+.legend div:last-child{margin-bottom:0}
+.legend strong{color:var(--navy)}
+
+/* ── h3 dentro do conteúdo ── */
+.sb2 h3{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin:18px 0 10px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+
+/* ── details/summary ── */
+details{background:#f8fafc;border:1px solid var(--border);border-radius:5px;margin-bottom:12px;overflow:hidden}
+details[open]{background:#fff}
+summary{list-style:none;cursor:pointer;padding:11px 16px;font-weight:600;color:var(--navy);font-size:12.5px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:#f0f5fa;border-bottom:1px solid transparent;transition:background .15s}
+details[open] summary{border-bottom-color:var(--border);background:#e8eef8}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'▾';font-size:10px;color:var(--muted);transition:transform .2s}
+details[open] summary::after{transform:rotate(180deg)}
+.det-body{padding:14px 18px}
+
+/* ── Tags inline ── */
+.tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.tag.accent{background:rgba(17,101,147,.12);color:var(--blue);border:1px solid rgba(17,101,147,.25)}
+.tag.good{background:rgba(42,148,80,.12);color:var(--green-dk);border:1px solid rgba(42,148,80,.25)}
+.tag.warn{background:var(--warn-soft);color:var(--warn);border:1px solid rgba(200,128,0,.3)}
+
+/* ── Footer-note ── */
+.footer-note{margin-top:16px;padding:12px 14px;background:#f0faf4;border-left:3px solid var(--green-dk);border-radius:0 5px 5px 0;color:#1a6e3a;font-size:11.5px;line-height:1.7}
+
+/* ── Layout duplo (visão exec) ── */
+.exec-grid{display:grid;grid-template-columns:1fr 280px;gap:18px;align-items:start}
+.exec-side{position:sticky;top:calc(var(--hh) + 18px)}
+.exec-side h2{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin-bottom:10px;font-weight:700}
+.exec-side .lede{font-size:11.5px;color:var(--muted);line-height:1.6;margin-bottom:14px;font-style:italic}
+
+@media (max-width:1000px){
+  .two-col,.exec-grid{grid-template-columns:1fr}
+  .exec-side{position:static}
+}
+@media (max-width:760px){
+  :root{--sw:0px}
+  #sb{transform:translateX(-100%)}
+  #main{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<aside id="sb">
+  <div id="sb-hdr">
+    <h1>PLI-SP · D-11</h1>
+    <p>Aderência dos temas D11c_09 e D11c_18 ao TDR e pontos de partida</p>
+  </div>
+  <nav>
+    <span class="sb-sep">Navegação</span>
+    <button class="ni active" data-tab="visao"><span class="num">01</span><span class="nlbl">Visão executiva</span></button>
+    <button class="ni" data-tab="aereo"><span class="num">02</span><span class="nlbl">D11c_09 — Aéreo</span></button>
+    <button class="ni" data-tab="clima"><span class="num">03</span><span class="nlbl">D11c_18 — Mudanças climáticas</span></button>
+  </nav>
+  <div id="sb-foot">
+    Base normativa: Termo de Referência do PLI-SP<br>
+    Produtos: D-11, D-12, D-06, D-07 e D-08
+  </div>
+</aside>
+
+<div id="main">
+  <header id="dh">
+    <h2>Aderência dos temas D11c_09 e D11c_18 ao TDR do PLI-SP e pontos de partida</h2>
+    <span class="meta">SEMIL · Consórcio Concremat–Transplan</span>
+  </header>
+
+  <div id="content">
+
+    <section class="hero">
+      <h1>Aderência dos temas D11c_09 e D11c_18 ao TDR do PLI-SP e pontos de partida</h1>
+      <div class="subtitle">Avaliação crítica e direcionamento metodológico para o D-11</div>
+      <p>Este material consolida a verificação de aderência de temas sugeridos ao contexto do Termo de Referência do PLI-SP. O objetivo é explicitar os requisitos metodológicos do D-11, qualificar o enquadramento de cada tema e indicar ajustes de recorte que ampliem sua utilidade para a construção dos cenários do D-12.</p>
+      <div class="chips">
+        <span class="chip">Base normativa: TDR PLI-SP</span>
+        <span class="chip">Produtos: D-11, D-12, D-06, D-07, D-08</span>
+        <span class="chip">Data de exportação: 16/04/2026</span>
+      </div>
+    </section>
+
+    <!-- ─────────── VISÃO EXECUTIVA ─────────── -->
+    <section id="visao" class="ss active-tab">
+      <div class="ss-hdr">
+        <span class="sn">01</span>
+        <span class="st">Visão executiva</span>
+        <span class="sbadge s-completo">Síntese consolidada</span>
+      </div>
+      <div class="sb2">
+
+        <div class="exec-grid">
+          <div>
+            <p class="sdesc">O achado central é que os temas avaliados são compatíveis com o escopo do PLI, mas as formulações atuais ainda demandam maior precisão conceitual para atender plenamente ao objetivo do D-11.</p>
+
+            <div class="quote">No TDR, a Meta 3.3 estabelece que os pontos provenientes dos contatos setoriais devem ser analisados criticamente para identificar as contribuições mais relevantes a serem incorporadas aos cenários a serem simulados. O critério de avaliação, portanto, não é apenas a pertinência temática, mas a capacidade de cada tema produzir hipóteses, variáveis ou condicionantes com utilidade metodológica para o processo de simulação.</div>
+
+            <table>
+              <thead>
+                <tr><th>Tema</th><th>Aderência ao TDR</th><th>Fragilidade atual</th><th>Direcionamento recomendado</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>D11c_09</strong> Aéreo</td>
+                  <td>Aderente</td>
+                  <td>Ênfase excessiva em novas rotas e expansão aeroportuária genérica, com baixa conexão direta com o campo analítico do PLI.</td>
+                  <td>Reposicionar para acessibilidade terrestre, efeitos intermodais, função logística de Viracopos e aviação regional como mecanismo de substituição modal.</td>
+                </tr>
+                <tr>
+                  <td><strong>D11c_18</strong> Mudanças climáticas</td>
+                  <td>Aderente, com forte base normativa</td>
+                  <td>Formulação excessivamente ampla, com risco de baixa operacionalização analítica.</td>
+                  <td>Converter em eixo de resiliência da infraestrutura, eventos extremos, efeito hidrológico sobre oferta e descarbonização como variável de cenário.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="two-col">
+              <div class="mini">
+                <h3>Requisitos do TDR</h3>
+                <ul>
+                  <li>Análise crítica das proposições oriundas dos contatos setoriais.</li>
+                  <li>Incorporação apenas de elementos relevantes para a modelagem de cenários futuros.</li>
+                  <li>Articulação metodológica com D-12, D-13 e D-14.</li>
+                  <li>Alinhamento com PAC 2050, PEE 2050 e ZEE-SP.</li>
+                </ul>
+              </div>
+              <div class="mini">
+                <h3>Insuficiências recorrentes</h3>
+                <ul>
+                  <li>Listagem setorial sem filtro metodológico.</li>
+                  <li>Texto institucional sem efeito sobre demanda, oferta ou acessibilidade.</li>
+                  <li>Proposição incapaz de alterar cenários futuros simulados.</li>
+                  <li>Abordagem abstrata de sustentabilidade sem variáveis observáveis.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="footer-note"><strong>Conclusão recomendada:</strong> manter os dois temas no D-11, com reformulação analítica. O D11c_09 deve ser tratado como eixo de acessibilidade e efeitos intermodais, enquanto o D11c_18 deve ser estruturado como eixo de resiliência operacional e descarbonização parametrizável.</div>
+          </div>
+
+          <aside class="exec-side">
+            <h2>Enquadramento analítico</h2>
+            <p class="lede">O TDR não demanda uma listagem desagregada de proposições. O D-11 exige triagem crítica, qualificação metodológica e seleção de fatores capazes de integrar cenários tecnicamente simuláveis.</p>
+            <div class="scorecard">
+              <div class="score">
+                <strong>Critério central do D-11</strong>
+                <span>Capacidade de incorporação aos cenários do D-12</span>
+              </div>
+              <div class="score">
+                <strong>D11c_09</strong>
+                <span>Aderente, com necessidade de refinamento intermodal</span>
+              </div>
+              <div class="score">
+                <strong>D11c_18</strong>
+                <span>Bem ancorado no TDR, com recorte ainda abrangente</span>
+              </div>
+            </div>
+            <div class="legend">
+              <div><strong>Síntese:</strong> ambos os temas podem permanecer no D-11.</div>
+              <div><strong>Ajuste requerido:</strong> substituir formulações setoriais genéricas por variáveis com impacto observável sobre demanda, oferta, acessibilidade, emissão ou resiliência da rede.</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── D11c_09 AÉREO ─────────── -->
+    <section id="aereo" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">02</span>
+        <span class="st">D11c_09 — Aéreo</span>
+        <span class="sbadge s-andamento">Aderente, com calibragem insuficiente</span>
+      </div>
+      <div class="sb2">
+        <p class="sdesc"><strong>Formulação em avaliação:</strong> Estratégias para o desenvolvimento do setor aéreo no ESP. A aderência existe, mas o recorte ainda se mostra abrangente e parcialmente desconectado dos elementos que o PLI efetivamente modela.</p>
+
+        <div class="two-col">
+          <div class="mini">
+            <h3 class="h-aereo">Fundamentação no TDR</h3>
+            <ul>
+              <li>D-06: análise da acessibilidade terrestre aos aeroportos.</li>
+              <li>D-06: levantamento de capacidades atuais e projetadas em cada aeródromo.</li>
+              <li>D-08: incorporação dos aeroportos ao zoneamento e à rede.</li>
+              <li>Objetivo geral: equilíbrio entre modos, incluindo o aeroviário.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3 class="h-aereo">Limitações da formulação atual</h3>
+            <ul>
+              <li>Novas linhas regulares dependem de dinâmicas comerciais e regulatórias externas ao alcance do PLI.</li>
+              <li>A expansão interna de aeroportos não constitui o objeto principal do estudo.</li>
+              <li>Há risco de deslocamento para uma agenda setorial de aviação, e não para um fator de cenário logístico.</li>
+            </ul>
+          </div>
+        </div>
+
+        <details open>
+          <summary>Leitura crítica do tema <span class="tag good">Manutenção com refinamento</span></summary>
+          <div class="det-body">
+            <div class="quote">O TDR não demanda que o PLI formule uma política aeronáutica. O que se exige é a avaliação de como a infraestrutura aeroportuária e sua acessibilidade terrestre alteram a organização regional dos fluxos de passageiros e cargas.</div>
+            <table>
+              <thead><tr><th>Ponto</th><th>Leitura recomendada</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Viracopos</strong></td><td>Deve ser tratado como polo cargueiro e nodo de conexão terrestre, e não apenas como ativo aeroportuário sujeito à expansão.</td></tr>
+                <tr><td><strong>Guarulhos e Congonhas</strong></td><td>Devem ser avaliados pelo efeito sobre acessos, distribuição territorial da demanda e conectividade regional.</td></tr>
+                <tr><td><strong>Aeroportos regionais</strong></td><td>Devem ser interpretados como elementos de acessibilidade regional e de potencial substituição modal no interior do estado.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details>
+          <summary>Formulação recomendada para o D-11 <span class="tag accent">Versão recomendada</span></summary>
+          <div class="det-body">
+            <div class="quote">Estratégias para o desenvolvimento do setor aéreo no ESP, com foco em acessibilidade terrestre aos aeroportos paulistas, impactos da expansão de capacidade aeroportuária nos fluxos intermodais de passageiros e cargas, e papel da aviação regional como fator de substituição modal e estruturação territorial.</div>
+            <ul style="padding-left:20px;font-size:12px;line-height:1.8">
+              <li><strong>Subeixo 1:</strong> acessibilidade terrestre a Guarulhos, Viracopos, Congonhas e aeroportos regionais.</li>
+              <li><strong>Subeixo 2:</strong> efeitos da expansão de capacidade sobre rodovias, terminais e conexões logisticamente relevantes.</li>
+              <li><strong>Subeixo 3:</strong> aviação regional e alteração da demanda de passageiros no interior.</li>
+              <li><strong>Subeixo 4:</strong> carga aérea e especialização de Viracopos no arranjo logístico paulista.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Perguntas analíticas e insumos de apoio <span class="tag good">Maior utilidade para o D-12</span></summary>
+          <div class="det-body">
+            <ul style="padding-left:20px;font-size:12px;line-height:1.8">
+              <li>Quais aeroportos alteram significativamente os tempos generalizados de acesso regional?</li>
+              <li>Quais expansões modificam o padrão de viagens rodoviárias e intermodais?</li>
+              <li>Como a carga de Viracopos redistribui fluxos de maior valor agregado?</li>
+              <li>Em quais corredores a aviação regional concorre ou complementa ônibus intermunicipais e TIC?</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Metodologia detalhada recomendada <span class="tag accent">Sequência executável</span></summary>
+          <div class="det-body">
+            <div class="quote">A proposta metodológica abaixo foi estruturada para produzir respostas defensáveis, replicáveis e compatíveis com o escopo do PLI. A unidade principal de análise é o corredor origem-destino, e não o aeroporto isoladamente.</div>
+
+            <h3>Etapa 1. Seleção de corredores potenciais</h3>
+            <table>
+              <thead><tr><th>Item</th><th>Procedimento</th><th>Ferramenta / método</th><th>Produto</th></tr></thead>
+              <tbody>
+                <tr><td>Filtro territorial</td><td>Selecionar pares O-D com presença de aeroportos operacionais, aeroportos com potencial regional ou polos urbanos e econômicos relevantes para o PLI.</td><td>QGIS para espacialização; Excel ou Power BI para triagem inicial; base Hórus, ANAC e zoneamento do PLI.</td><td>Lista preliminar de cidades e aeroportos elegíveis.</td></tr>
+                <tr><td>Filtro tempo-distância</td><td>Manter somente relações em que o modo aéreo regional seja plausível: tipicamente entre 250 km e 900 km ou com tempo rodoviário superior a 3h30.</td><td>OpenRouteService, Google Maps, Visum ou cálculo de caminho mínimo em rede rodoviária.</td><td>Matriz O-D com distância e tempo rodoviário.</td></tr>
+                <tr><td>Filtro funcional</td><td>Reter apenas corredores com potencial de negócios, turismo, conexões institucionais, centralidade regional ou função logística relevante.</td><td>Matriz multicritério simples em Excel, com critérios binários ou pontuados.</td><td>Conjunto final de corredores a analisar.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Etapa 2. Cálculo do tempo porta-a-porta por modo</h3>
+            <div class="two-col">
+              <div class="mini">
+                <h3 class="h-aereo">Como calcular</h3>
+                <ul>
+                  <li>Aéreo: acesso ao aeroporto + antecedência operacional + tempo de voo + desembarque + egresso + conexão, se houver.</li>
+                  <li>Ônibus: acesso ao terminal + antecedência + viagem + desembarque + egresso.</li>
+                  <li>Trilho: acesso à estação + espera média + viagem + transferência + egresso.</li>
+                  <li>Automóvel: tempo em rede + penalidades de estacionamento ou travessia urbana, se relevantes.</li>
+                </ul>
+              </div>
+              <div class="mini">
+                <h3 class="h-aereo">Ferramentas viáveis</h3>
+                <ul>
+                  <li>QGIS ou Visum para tempos de acesso e egresso.</li>
+                  <li>ANAC, Hórus, sites de companhias e operadores para tempos aéreos.</li>
+                  <li>Plataformas rodoviárias, ANTT, Artesp e operadores para tempos de ônibus.</li>
+                  <li>Planilha Excel para compor o tempo total por modo.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="quote">O procedimento mínimo recomendável é trabalhar com tempos médios representativos por faixa horária, explicitar as premissas de antecedência e registrar todas as fontes em uma planilha-mestre auditável.</div>
+
+            <h3>Etapa 3. Comparação de custo generalizado e frequência</h3>
+            <table>
+              <thead><tr><th>Componente</th><th>Como estimar</th><th>Ferramenta / método</th><th>Observação</th></tr></thead>
+              <tbody>
+                <tr><td>Custo monetário</td><td>Tarifa média observada ou representativa por modo.</td><td>Levantamento em sites de venda, ANTT, operadoras e estimativa de custo operacional do automóvel.</td><td>Registrar faixa de tarifa e data de observação.</td></tr>
+                <tr><td>Valor do tempo</td><td>Aplicar valor do tempo diferenciado por perfil de demanda.</td><td>Planilha Excel com parâmetros de referência de estudos anteriores ou literatura técnica.</td><td>Não precisa calibrar modelo econométrico para o D-11.</td></tr>
+                <tr><td>Frequência</td><td>Converter baixa oferta em penalidade de espera e rigidez operacional.</td><td>Classificação em alta, média e baixa frequência ou meia-espera média.</td><td>Para o aéreo regional, a frequência é decisiva na comparação.</td></tr>
+                <tr><td>Confiabilidade</td><td>Aplicar penalidade qualitativa quando houver baixa previsibilidade, conexão frágil ou maior risco operacional.</td><td>Proxy qualitativa padronizada em Excel.</td><td>Útil quando faltarem dados observados robustos.</td></tr>
+              </tbody>
+            </table>
+            <div class="quote">Recomenda-se usar uma formulação simplificada de custo generalizado: custo monetário + valor do tempo × tempo total + penalidades por baixa frequência, transferência e confiabilidade. Isso é suficiente para o D-11 e defensável perante revisão técnica.</div>
+
+            <h3>Etapa 4. Separação de perfis de demanda</h3>
+            <table>
+              <thead><tr><th>Perfil</th><th>Critério de identificação</th><th>Parâmetros-chave</th><th>Ferramenta</th></tr></thead>
+              <tbody>
+                <tr><td>Negócios</td><td>Deslocamentos com alta sensibilidade ao tempo e à regularidade.</td><td>Maior valor do tempo, menor tolerância à espera.</td><td>Planilha com cenários por perfil.</td></tr>
+                <tr><td>Lazer / visita</td><td>Deslocamentos com maior sensibilidade ao preço e menor urgência temporal.</td><td>Maior peso para tarifa, menor peso para tempo.</td><td>Planilha com elasticidades simplificadas.</td></tr>
+                <tr><td>Institucional / estratégico</td><td>Deslocamentos administrativos, de saúde, ensino ou conexão regional específica.</td><td>Peso intermediário entre tempo, regularidade e custo.</td><td>Classificação qualitativa baseada em função territorial.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Etapa 5. Classificação da relação modal</h3>
+            <table>
+              <thead><tr><th>Classe</th><th>Como classificar</th><th>Critério objetivo sugerido</th><th>Produto</th></tr></thead>
+              <tbody>
+                <tr><td>Competição forte</td><td>Quando o aéreo e o modo terrestre principal apresentarem custo generalizado próximo e vantagem temporal relevante para ao menos um perfil importante.</td><td>Diferença de custo generalizado até 20%, frequência mínima operacional e vantagem clara de tempo.</td><td>Corredor elegível para hipótese de cenário no D-12.</td></tr>
+                <tr><td>Complementaridade</td><td>Quando o aéreo não domina o corredor, mas cumpre função específica para nichos, conexões ou articulação territorial.</td><td>Competitividade parcial, restrita a determinados perfis ou funções de rede.</td><td>Corredor com relevância seletiva, passível de tratamento qualitativo-quantitativo.</td></tr>
+                <tr><td>Irrelevância operacional</td><td>Quando o aéreo não altera a organização do corredor por falta de frequência, custo proibitivo ou ausência de vantagem porta-a-porta.</td><td>Custo generalizado claramente inferior dos modos terrestres para todos os perfis.</td><td>Relação excluída do aprofundamento.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Etapa 6. Registro apenas de relações com efeito material</h3>
+            <div class="two-col">
+              <div class="mini">
+                <h3 class="h-aereo">Como fazer</h3>
+                <ul>
+                  <li>Montar uma matriz de materialidade com notas de 1 a 5.</li>
+                  <li>Avaliar relevância territorial, volume potencial, diferença modal, aderência ao TDR e possibilidade de simulação.</li>
+                  <li>Somar as pontuações e aplicar corte de seleção.</li>
+                </ul>
+              </div>
+              <div class="mini">
+                <h3 class="h-aereo">Ferramenta / método</h3>
+                <ul>
+                  <li>Excel com matriz multicritério simples.</li>
+                  <li>QGIS para apoio territorial.</li>
+                  <li>Classificação final: entra no corpo principal, entra em apoio ou não entra.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="footer-note"><strong>Síntese metodológica do D11c_09:</strong> a análise deve partir de corredores plausíveis, comparar tempos porta-a-porta e custo generalizado por perfil de demanda, classificar a relação modal e reter apenas os casos com materialidade suficiente para influenciar cenários futuros.</div>
+          </div>
+        </details>
+
+        <details open>
+          <summary>Hipóteses de oferta futura e fatores de cenário <span class="tag accent">Saída do D-11 para D-10 / D-12 e insumo da carteira do D-14</span></summary>
+          <div class="det-body">
+            <div class="quote"><strong>Aviso metodológico.</strong> O TDR define o D-11 como <em>análise de fatores que influenciam cenários futuros</em> (Meta 3.3) e reserva ao D-14 a entrega da <em>carteira de intervenções</em> (mínimo de 25 projetos selecionados — Meta 4.1.2). Esta tabela <strong>não é a carteira final</strong>: registra <strong>fatos consolidados</strong> que precisam compor a oferta futura no D-10/D-12 e <strong>hipóteses</strong> sugeridas pelo recorte do D11c_09 que merecem teste de materialidade no D-13 antes de eventual entrada no D-14.</div>
+            <table>
+              <thead><tr><th>Cód.</th><th>Item</th><th>Natureza</th><th>Status real</th><th>Fonte</th><th>Tratamento no PLI</th></tr></thead>
+              <tbody>
+                <tr><td><strong>AER-F1</strong></td><td>Concessão de 22 aeródromos públicos regionais paulistas (DAESP) — inclui Ribeirão Preto, S. J. do Rio Preto, Bauru, Presidente Prudente, Marília e Araraquara, em dois lotes, 30 anos, com plano de investimentos previsto pelo Governo de SP em torno de R$ 700 milhões.</td><td>Fato (concessão estruturada)</td><td>Projeto contratado pela Secretaria de Parcerias em Investimentos (SPI-SP).</td><td><a href="https://www.parceriaseminvestimentos.sp.gov.br/sec-parcerias-investimentos/projetos/projetos-contratados/22-aerodromos-publicos-regionais" target="_blank" rel="noopener">SPI-SP — 22 Aeródromos Públicos Regionais</a></td><td>Entra como oferta futura no D-10 e como premissa de cenário base no D-12. Apoiar D-13 com avaliação de acessibilidade terrestre por aeroporto.</td></tr>
+                <tr><td><strong>AER-F2</strong></td><td>Concessão de 5 aeroportos de aviação executiva e táxi-aéreo: Itanhaém, Ubatuba, Jundiaí, Campinas-Amarais e Bragança Paulista.</td><td>Fato (edital publicado)</td><td>Edital publicado pelo Governo de SP.</td><td>Imprensa setorial; SPI-SP.</td><td>Componente complementar da oferta futura aeroportuária no D-10.</td></tr>
+                <tr><td><strong>AER-F3</strong></td><td>Trem Intercidades — Eixo Norte (São Paulo–Jundiaí–Campinas, com modernização da Linha 7-Rubi da CPTM): contrato assinado em 03/06/2024 com o consórcio C2 Mobilidade sobre Trilhos; CAPEX Modelo Econômico-Financeiro R$ 8,57 bi (PPI). Tempo previsto SP–Campinas: 60 minutos.</td><td>Fato (concessão assinada)</td><td>Em fase de obras e desapropriações.</td><td><a href="https://ppi.gov.br/projetos/trem-intercidades-tic/" target="_blank" rel="noopener">PPI — Trem Intercidades</a></td><td>Variável de oferta futura central para o corredor SP–Campinas no D-10/D-12. Altera diretamente a Etapa 2 (tempo porta-a-porta) e Etapa 5 (classificação modal aéreo×TIC) deste tema.</td></tr>
+                <tr><td><strong>AER-F4</strong></td><td>Trem Intercidades — Eixo Oeste (São Paulo–Sorocaba): edital previsto pela SPI-SP para 2026 (consulta pública concluída em 2025).</td><td>Fato (em estruturação)</td><td>Modelagem em consulta; leilão programado.</td><td>SPI-SP; consulta pública 2025.</td><td>Hipótese de oferta com data programada — incorporar em cenário base/otimista no D-12.</td></tr>
+                <tr><td><strong>AER-F5</strong></td><td>Linha 17-Ouro (monotrilho ligando Congonhas a Morumbi/Linha 9-Esmeralda).</td><td>Fato (em obras)</td><td>Obras em execução pela ViaMobilidade.</td><td>Metrô-SP / ViaMobilidade.</td><td>Premissa de oferta futura no horizonte 2028 do D-10. Não constitui projeto novo a propor.</td></tr>
+                <tr><td><strong>AER-H1</strong></td><td>Reforço da acessibilidade terrestre rodoviária aos hubs de Guarulhos e Viracopos no horizonte de cenário (não confundir com expansões já contratadas pelas concessionárias Ecopistas, CCR RodoAnel e CCR ViaOeste).</td><td>Hipótese</td><td>Demanda recorrente em fóruns; projetos parciais existentes nos PERs das concessões.</td><td>PERs das concessionárias (Artesp); pleitos de fóruns regionais.</td><td>Avaliar via Etapas 1–3 e Etapa 6 (materialidade). Eventual proposição no D-14 deve evitar duplicação com pipeline contratual existente.</td></tr>
+                <tr><td><strong>AER-H2</strong></td><td>Conexão ferroviária dedicada de passageiros entre São Paulo e o Aeroporto de Guarulhos (alternativa ao acesso atual via Linha 13-Jade + transferência), com integração tarifária plena.</td><td>Hipótese</td><td>Pleito antigo, sem projeto consolidado em PPI ou SPI.</td><td>Discussão setorial; ausência de fonte primária com cronograma.</td><td>Tratar como hipótese de cenário otimista no D-12, sob restrição de capacidade da CPTM. Materialidade a verificar no D-13.</td></tr>
+                <tr><td><strong>AER-H3</strong></td><td>Estudo da competição e da complementaridade entre aviação regional, ônibus interurbano e TIC nos corredores São Paulo↔Campinas, Ribeirão Preto, Sorocaba e São José dos Campos, à luz do leilão dos 22 aeródromos.</td><td>Hipótese (estudo)</td><td>Não há estudo público integrado para o estado.</td><td>Lacuna identificada por análise.</td><td>Insumo direto da Etapa 5 do tema. Resultado deve alimentar pontos de atenção do D-13 e eventual programa no D-14.</td></tr>
+                <tr><td><strong>AER-H4</strong></td><td>Consolidação operacional de Viracopos como hub estadual de carga aérea de alto valor agregado, articulada à malha ferroviária paulista (MRS/Rumo) e ao Porto de Santos, observando que a expansão aeroportuária já é objeto da concessão Aeroportos Brasil Viracopos.</td><td>Hipótese</td><td>Expansão aeroportuária prevista contratualmente; conexão ferroviária dedicada em discussão.</td><td>Concessão ABV; PNL 2050 (referência).</td><td>Tratar conexão ferro-cargo como variante de cenário no D-12 e como candidato a estudo no D-13.</td></tr>
+                <tr><td><strong>AER-H5</strong></td><td>Avaliação do efeito intermodal da ampliação programada de Guarulhos e Viracopos sobre Rodoanel, Anhanguera, Bandeirantes, Dutra e Ayrton Senna.</td><td>Hipótese (estudo)</td><td>Estudos parciais nas concessões; sem visão integrada.</td><td>Lacuna identificada; aderente à Atividade 3.3.3 do TDR.</td><td>Estudo previsto na Etapa 6 — materialidade. Resultado é insumo do D-13 (pontos de atenção).</td></tr>
+              </tbody>
+            </table>
+            <div class="footer-note"><strong>Encaminhamento.</strong> Os itens AER-F1 a AER-F5 são <strong>fatos</strong> que devem ser incorporados como premissas de oferta futura no D-10 e como cenário base no D-12 — não são projetos a propor pelo PLI. Os itens AER-H1 a AER-H5 são <strong>hipóteses</strong> que precisam atravessar o filtro de materialidade da Etapa 6 antes de virarem candidatos à carteira de mínimo 25 projetos do D-14 (Atividade 4.1.2 do TDR). A carteira final é entrega do D-14, não do D-11.</div>
+          </div>
+        </details>
+
+        <details open>
+          <summary>Projetos propostos — metodologia e indicadores de eficácia <span class="tag accent">Carteira preliminar para o D-14</span></summary>
+          <div class="det-body">
+            <div class="quote"><strong>Como ler.</strong> Cada projeto é descrito por (i) <em>objetivo</em>, (ii) <em>metodologia em etapas verificáveis</em>, (iii) <em>indicadores de eficácia</em> com baseline, meta, horizonte e fonte do dado, (iv) <em>critérios candidatos para a hierarquização AHP do D-17</em> com peso relativo sugerido (Alto/Médio/Baixo) e (v) <em>vínculo com produtos do PLI</em>. O conjunto dos critérios candidatos AHP é padronizado: <strong>C1</strong> Benefício econômico (B/C, VPL — D-16), <strong>C2</strong> CAPEX/esforço de investimento (D-15), <strong>C3</strong> Demanda atendida e impacto modal, <strong>C4</strong> Sustentabilidade ambiental (CO₂, qualidade do ar), <strong>C5</strong> Impacto social (acessibilidade, equidade regional, segurança), <strong>C6</strong> Viabilidade jurídico-institucional (D-18), <strong>C7</strong> Prazo de implantação, <strong>C8</strong> Sinergia com pipeline existente (PERs, PPI, SPI), <strong>C9</strong> Resiliência climática/operacional, <strong>C10</strong> Risco e incerteza. O peso final entre critérios será calibrado no D-17 por matriz par-a-par com painel de especialistas; aqui apenas se indica quais critérios são discriminantes para cada projeto.</div>
+
+            <table>
+              <thead><tr><th style="width:8%">Cód.</th><th style="width:22%">Projeto / objetivo</th><th style="width:24%">Metodologia (etapas)</th><th style="width:24%">Indicadores de eficácia</th><th style="width:16%">Critérios candidatos AHP (D-17)</th><th style="width:6%">Produto-alvo</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>AER-P1</strong></td>
+                  <td><strong>Plano integrado de acessibilidade terrestre a Guarulhos e Viracopos.</strong> Reduzir tempo e variabilidade do acesso porta-a-porta, com priorização de transporte coletivo, sem duplicar obras já contratadas em PERs de concessão.</td>
+                  <td>1. Inventário das obrigações vigentes em PERs (Ecopistas, CCR RodoAnel, CCR ViaOeste, AB Concessões). 2. Identificação de lacunas via análise de capacidade nos eixos Ayrton Senna, Dutra, Anhanguera, Bandeirantes e Rodoanel. 3. Modelagem em Visum-PTV (cenário com e sem intervenção). 4. Avaliação benefício-custo (ABC) seguindo método previsto no D-16. 5. Submissão à hierarquização AHP no D-17.</td>
+                  <td>• <strong>T-acesso</strong> = tempo médio porta-a-porta percentil 85 (zona origem → terminal de embarque), em min. Baseline: a apurar no D-3 com Big Data rodoviário. Meta: −20% até 2033, −30% até 2043. Fonte: matriz OD do D-04.<br>• <strong>IVT</strong> = índice de variabilidade do tempo de viagem (desvio-padrão / média). Meta: ≤ 0,25 nos picos manhã/tarde. Fonte: monitoramento Artesp / concessionárias.<br>• <strong>Modal-share-TC</strong> = participação de transporte coletivo no acesso (%). Baseline: ~20% em GRU (estimativa GRU Airport). Meta: 35% até 2033, 50% até 2043.</td>
+                  <td><strong>C3</strong> Alto (acessibilidade do principal hub do país) · <strong>C5</strong> Alto (equidade no acesso) · <strong>C8</strong> Alto (interface obrigatória com PERs) · <strong>C2</strong> Médio · <strong>C1</strong> Médio · <strong>C7</strong> Médio. Discriminante principal: <em>C8</em> — risco de duplicação com obras já contratadas.</td>
+                  <td>D-13, D-14, D-15</td>
+                </tr>
+                <tr>
+                  <td><strong>AER-P2</strong></td>
+                  <td><strong>Estudo de competição e complementaridade entre TIC, ônibus interurbano e aviação regional</strong> nos eixos SP↔Campinas, Ribeirão Preto, Sorocaba e São José dos Campos. Subsidiar decisão sobre PROAR (subsídio à aviação regional) considerando o TIC já contratado.</td>
+                  <td>1. Construção de matriz origem-destino multimodal por motivo de viagem (institucional, negócios, lazer) — usar PNAD Contínua + dados ANAC + Big Data rodoviário. 2. Cálculo de custo generalizado por par OD por modo. 3. Modelagem de escolha modal (logit) com elasticidades calibradas. 4. Análise de sensibilidade ao tempo, frequência e tarifa. 5. Simulação no Visum-PTV módulo EVA.</td>
+                  <td>• <strong>Δ-tempo-relativo</strong> = (T-aéreo + T-acesso) ÷ T-TIC porta-a-porta. Critério: aviação regional só faz sentido onde Δ &lt; 0,7 (substituição forte). Fonte: D-04 + D-09.<br>• <strong>Custo-generalizado-relativo</strong> = CG-aéreo ÷ CG-TIC. Meta de relevância: ≤ 1,5.<br>• <strong>Densidade-mínima-de-demanda</strong>: nº pax/dia/par OD para frequência mínima de 2 voos/dia operacionalmente sustentável (referência ANAC: ~80 pax/voo). Baseline: ANAC 2024.</td>
+                  <td>Estudo prepós-projeto — não entra no AHP do D-17. Define critérios de elegibilidade para projetos derivados (subsídio PROAR, expansão de aeródromo regional). Insumo direto para os critérios <strong>C3</strong> e <strong>C8</strong> aplicados a outros projetos.</td>
+                  <td>D-13, D-18</td>
+                </tr>
+                <tr>
+                  <td><strong>AER-P3</strong></td>
+                  <td><strong>Conexão ferroviária dedicada de passageiros São Paulo–Aeroporto de Guarulhos</strong> com integração tarifária à CPTM/Metrô. Avaliar ramal expresso ou modernização da Linha 13-Jade com material rodante de alta capacidade.</td>
+                  <td>1. Levantamento da capacidade residual da Linha 13-Jade e da subestação de tração. 2. Estudo de demanda induzida via modelo gravitacional (D-09). 3. Comparação de três alternativas: ramal expresso, reforço de frequência da L13, monotrilho de circulação interna. 4. Pré-dimensionamento CAPEX/OPEX via parâmetros do PNL 2050 e benchmarks (HEX Helsinque, Heathrow Express). 5. Análise de risco institucional (interface CPTM × concessionária aeroportuária).</td>
+                  <td>• <strong>Pax-trem/dia</strong>. Meta de viabilidade: ≥ 25.000 pax/dia (referência internacional para ramal aeroportuário dedicado).<br>• <strong>Tempo-Sé→GRU</strong>. Meta: ≤ 35 min porta-a-porta (vs. ~70 min atuais via L13 + transferência). Fonte: medição própria + GTFS CPTM.<br>• <strong>Headway pico</strong>. Meta: ≤ 10 min.<br>• <strong>VPL</strong> a uma TMA real de 8% — critério de elegibilidade para D-14: VPL &gt; 0 ou benefício social líquido &gt; 0 conforme D-16.</td>
+                  <td><strong>C2</strong> Alto (CAPEX elevado) · <strong>C6</strong> Alto (interface CPTM×concessionária) · <strong>C7</strong> Alto (prazo longo) · <strong>C1</strong> Alto (sensível à demanda induzida) · <strong>C3</strong> Alto · <strong>C10</strong> Médio. Discriminantes principais: <em>C2 e C6</em> — viabilidade depende de modelagem financeira robusta e arranjo institucional.</td>
+                  <td>D-13, D-14, D-15, D-17</td>
+                </tr>
+                <tr>
+                  <td><strong>AER-P4</strong></td>
+                  <td><strong>Programa de qualificação da acessibilidade terrestre aos 22 aeródromos regionais concedidos</strong> (CLI-F1). Sincronizar com o cronograma de investimentos da concessão SPI-SP para evitar obras desconexas no entorno.</td>
+                  <td>1. Coleta dos planos de investimento por aeródromo (concessionária + Plano Diretor de cada município). 2. Avaliação do nível de serviço (HCM 6) das vias de acesso em raio de 10 km. 3. Identificação de gargalos e proposição de intervenções complementares (rodoviárias e de transporte público). 4. Articulação institucional via fóruns regionais (D-05).</td>
+                  <td>• <strong>NS-acesso</strong> = nível de serviço HCM nas vias de acesso (A–F). Meta: ≤ C nos horários de pico de movimentação aeroportuária por aeródromo até 2033.<br>• <strong>T-cidade-aeroporto</strong> em min, percentil 85. Meta por porte do aeroporto (P1: ≤15 min; P2: ≤25 min; P3: ≤40 min).<br>• <strong>Cobertura-TC</strong>: existência de linha regular de TC entre sede municipal e aeroporto (binário). Meta: 100% dos 22 aeródromos até 2028.</td>
+                  <td><strong>C5</strong> Alto (equidade regional — aeródromos no interior) · <strong>C8</strong> Alto (sincronização com concessão SPI-SP) · <strong>C7</strong> Alto (janela de 30 anos da concessão) · <strong>C2</strong> Médio · <strong>C3</strong> Médio. Discriminante principal: <em>C8</em> — desconexão com cronograma da concessão anula benefícios.</td>
+                  <td>D-13, D-14</td>
+                </tr>
+                <tr>
+                  <td><strong>AER-P5</strong></td>
+                  <td><strong>Estudo de viabilidade de conexão ferroviária dedicada de carga entre Viracopos e o Porto de Santos</strong>, integrada à malha paulista (Rumo/MRS). Avaliar variantes greenfield e brownfield.</td>
+                  <td>1. Projeção de carga aérea de Viracopos para 2050 (cenários ANAC + IATA). 2. Identificação da fração com aderência à conexão ferroviária (commodities de alto valor com rota internacional via cabotagem ou exportação por Santos). 3. Pré-traçado e estimativa CAPEX por km com base no PNL 2050. 4. Análise de capacidade residual no eixo Campinas–Santos. 5. Triagem por materialidade (Etapa 6 do D-11).</td>
+                  <td>• <strong>TKU-cativo</strong> = tonelada-km útil potencial de carga aderente ao ferro. Critério de avanço para D-14: ≥ 500 mil TKU/ano por trecho.<br>• <strong>CAPEX/TKU</strong>. Critério: dentro do quartil inferior de benchmarks PNL 2050.<br>• <strong>Δ-CO₂</strong> evitado = (emissões rodo − emissões ferro) por TKU. Fator HBEFA aplicado no D-11 e no D-16.</td>
+                  <td><strong>C2</strong> Alto (CAPEX elevado) · <strong>C4</strong> Alto (ΔCO₂ expressivo) · <strong>C1</strong> Alto (B/C sensível à captura de carga) · <strong>C10</strong> Alto (incerteza de demanda cativa) · <strong>C7</strong> Alto. Discriminante principal: <em>C10</em> — hipóteses de captura de carga precisam de teste rigoroso antes do AHP.</td>
+                  <td>D-13, D-14</td>
+                </tr>
+                <tr>
+                  <td><strong>AER-P6</strong></td>
+                  <td><strong>Avaliação dos efeitos intermodais da expansão programada de Guarulhos e Viracopos</strong> sobre Rodoanel, Anhanguera, Bandeirantes, Dutra e Ayrton Senna no horizonte 2050.</td>
+                  <td>1. Cenários de expansão segundo Planos Diretores Aeroportuários vigentes. 2. Conversão de pax/ano e ton/ano em viagens equivalentes na rede rodoviária por hora-pico. 3. Alocação no Visum-PTV. 4. Identificação de trechos com NS rebaixado &gt; 1 nível por efeito da expansão. 5. Insumo direto para o D-13.</td>
+                  <td>• <strong>VHCD</strong> = veículos-hora de congestionamento adicional por cenário. Critério de materialidade: &gt; 5% sobre a baseline.<br>• <strong>Trechos-criticos</strong>: lista de trechos com NS rebaixado &gt; 1 nível. Saída direta para D-13.<br>• <strong>Δ-tempo-OD</strong> em pares OD selecionados.</td>
+                  <td>Estudo de identificação de pontos de atenção — não entra no AHP do D-17. Saida é lista de trechos críticos que gerão projetos específicos no D-14, esses sim hierarquizáveis pelos critérios <strong>C2/C3/C9</strong>.</td>
+                  <td>D-13, D-14</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="footer-note"><strong>Encaminhamento.</strong> Estes seis projetos são <strong>candidatos à carteira do D-14</strong>, não entregas finais do D-11. O D-11 entrega: (i) o método de medição de cada KPI; (ii) os dados a coletar no D-3 para fixar baselines; (iii) o filtro de materialidade que decidirá quais projetos seguem para o D-14. Projetos com baseline <em>“a apurar no D-2/D-3”</em> só podem ser hierarquizados pelo AHP do D-17 após a coleta no D-3.</div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ─────────── D11c_18 CLIMA ─────────── -->
+    <section id="clima" class="ss">
+      <div class="ss-hdr">
+        <span class="sn">03</span>
+        <span class="st">D11c_18 — Mudanças climáticas</span>
+        <span class="sbadge s-completo">Muito aderente ao TDR</span>
+      </div>
+      <div class="sb2">
+        <p class="sdesc"><strong>Formulação em avaliação:</strong> Estratégias para adaptação e resiliência às mudanças climáticas. Entre os temas analisados, este apresenta a base normativa mais consistente nos documentos oficiais, mas ainda requer maior delimitação operacional.</p>
+
+        <div class="two-col">
+          <div class="mini">
+            <h3 class="h-clima">Fundamentação normativa</h3>
+            <ul>
+              <li>O TDR estabelece alinhamento dos cenários ao PAC 2050.</li>
+              <li>O conceito de sustentabilidade estrutura o plano como um todo.</li>
+              <li>O TDR determina o tratamento de eletrificação e combustíveis verdes nos cenários futuros.</li>
+              <li>O D-07 recomenda acoplar coeficientes de emissão e hipóteses de GEE nas simulações.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3 class="h-clima">Riscos de abordagem</h3>
+            <ul>
+              <li>Converter-se em capítulo temático sem impacto sobre oferta e demanda.</li>
+              <li>Confundir agenda climática geral com variável de cenário logístico.</li>
+              <li>Descrever descarbonização sem traduzi-la em parâmetros, restrições ou intervenções.</li>
+            </ul>
+          </div>
+        </div>
+
+        <details open>
+          <summary>Leitura crítica do tema <span class="tag accent">Tema aderente, recorte amplo</span></summary>
+          <div class="det-body">
+            <div class="quote">A melhor aplicação do tema não consiste em reproduzir o PAC 2050, mas em traduzir a dimensão climática em dois grupos de efeito: degradação de desempenho da infraestrutura e transição tecnológica da matriz energética.</div>
+            <table>
+              <thead><tr><th>Dimensão</th><th>Como entra no PLI</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Eventos extremos</strong></td><td>Redução de capacidade, interrupções operacionais, vulnerabilidade de trechos e perda de confiabilidade.</td></tr>
+                <tr><td><strong>Hidrologia</strong></td><td>Variações de calado e capacidade na Hidrovia Tietê-Paraná.</td></tr>
+                <tr><td><strong>Descarbonização</strong></td><td>Penetração de eletrificação, biocombustíveis, GNV e hidrogênio de baixo carbono.</td></tr>
+                <tr><td><strong>Resiliência territorial</strong></td><td>Blue Spot Analysis, priorização de trechos sensíveis e programação de obras de adaptação.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details>
+          <summary>Formulação recomendada para o D-11 <span class="tag accent">Versão recomendada</span></summary>
+          <div class="det-body">
+            <div class="quote">Estratégias para adaptação e resiliência às mudanças climáticas, com foco na vulnerabilidade climática da infraestrutura de transportes, nos impactos de eventos extremos sobre oferta e confiabilidade da rede, nas variações hidrológicas com efeito sobre a hidrovia Tietê-Paraná e na descarbonização da matriz energética como variável de cenário.</div>
+            <ul style="padding-left:20px;font-size:12px;line-height:1.8">
+              <li><strong>Subeixo 1:</strong> vulnerabilidade climática da rede rodoviária e ferroviária.</li>
+              <li><strong>Subeixo 2:</strong> hidrovia e risco hidrológico sobre capacidade operacional.</li>
+              <li><strong>Subeixo 3:</strong> Blue Spot Analysis e pipeline de obras de adaptação.</li>
+              <li><strong>Subeixo 4:</strong> eletrificação, biocombustíveis e hidrogênio como variáveis de cenário.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Razões para maior robustez metodológica <span class="tag good">Ganho de aderência</span></summary>
+          <div class="det-body">
+            <ul style="padding-left:20px;font-size:12px;line-height:1.8">
+              <li>Estabelece aderência direta ao PAC 2050, explicitamente citado no TDR.</li>
+              <li>Permite construir cenários base, otimista e pessimista com pressupostos verificáveis.</li>
+              <li>Integra tecnologia, emissão, infraestrutura e confiabilidade da rede em uma mesma estrutura analítica.</li>
+              <li>Prepara de forma mais consistente a transição metodológica para D-12, D-13 e D-14.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Metodologia detalhada recomendada <span class="tag accent">Sequência executável</span></summary>
+          <div class="det-body">
+            <div class="quote">A metodologia proposta para D11c_18 busca converter o tema climático em variáveis de cenário, restrições operacionais e critérios de priorização. O foco não é produzir um diagnóstico climático genérico, mas traduzir o risco climático em desempenho de rede e necessidade de adaptação.</div>
+
+            <h3>Etapa 1. Identificação dos componentes mais vulneráveis da infraestrutura</h3>
+            <table>
+              <thead><tr><th>Item</th><th>Procedimento</th><th>Ferramenta / método</th><th>Produto</th></tr></thead>
+              <tbody>
+                <tr><td>Definição dos riscos</td><td>Estabelecer tipologias de risco relevantes: inundação, escorregamento, erosão, estiagem crítica e calor extremo.</td><td>Revisão documental e alinhamento com PAC 2050, Cemaden, ANA, DAEE e bases setoriais.</td><td>Matriz de riscos climáticos por modal.</td></tr>
+                <tr><td>Cruzamento espacial</td><td>Sobrepor a rede de transportes a camadas de relevo, drenagem, uso do solo, histórico de eventos e áreas críticas.</td><td>QGIS com análise espacial e geoprocessamento.</td><td>Mapa preliminar de trechos expostos.</td></tr>
+                <tr><td>Índice de vulnerabilidade</td><td>Combinar exposição, sensibilidade, criticidade funcional e redundância da rede em índice simples.</td><td>Matriz multicritério em Excel ou QGIS.</td><td>Classificação alta, média e baixa vulnerabilidade.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Etapa 2. Tradução de eventos extremos em perda de desempenho operacional</h3>
+            <div class="two-col">
+              <div class="mini">
+                <h3 class="h-clima">Como fazer</h3>
+                <ul>
+                  <li>Selecionar eventos representativos: chuva intensa, inundação, escorregamento, estiagem severa.</li>
+                  <li>Associar cada evento a um efeito operacional: redução de capacidade, aumento de tempo, interdição parcial ou total.</li>
+                  <li>Aplicar esses efeitos aos trechos classificados como críticos.</li>
+                </ul>
+              </div>
+              <div class="mini">
+                <h3 class="h-clima">Ferramentas</h3>
+                <ul>
+                  <li>QGIS para localização dos trechos afetados.</li>
+                  <li>Excel para matriz de perturbação e penalidades.</li>
+                  <li>Visum, quando houver maturidade suficiente da rede, para testar sensibilidade em tempo e conectividade.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="quote">O procedimento viável no D-11 é trabalhar com fatores de perturbação operacionais padronizados, em vez de tentar construir modelagem climática completa. O resultado esperado é uma tabela de sensibilidade climática da rede.</div>
+
+            <h3>Etapa 3. Avaliação hidrológica simplificada da Hidrovia Tietê-Paraná</h3>
+            <table>
+              <thead><tr><th>Componente</th><th>Como estimar</th><th>Ferramenta / método</th><th>Saída esperada</th></tr></thead>
+              <tbody>
+                <tr><td>Condição hidrológica</td><td>Levantar histórico de níveis d'água, restrições de calado e janelas operacionais.</td><td>Bases da ANA, operadores, relatórios técnicos da hidrovia e séries históricas disponíveis.</td><td>Série de referência para operação normal, restrita e crítica.</td></tr>
+                <tr><td>Capacidade efetiva</td><td>Relacionar faixas de condição hidrológica à capacidade da via, tamanho de comboio e restrições de navegação.</td><td>Tabela de equivalência operacional em Excel.</td><td>Curva simplificada condição hidrológica × capacidade.</td></tr>
+                <tr><td>Efeito na rede</td><td>Inferir redistribuição potencial de carga para rodovia e ferrovia quando a hidrovia entrar em condição restrita.</td><td>Cenário analítico qualitativo-quantitativo, apoiado por rede do PLI.</td><td>Hipóteses de oferta para o D-12.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Etapa 4. Inserção da descarbonização como variável de cenário</h3>
+            <table>
+              <thead><tr><th>Dimensão</th><th>Procedimento</th><th>Ferramenta / método</th><th>Produto</th></tr></thead>
+              <tbody>
+                <tr><td>Seleção tecnológica</td><td>Escolher tecnologias plausíveis por modo e horizonte: eletrificação, biometano, GNV, hidrogênio, SAF.</td><td>Leitura do PAC 2050, PEE 2050 e tendências setoriais.</td><td>Portfólio tecnológico de referência.</td></tr>
+                <tr><td>Trajetórias de adoção</td><td>Definir cenários de baixa, média e alta penetração tecnológica.</td><td>Planilha com parâmetros de adoção por horizonte.</td><td>Quadro de trajetórias de transição energética.</td></tr>
+                <tr><td>Efeitos materiais</td><td>Associar cada trajetória a efeitos sobre emissões, custo operacional e infraestrutura de abastecimento ou recarga.</td><td>Excel com parâmetros simplificados de comparação.</td><td>Base analítica para incorporação ao D-12 e apoio ao D-14.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Etapa 5. Filtro de materialidade</h3>
+            <div class="two-col">
+              <div class="mini">
+                <h3 class="h-clima">Critérios sugeridos</h3>
+                <ul>
+                  <li>Criticidade funcional do trecho ou sistema.</li>
+                  <li>Magnitude da perda de capacidade ou confiabilidade.</li>
+                  <li>Capacidade de parametrização em cenário.</li>
+                  <li>Aderência direta ao TDR e ao PAC 2050.</li>
+                  <li>Potencial de induzir intervenção futura.</li>
+                </ul>
+              </div>
+              <div class="mini">
+                <h3 class="h-clima">Como aplicar</h3>
+                <ul>
+                  <li>Pontuar cada item de 1 a 5 em Excel.</li>
+                  <li>Somar ou ponderar os critérios.</li>
+                  <li>Classificar em: entra no corpo principal, entra como apoio ou não entra.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="footer-note"><strong>Síntese metodológica do D11c_18:</strong> a análise deve identificar ativos vulneráveis, traduzir eventos extremos em perda de desempenho, estimar o efeito hidrológico sobre a hidrovia e estruturar trajetórias de descarbonização, retendo apenas os componentes com materialidade suficiente para influenciar os cenários do D-12.</div>
+          </div>
+        </details>
+
+        <details open>
+          <summary>Hipóteses de oferta futura, fatores de cenário e referências normativas <span class="tag accent">Saída do D-11 para D-10 / D-12 e insumo da carteira do D-14</span></summary>
+          <div class="det-body">
+            <div class="quote"><strong>Aviso metodológico.</strong> Vale o mesmo recorte do bloco anterior: o TDR posiciona o D-11 como análise de fatores (Meta 3.3) e reserva ao D-14 a entrega da carteira de mínimo 25 intervenções (Meta 4.1.2). A tabela abaixo distingue <strong>fatos consolidados</strong> de descarbonização e adaptação que devem entrar como premissas no D-10/D-12 e <strong>hipóteses de estudo ou intervenção</strong> que merecem teste de materialidade no D-13. As metodologias internacionais citadas dão lastro técnico-normativo às hipóteses propostas.</div>
+            <table>
+              <thead><tr><th>Cód.</th><th>Item</th><th>Natureza</th><th>Status real / referência</th><th>Fonte</th><th>Tratamento no PLI</th></tr></thead>
+              <tbody>
+                <tr><td><strong>CLI-F1</strong></td><td>Derrocamento de Nova Avanhandava (16 km, aprofundamento do canal em 3,5 m, remoção de 552 mil m³ de rocha) — convênio DNIT × Governo SP, R$ 293,8 milhões; término previsto 2026; obras com mais de 78% de execução em set/2025; aporte adicional de R$ 147,7 mi via Eletrobrás/MME (jun/2025).</td><td>Fato (em execução)</td><td>Obra contratada e em curso.</td><td><a href="https://www.gov.br/dnit/pt-br/assuntos/noticias/obras-no-pedral-de-nova-avanhandava-avancam-e-impulsionam-a-hidrovia-tiete-parana" target="_blank" rel="noopener">DNIT — junho 2025</a>; <a href="https://agenciagov.ebc.com.br/noticias/202506/alexandre-silveira-garante-r-147-milhoes-para-ampliar-hidrovia-tiete-parana" target="_blank" rel="noopener">MME — Eletrobras R$ 147,7 mi</a></td><td>Premissa de oferta futura no D-10 e parâmetro de janela operacional/calado no D-12. Não é projeto a propor; é insumo da Etapa 3 (curva condição × capacidade) e do D-13.</td></tr>
+                <tr><td><strong>CLI-F2</strong></td><td>Avaliação de modelagem de concessão da Hidrovia Tietê-Paraná, em andamento pelo Governo de SP (set/2025).</td><td>Fato (em estruturação)</td><td>Estudos preliminares.</td><td><a href="https://portalportuario.cl/governo-de-sp-avalia-possivel-concessao-da-hidrovia-do-tiete-parana/" target="_blank" rel="noopener">Portal Portuario — set/2025</a></td><td>Variável institucional para a esteira D-12 → D-18 (aspectos jurídicos e regulatórios).</td></tr>
+                <tr><td><strong>CLI-F3</strong></td><td>Programa BR do Mar — regulamentação do Decreto 12.532/2025 estimula cabotagem; previsão de redirecionamento de cargas com efeito sobre Porto de Santos e sobre rodovias paulistas (Imigrantes, Anchieta, Régis Bittencourt) e ferrovias.</td><td>Fato (regulamentado)</td><td>Decreto vigente.</td><td><a href="https://www.gov.br/portos-e-aeroportos/pt-br/assuntos/noticias/2025/07/governo-assina-decreto-que-regulamenta-a-cabotagem-no-brasil" target="_blank" rel="noopener">Ministério de Portos e Aeroportos — jul/2025</a></td><td>Variável de cenário no D-12 (redistribuição modal); mensurar efeito de descarbonização indireta na metodologia HBEFA do D-11.</td></tr>
+                <tr><td><strong>CLI-F4</strong></td><td>Lei Municipal 14.933/2009 (SP capital) — meta de zerar emissões dos ônibus urbanos até 2038; financiamento BID R$ 1,4 bi; uso complementar de biometano (~500 unidades em 2 anos). Decreto estadual 02/2025 prevê desmobilização da EMTU e reorganização do sistema metropolitano.</td><td>Fato (norma vigente + reestruturação institucional)</td><td>Em implementação parcial; meta intermediária 2028 frustrada.</td><td><a href="https://www.mobilize.org.br/noticias/14492/sao-paulo-supera-a-marca-de-mil-onibus-eletricos-mas-meta-ainda-segue-distante.html" target="_blank" rel="noopener">Mobilize Brasil</a></td><td>Premissa do cenário base de descarbonização da frota de transporte coletivo no D-12; ajuste do escopo da CLI-H4 ao novo arranjo institucional pós-EMTU.</td></tr>
+                <tr><td><strong>CLI-F5</strong></td><td>Plano de Ação Climática do Estado de SP (PAC 2050) e Plano Estadual de Energia (PEE 2050) — referência obrigatória citada no TDR.</td><td>Fato (norma estadual)</td><td>Documentos publicados.</td><td>SEMIL/SP — TDR PLI.</td><td>Premissa transversal a todo o D-11 e ao D-12.</td></tr>
+                <tr><td><strong>CLI-N1</strong></td><td><em>PIARC International Climate Change Adaptation Framework for Road Infrastructure</em> (2015 e atualização 2023) — guia internacional de referência da Associação Mundial de Estradas para avaliação de risco climático e definição de respostas de adaptação em redes rodoviárias.</td><td>Norma técnica internacional</td><td>Documento técnico.</td><td><a href="https://www.piarc.org/en/order-library/42628-en-PIARC%20International%20Climate%20Change%20Adaptation%20Framework%202023%20%E2%80%93%20TechnicalReport" target="_blank" rel="noopener">PIARC 2023 — Technical Report</a></td><td>Lastro metodológico das hipóteses CLI-H1 a CLI-H3. Adotar a sequência PIARC: identificação de ativos → avaliação de exposição → análise de risco → definição de respostas → priorização.</td></tr>
+                <tr><td><strong>CLI-N2</strong></td><td><em>Blue Spot Model</em> — Danish Road Directorate (Vejdirektoratet); reconhecido pela NDC Partnership e pela European Climate-ADAPT (EEA) como ferramenta de identificação de trechos rodoviários vulneráveis a inundação sob clima atual e futuro.</td><td>Metodologia técnica internacional</td><td>Modelo aplicado em vários países.</td><td><a href="https://ndcpartnership.org/knowledge-portal/climate-toolbox/blue-spot-model" target="_blank" rel="noopener">NDC Partnership — Blue Spot Model</a>; <a href="https://www.vejdirektoratet.dk/sites/default/files/2025-06/the_blue_spot_model.pdf" target="_blank" rel="noopener">Vejdirektoratet — relatório técnico</a></td><td>Base metodológica para a hipótese CLI-H3 (mapeamento de pontos azuis na rede paulista).</td></tr>
+                <tr><td><strong>CLI-H1</strong></td><td>Mapa estadual de vulnerabilidade climática da rede rodoviária (federal, estadual concedida, DER-SP e vicinais) seguindo o framework PIARC (CLI-N1), com classificação alta/média/baixa por trecho e cruzamento com camadas hidrológicas e de relevo.</td><td>Hipótese (estudo)</td><td>Não há mapeamento integrado público para SP.</td><td>Lacuna identificada; aderente a PIARC 2023.</td><td>Insumo da Etapa 1 e do D-13. Resultado pode embasar projetos da carteira do D-14.</td></tr>
+                <tr><td><strong>CLI-H2</strong></td><td>Programa plurianual de adaptação geotécnica e hidráulica (taludes, drenagem, bueiros, pontes) em rodovias prioritárias de serra: Anchieta, Imigrantes, Tamoios, Rio-Santos, Mogi-Bertioga e Oswaldo Cruz. Avaliar coordenação com PERs das concessionárias e contratos do DER-SP para evitar duplicação.</td><td>Hipótese</td><td>Intervenções pontuais existem; falta programa integrado estadual.</td><td>PIARC 2023; PERs Artesp.</td><td>Submeter à Etapa 5 (materialidade). Forte candidato à carteira do D-14 condicionado à inexistência no pipeline contratual.</td></tr>
+                <tr><td><strong>CLI-H3</strong></td><td>Aplicação da metodologia <em>Blue Spot</em> (CLI-N2) à rede rodoviária estadual prioritária, com mapeamento georreferenciado de pontos azuis críticos sob projeções climáticas regionalizadas (CMIP6).</td><td>Hipótese (estudo)</td><td>Sem aplicação documentada para o estado de SP.</td><td>NDC Partnership; Vejdirektoratet.</td><td>Insumo da Etapa 1; resultado deve compor pontos de atenção do D-13 e definir pipeline de obras candidato ao D-14.</td></tr>
+                <tr><td><strong>CLI-H4</strong></td><td>Plano estadual de descarbonização do transporte coletivo intermunicipal e metropolitano, considerando a desmobilização da EMTU (CLI-F4) e o portfólio combinado de eletrificação, biometano e GNV. Articular com cronograma do PEE 2050.</td><td>Hipótese</td><td>Iniciativas fragmentadas; sem plano estadual integrado pós-reforma EMTU.</td><td>Lacuna identificada; PEE 2050.</td><td>Trajetórias de adoção como variáveis de cenário no D-12 (Etapa 4); programa elegível ao D-14.</td></tr>
+                <tr><td><strong>CLI-H5</strong></td><td>Mapa estadual de infraestrutura de recarga rápida e ultrarrápida em corredores rodoviários estratégicos (Anhanguera, Bandeirantes, Dutra, Castello, Imigrantes/Anchieta, Régis Bittencourt), articulado com obrigações de PERs das concessões.</td><td>Hipótese</td><td>Iniciativas privadas isoladas; sem visão de rede.</td><td>Lacuna identificada.</td><td>Etapa 4; candidato a programa setorial no D-14.</td></tr>
+                <tr><td><strong>CLI-H6</strong></td><td>Estudo de viabilidade de hidrogênio de baixo carbono e Sustainable Aviation Fuel (SAF) para os hubs do Porto de Santos e do Aeroporto de Viracopos — explicitamente citado no TDR como combustível alternativo a considerar.</td><td>Hipótese (estudo)</td><td>Estudos setoriais privados em curso.</td><td>TDR PLI; PEE 2050.</td><td>Trajetória de alta penetração tecnológica para horizontes longos no D-12.</td></tr>
+              </tbody>
+            </table>
+            <div class="footer-note"><strong>Encaminhamento.</strong> CLI-F1 a CLI-F5 são <strong>fatos</strong> a incorporar no D-10/D-12 como premissas (não são projetos a propor). CLI-N1 e CLI-N2 são <strong>referências normativas internacionais</strong> que dão lastro técnico às hipóteses CLI-H1, CLI-H2 e CLI-H3. CLI-H1 a CLI-H6 são <strong>hipóteses</strong> que precisam atravessar o filtro de materialidade da Etapa 5 antes de serem candidatas à carteira do D-14. A carteira final é entrega do D-14, não do D-11.</div>
+          </div>
+        </details>
+
+        <details open>
+          <summary>Projetos propostos — metodologia e indicadores de eficácia <span class="tag accent">Carteira preliminar para o D-14</span></summary>
+          <div class="det-body">
+            <div class="quote"><strong>Como ler.</strong> Mesma convenção do bloco aéreo, incluindo a coluna de <em>critérios candidatos para AHP (D-17)</em>. As metodologias seguem PIARC 2023 (CLI-N1) para risco rodoviário e Blue Spot Model (CLI-N2) para mapeamento de inundação. As metas de descarbonização ancoram-se no PEE 2050 e no PAC 2050. O conjunto C1–C10 de critérios AHP é o mesmo definido no bloco aéreo.</div>
+
+            <table>
+              <thead><tr><th style="width:8%">Cód.</th><th style="width:22%">Projeto / objetivo</th><th style="width:24%">Metodologia (etapas)</th><th style="width:24%">Indicadores de eficácia</th><th style="width:16%">Critérios candidatos AHP (D-17)</th><th style="width:6%">Produto-alvo</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>CLI-P1</strong></td>
+                  <td><strong>Mapa estadual de vulnerabilidade climática da rede rodoviária</strong> (federal, estadual concedida, DER-SP, vicinais) seguindo PIARC 2023 (CLI-N1).</td>
+                  <td>1. Inventário georreferenciado da rede em SIG (D-06). 2. Cruzamento com camadas de exposição: precipitação extrema (projeções CMIP6 regionalizadas), suscetibilidade a deslizamento (IPT), inundação (CPRM/ANA), ondas de calor. 3. Cálculo de índice composto V = f(exposição, sensibilidade, criticidade da função, redundância da rede). 4. Classificação por trecho em alta/média/baixa. 5. Validação por especialistas DER-SP/concessionárias.</td>
+                  <td>• <strong>%-rede-classificada</strong>: cobertura do mapeamento (% km da rede). Meta: 100% das rodovias estaduais e federais até final do D-13.<br>• <strong>IVC</strong> = índice de vulnerabilidade composto (0–1) por trecho. Saída entregue como camada SIG.<br>• <strong>%-rede-em-classe-alta</strong>. Baseline: a estabelecer (primeira mensuração no estado).<br>• <strong>Concordância inter-avaliadores</strong> (kappa de Cohen) na validação por especialistas. Meta: ≥ 0,7.</td>
+                  <td>Estudo habilitador — não entra no AHP do D-17. É a base de dados que alimenta os critérios <strong>C9</strong> (resiliência) e <strong>C5</strong> (impacto social) de todos os projetos rodoviários e fornece o próprio critério de priorização para o programa CLI-P2.</td>
+                  <td>D-13, D-14</td>
+                </tr>
+                <tr>
+                  <td><strong>CLI-P2</strong></td>
+                  <td><strong>Programa de adaptação geotécnica e hidráulica em rodovias de serra</strong>: Anchieta, Imigrantes, Tamoios, Rio-Santos, Mogi-Bertioga, Oswaldo Cruz. Coordenado com PERs de concessões e DER-SP.</td>
+                  <td>1. Inventário das intervenções já contratadas. 2. Aplicação do CLI-P1 nesses corredores. 3. Engenharia conceitual por tipologia (talude, drenagem, ponte, bueiro). 4. Estimativa CAPEX/OPEX via SICRO. 5. Análise B/C considerando custo de interrupção (lost-revenue + custo social do desvio). 6. Hierarquização AHP no D-17.</td>
+                  <td>• <strong>Dias-de-interrupção/ano</strong> por trecho. Baseline 2020-2025: a consolidar com Artesp/DER-SP. Meta: −50% em 10 anos pós-intervenção.<br>• <strong>Tempo-médio-de-restabelecimento</strong> após evento extremo (h). Meta: ≤ 24 h em trechos críticos.<br>• <strong>Custo-evitado/ano</strong> (R$): perda econômica evitada por interrupção, calculada pelo método do D-16.<br>• <strong>%-trechos-com-monitoramento</strong> (instrumentação geotécnica/hidrológica). Meta: 100% dos trechos classe alta até 2030.</td>
+                  <td><strong>C9</strong> Alto (resiliência é o próprio objetivo) · <strong>C1</strong> Alto (custo evitado é o B/C dominante) · <strong>C5</strong> Alto (acessibilidade ao litoral e à serra) · <strong>C8</strong> Alto (interface com PERs) · <strong>C2</strong> Médio · <strong>C7</strong> Médio. Discriminantes: <em>C9 e C1</em> — priorização por custo evitado por evento extremo.</td>
+                  <td>D-14, D-15, D-17</td>
+                </tr>
+                <tr>
+                  <td><strong>CLI-P3</strong></td>
+                  <td><strong>Aplicação do Blue Spot Model</strong> (CLI-N2) à rede rodoviária estadual prioritária para identificar trechos vulneráveis a inundação sob clima atual e projetado.</td>
+                  <td>1. Aquisição de MDT de alta resolução (≤ 5 m) para corredores prioritários. 2. Execução do algoritmo de pontos azuis (depressões na superfície) sobrepondo a rede. 3. Cruzamento com séries históricas de precipitação e projeções CMIP6. 4. Classificação dos pontos azuis por (área alagável × profundidade × criticidade da rede). 5. Validação em campo amostral.</td>
+                  <td>• <strong>Nº de pontos azuis críticos</strong> identificados.<br>• <strong>Volume potencial de retenção</strong> (m³) por ponto.<br>• <strong>Frequência projetada de alagamento</strong> (eventos/ano para cenário RCP 4.5 e 8.5).<br>• <strong>Acurácia da validação em campo</strong>: % de pontos confirmados em vistoria amostral. Meta: ≥ 80%.</td>
+                  <td>Estudo — não entra no AHP. Define um pipeline de obras de drenagem que serão hierarquizadas no D-17 prioritariamente pelos critérios <strong>C9</strong> (resiliência), <strong>C1</strong> (custo evitado por inundação) e <strong>C5</strong> (população exposta).</td>
+                  <td>D-13, D-14</td>
+                </tr>
+                <tr>
+                  <td><strong>CLI-P4</strong></td>
+                  <td><strong>Estudo de capacidade hidrológica futura da Hidrovia Tietê-Paraná</strong> sob cenários de mudança climática, complementando o derrocamento de Nova Avanhandava (CLI-F1).</td>
+                  <td>1. Reconstrução de séries de nível, calado e janela operacional 2010-2025 (ANA, DAEE, AHRANA). 2. Aplicação de modelo hidrológico (SWAT ou MGB-IPH) com forçantes climáticas CMIP6. 3. Construção da curva condição hidrológica × capacidade (TKU/ano). 4. Análise de redistribuição modal (carga que migra para rodovia/ferrovia em cenário de redução de calado). 5. Recomendações de mitigação (operacional + estrutural).</td>
+                  <td>• <strong>Janela operacional</strong>: dias/ano com calado ≥ 2,5 m. Baseline: ANA 2015-2024. Meta de monitoramento: ≥ 320 dias/ano em 2050 (cenário com adaptação).<br>• <strong>Capacidade-pico</strong> (TKU/ano) por cenário climático.<br>• <strong>%-carga-redistribuída</strong> a rodovia em cenário de seca extrema (proxy de risco para Castello/Anhanguera).<br>• <strong>Δ-CO₂</strong> = aumento de emissões na rede rodo-ferro caso a hidrovia perca capacidade.</td>
+                  <td>Estudo de cenário — não entra no AHP. Calibra os critérios <strong>C9</strong> e <strong>C4</strong> aplicados aos projetos hidroviários e ferroviários derivados (eclusagem, terminais intermodais, reforço de capacidade rodo-ferro alternativa).</td>
+                  <td>D-13, D-14</td>
+                </tr>
+                <tr>
+                  <td><strong>CLI-P5</strong></td>
+                  <td><strong>Plano estadual de descarbonização do transporte coletivo intermunicipal e metropolitano</strong>, ajustado à desmobilização da EMTU (CLI-F4) e ao PEE 2050.</td>
+                  <td>1. Inventário da frota atual por operador, idade, motorização. 2. Definição de trajetórias por corredor (elétrica, biometano, GNV, diesel S10) com modelo TCO (Total Cost of Ownership). 3. Mapeamento de eletropostos e plantas de biometano. 4. Definição de cronograma de renovação compatível com vida útil contratual. 5. Análise jurídico-institucional (D-18) considerando reforma EMTU.</td>
+                  <td>• <strong>%-frota-zero-emissão</strong> (BEV + biometano + GNV). Meta: 30% até 2033, 70% até 2043, 100% até 2050.<br>• <strong>g-CO₂eq/pax-km</strong>. Baseline 2025: a apurar via fator HBEFA aplicado à frota atual. Meta: −80% até 2050.<br>• <strong>NOx e MP2,5/pax-km</strong>: redução em corredores de RMSP, Campinas, Baixada.<br>• <strong>%-paradas-com-acessibilidade-elétrica</strong> (potência instalada disponível para recarga).</td>
+                  <td><strong>C4</strong> Alto (objetivo central é descarbonização) · <strong>C5</strong> Alto (qualidade do ar em RMSP) · <strong>C6</strong> Alto (reforma EMTU + marco regulatório) · <strong>C2</strong> Alto (CAPEX de frota e infraestrutura) · <strong>C7</strong> Alto · <strong>C10</strong> Médio (TCO de tecnologias emergentes). Discriminante principal: <em>C6</em> — viabilidade institucional pós-EMTU é crítica.</td>
+                  <td>D-14, D-17, D-18</td>
+                </tr>
+                <tr>
+                  <td><strong>CLI-P6</strong></td>
+                  <td><strong>Mapa estadual de infraestrutura de recarga rápida e ultrarrápida</strong> em corredores rodoviários estratégicos, articulado com obrigações de PERs.</td>
+                  <td>1. Levantamento dos eletropostos existentes (ABVE, ANEEL). 2. Cálculo da demanda futura por veículo elétrico em SP por corredor (cenários PEE 2050). 3. Definição de espaçamento ótimo entre estações por tipo de via. 4. Aderência às obrigações já previstas em PERs vigentes. 5. Pleitos a incluir em renovações contratuais futuras.</td>
+                  <td>• <strong>Distância-máxima-entre-estações</strong> (km) por corredor. Meta: ≤ 100 km em corredores estratégicos até 2030; ≤ 60 km até 2040.<br>• <strong>Potência-instalada</strong> (MW) por trecho de 100 km.<br>• <strong>%-cobertura</strong> da malha estadual concedida com eletroposto a ≤ 50 km. Meta: 100% até 2035.<br>• <strong>Tempo-médio-de-recarga</strong> (min) para 80% da bateria.</td>
+                  <td><strong>C8</strong> Alto (depende da inclusão em PERs) · <strong>C4</strong> Alto · <strong>C7</strong> Médio (curto/médio prazo) · <strong>C2</strong> Médio (CAPEX privado em sua maior parte) · <strong>C6</strong> Médio (regulação ANEEL/Artesp). Discriminante: <em>C8</em> — sem aderir a PERs, vira mero plano indicativo.</td>
+                  <td>D-14, D-15</td>
+                </tr>
+                <tr>
+                  <td><strong>CLI-P7</strong></td>
+                  <td><strong>Estudo de viabilidade de hidrogênio de baixo carbono e SAF</strong> para os hubs do Porto de Santos e do Aeroporto de Viracopos.</td>
+                  <td>1. Mapeamento de potenciais ofertantes em SP (cana, biomassa, eletrólise verde com solar/eólica). 2. Estimativa de demanda potencial de SAF em Viracopos e H₂ no Porto de Santos (cenários IATA, IEA). 3. Análise de gargalos logísticos (terminal, armazenagem, distribuição). 4. Análise jurídica (D-18) — marco regulatório de combustíveis de baixo carbono.</td>
+                  <td>• <strong>%-mistura-SAF</strong> em querosene de aviação consumido em Viracopos. Meta: alinhada à ICAO CORSIA (2% em 2025, 10% em 2030, 65% em 2050).<br>• <strong>Capacidade-de-produção-SP</strong> (t/ano) de SAF e H₂ de baixo carbono. Meta a ser fixada em conjunto com PEE 2050.<br>• <strong>Δ-CO₂eq evitado</strong> (Mt/ano) no setor aéreo e marítimo paulista.<br>• <strong>Custo-marginal-de-abatimento</strong> (R$/tCO₂) — critério para entrada na hierarquização AHP.</td>
+                  <td><strong>C4</strong> Alto (alto potencial de abatimento) · <strong>C10</strong> Alto (incerteza tecnológica e de mercado) · <strong>C6</strong> Alto (marco regulatório em construção) · <strong>C7</strong> Alto (horizonte longo) · <strong>C2</strong> Médio. Discriminante principal: <em>C10</em> — risco tecnológico exige cenários múltiplos no AHP.</td>
+                  <td>D-13, D-14</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="footer-note"><strong>Encaminhamento.</strong> Os sete projetos cobrem os quatro subeixos do tema. Três tipologias de medição: (i) <em>indicadores de processo</em> (cobertura de mapeamento, validação) verificáveis ao final do D-13; (ii) <em>indicadores de resultado físico</em> (dias de interrupção, frota zero-emissão) com mensuração anual após implantação; (iii) <em>indicadores de impacto</em> (CO₂ evitado, custo evitado) calculados pelo método do D-16. Critério explícito de avanço para o D-14: projetos com KPIs cujos baselines não puderam ser apurados no D-3 só seguem com nota técnica de incerteza anexada.</div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const navBtns = document.querySelectorAll('.ni');
+  const sections = document.querySelectorAll('.ss');
+  function activate(tab){
+    navBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    sections.forEach(s => s.classList.toggle('active-tab', s.id === tab));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  navBtns.forEach(b => b.addEventListener('click', () => activate(b.dataset.tab)));
+})();
+</script>
+</body>
+</html>
