@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios D11 - PLI Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-12 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                <i class="fas fa-folder-open mr-3"></i>Relatórios D11
+            </h1>
+            <p class="text-xl text-purple-100 max-w-2xl mx-auto">
+                Documentos de Execução - Silvio
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <!-- Back Button -->
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium">
+                <i class="fas fa-arrow-left mr-2"></i> Voltar ao Hub
+            </a>
+        </div>
+
+        <!-- Reports Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Adesão D11C -->
+            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-pie text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Adesão D11C</h3>
+                <p class="text-gray-600 mb-4">Análise de Adesão D11C 09 e D11C 18 - TDR PLI</p>
+                <a href="aderencia_d11c_09_e_d11c_18_tdr_pli.html" target="_blank" class="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium">
+                    Acessar <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Análise D11 Aéreo Clima -->
+            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                <div class="w-14 h-14 bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-cloud-sun text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Análise D11 Aéreo Clima</h3>
+                <p class="text-gray-600 mb-4">Análise de D11 Aéreo e Clima</p>
+                <a href="analise_d11_aereo_clima.html" target="_blank" class="inline-flex items-center text-sky-600 hover:text-sky-700 font-medium">
+                    Acessar <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Resumo Metodologia -->
+            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                <div class="w-14 h-14 bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-book text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Resumo Metodologia</h3>
+                <p class="text-gray-600 mb-4">Resumo da Metodologia de Temas D11</p>
+                <a href="resumo_metodologia_temas_d11.html" target="_blank" class="inline-flex items-center text-violet-600 hover:text-violet-700 font-medium">
+                    Acessar <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Sistematização Temas -->
+            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                <div class="w-14 h-14 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-sitemap text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Sistematização Temas</h3>
+                <p class="text-gray-600 mb-4">Sistematização dos Temas D11 - PLI</p>
+                <a href="sistematizacao_temas_d11_pli.html" target="_blank" class="inline-flex items-center text-rose-600 hover:text-rose-700 font-medium">
+                    Acessar <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Sumário Resultados -->
+            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100 md:col-span-2">
+                <div class="w-14 h-14 bg-gradient-to-br from-lime-500 to-lime-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-file-lines text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Sumário Resultados</h3>
+                <p class="text-gray-600 mb-4">Sumário dos Resultados dos Temas D11</p>
+                <a href="sumario_resultados_temas_d11.html" target="_blank" class="inline-flex items-center text-lime-600 hover:text-lime-700 font-medium">
+                    Acessar <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-400">
+                <i class="fas fa-code mr-2"></i>PLI Hub - Central de Aplicações Web
+            </p>
+            <p class="text-gray-500 text-sm mt-2">
+                © 2026 - Todos os direitos reservados
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
