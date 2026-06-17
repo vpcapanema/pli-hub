@@ -47,15 +47,57 @@
         box-shadow: 0 8px 20px rgba(28, 61, 89, 0.15);
       }
       .app-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        container-type: inline-size;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        justify-items: center;
+        align-content: start;
         text-align: center;
+        height: 100%;
       }
       .app-card .text-sm.mb-3 {
-        align-self: stretch;
+        justify-self: stretch;
         width: 100%;
+        align-self: start;
+        margin-bottom: 0;
         text-align: justify;
+        text-align-last: left;
+        text-wrap: pretty;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphenate-limit-chars: 6 3 2;
+        line-height: 1.55;
+        word-spacing: normal;
+        letter-spacing: normal;
+        overflow-wrap: break-word;
+      }
+      .app-card > a {
+        align-self: center;
+        padding-top: 0.75rem;
+      }
+      .app-card h3.title-single-line {
+        white-space: nowrap;
+        width: 100%;
+        font-size: calc(1.125rem - 0.5px);
+        line-height: 1.75rem;
+      }
+      @container (max-width: 212px) {
+        .app-card h3.title-single-line--long {
+          font-size: calc(1.0625rem - 0.5px);
+          line-height: 1.5rem;
+        }
+      }
+      @container (max-width: 200px) {
+        .app-card h3.title-single-line--long {
+          font-size: calc(1rem - 0.5px);
+          line-height: 1.5rem;
+        }
+      }
+      .app-cards-grid {
+        align-items: stretch;
+      }
+      .app-cards-grid > .app-card {
+        min-height: 100%;
       }
       .gradient-bg {
         background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 100%);
@@ -374,7 +416,10 @@
             >
               <i class="fas fa-calculator text-white text-xl"></i>
             </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+            <h3
+              class="text-lg font-semibold mb-2 title-single-line title-single-line--long"
+              style="color: var(--navy)"
+            >
               Calculadora Aderência 2.0
             </h3>
             <p class="text-sm mb-3" style="color: var(--muted)">
@@ -434,7 +479,10 @@
             >
               <i class="fas fa-clipboard-list text-white text-xl"></i>
             </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+            <h3
+              class="text-lg font-semibold mb-2 title-single-line"
+              style="color: var(--navy)"
+            >
               Formulário Embarcadores
             </h3>
             <p class="text-sm mb-3" style="color: var(--muted)">
@@ -580,7 +628,7 @@
           // Create grid for cards in this theme
           const cardsGrid = document.createElement("div");
           cardsGrid.className =
-            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4";
+            "app-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4";
 
           grouped[theme].forEach((card) => {
             cardsGrid.appendChild(card);
