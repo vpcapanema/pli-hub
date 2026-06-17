@@ -140,6 +140,35 @@
             </a>
           </div>
 
+          <!-- PLI Smart Router -->
+          <div
+            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
+            data-theme="Sistemas Maiores"
+            data-name="PLI Smart Router"
+          >
+            <div
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+              style="background: linear-gradient(135deg, #0ea5e9, #0369a1)"
+            >
+              <i class="fas fa-route text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
+              PLI Smart Router
+            </h3>
+            <p class="text-sm mb-3" style="color: var(--muted)">
+              Roteador inteligente com cálculo de rotas por coordenadas ou CEP
+              usando OpenStreetMap, OSRM e ViaCEP
+            </p>
+            <a
+              href="https://pli-smartrouter.onrender.com"
+              target="_blank"
+              class="inline-flex items-center text-sm font-medium"
+              style="color: #0ea5e9"
+            >
+              Acessar <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
           <!-- Sistema Apoio Tomada Decisão -->
           <div
             class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
@@ -410,35 +439,6 @@
             </a>
           </div>
 
-          <!-- PLI Smart Router -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Ferramentas Analíticas e de Produção"
-            data-name="PLI Smart Router"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="background: linear-gradient(135deg, #0ea5e9, #0369a1)"
-            >
-              <i class="fas fa-route text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              PLI Smart Router
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Roteador inteligente com cálculo de rotas por coordenadas ou CEP
-              usando OpenStreetMap, OSRM e ViaCEP
-            </p>
-            <a
-              href="https://pli-smartrouter.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: #0ea5e9"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
           <!-- Relatórios D11 -->
           <div
             class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
@@ -511,11 +511,27 @@
           grouped[theme].push(card);
         });
 
-        // Sort cards alphabetically within each theme by data-name
+        // Sort cards within each theme (custom order where defined, then A–Z)
+        const cardOrderByTheme = {
+          "Sistemas Maiores": [
+            "SIGMA-PLI",
+            "SRA PLI Starter",
+            "PLI Smart Router",
+          ],
+        };
+
         Object.keys(grouped).forEach((theme) => {
+          const order = cardOrderByTheme[theme];
           grouped[theme].sort((a, b) => {
             const nameA = a.getAttribute("data-name") || "";
             const nameB = b.getAttribute("data-name") || "";
+            if (order) {
+              const indexA = order.indexOf(nameA);
+              const indexB = order.indexOf(nameB);
+              const rankA = indexA === -1 ? order.length + 1 : indexA;
+              const rankB = indexB === -1 ? order.length + 1 : indexB;
+              if (rankA !== rankB) return rankA - rankB;
+            }
             return nameA.localeCompare(nameB);
           });
         });
