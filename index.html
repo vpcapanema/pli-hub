@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PLI Hub - Central de Aplicações</title>
-    <meta
-      name="description"
-      content="Central de aplicações web do Programa Litoral Integrado (PLI-SP)."
-    />
-    <meta name="theme-color" content="#1c3d59" />
+    <meta name="description" content="Central de aplicações web do Programa Litoral Integrado (PLI-SP)." />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PLI Hub" />
@@ -16,636 +12,611 @@
     <link rel="icon" href="/icons/icon-192.png" type="image/png" />
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
       :root {
-        --navy: #1c3d59;
-        --deep: #003b5a;
-        --blue: #116593;
-        --green: #3ec26e;
-        --green-dk: #2a9450;
-        --bg: #eef1f5;
+        --navy:    #1c3d59;
+        --deep:    #003b5a;
+        --blue:    #116593;
+        --green:   #3ec26e;
+        --green-dk:#2a9450;
+        --bg:      #eef1f5;
         --surface: #fff;
-        --border: #d5dce6;
-        --text: #1a1a2e;
-        --muted: #4f5d6e;
+        --border:  #d5dce6;
+        --text:    #1a1a2e;
+        --muted:   #4f5d6e;
+        --sidebar-w: 256px;
       }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
       body {
         font-family: "Inter", sans-serif;
         background: var(--bg);
         color: var(--text);
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
-      .card-hover {
-        transition: all 0.3s ease;
+
+      .layout {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
       }
-      .card-hover:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(28, 61, 89, 0.15);
+
+      /* SIDEBAR */
+      .sidebar {
+        width: var(--sidebar-w);
+        background: linear-gradient(180deg, #012d44 0%, #001f30 100%);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        overflow: hidden;
+        transition: width 0.3s cubic-bezier(.4,0,.2,1);
+        border-right: 1px solid rgba(255,255,255,0.07);
       }
-      .app-card {
-        container-type: inline-size;
+      .sidebar.collapsed { width: 0; }
+
+      .sidebar-brand {
+        padding: 1.25rem 1.1rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.09);
+        flex-shrink: 0;
+      }
+      .sidebar-brand h1 {
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 0.2rem;
+        white-space: nowrap;
+      }
+      .sidebar-brand p {
+        color: rgba(255,255,255,0.42);
+        font-size: 0.67rem;
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      .sidebar-search {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        position: relative;
+        flex-shrink: 0;
+      }
+      .sidebar-search input {
+        width: 100%;
+        background: rgba(255,255,255,0.09);
+        border: 1px solid rgba(255,255,255,0.13);
+        border-radius: 0.5rem;
+        padding: 0.45rem 0.75rem 0.45rem 2rem;
+        color: #fff;
+        font-size: 0.78rem;
+        outline: none;
+        transition: background 0.2s, border-color 0.2s;
+        font-family: inherit;
+      }
+      .sidebar-search input::placeholder { color: rgba(255,255,255,0.35); }
+      .sidebar-search input:focus {
+        background: rgba(255,255,255,0.16);
+        border-color: rgba(255,255,255,0.25);
+      }
+      .sidebar-search .s-icon {
+        position: absolute;
+        left: 1.6rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255,255,255,0.35);
+        font-size: 0.7rem;
+        pointer-events: none;
+      }
+
+      .sidebar-nav {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.5rem 0;
+      }
+      .sidebar-nav::-webkit-scrollbar { width: 3px; }
+      .sidebar-nav::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.12);
+        border-radius: 2px;
+      }
+
+      .nav-section-label {
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.25);
+        padding: 0.75rem 1rem 0.25rem;
+        white-space: nowrap;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.55rem 1rem;
+        cursor: pointer;
+        color: rgba(255,255,255,0.6);
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+        white-space: nowrap;
+        overflow: hidden;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+      .nav-item.active {
+        background: rgba(255,255,255,0.11);
+        color: #fff;
+        border-left-color: var(--green);
+      }
+      .nav-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+      .nav-label { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+      .nav-count {
+        flex-shrink: 0;
+        font-size: 0.67rem;
+        font-weight: 600;
+        background: rgba(255,255,255,0.13);
+        color: rgba(255,255,255,0.6);
+        border-radius: 9999px;
+        padding: 0.08rem 0.45rem;
+        transition: all 0.2s;
+      }
+      .nav-item.active .nav-count { background: var(--green); color: #fff; }
+
+      .sidebar-footer {
+        padding: 0.75rem 1rem;
+        border-top: 1px solid rgba(255,255,255,0.07);
+        color: rgba(255,255,255,0.28);
+        font-size: 0.63rem;
+        flex-shrink: 0;
+        line-height: 1.5;
+        white-space: nowrap;
+      }
+
+      /* MAIN AREA */
+      .main-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-width: 0;
+      }
+
+      /* TOPBAR */
+      .topbar {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 0.6rem 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+        z-index: 10;
+      }
+      .topbar-btn {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--navy);
+        cursor: pointer;
+        font-size: 0.85rem;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.4rem;
+        transition: background 0.15s;
+        flex-shrink: 0;
+      }
+      .topbar-btn:hover { background: var(--bg); }
+      .topbar-brand { display: flex; flex-direction: column; }
+      .topbar-brand .tb-title { font-size: 0.9rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+      .topbar-brand .tb-sub { font-size: 0.68rem; color: var(--muted); }
+      .topbar-spacer { flex: 1; }
+
+      .topbar-stats { display: flex; gap: 1rem; align-items: center; }
+      .topbar-stat { text-align: center; }
+      .topbar-stat .ts-num { font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1; }
+      .topbar-stat .ts-lbl { font-size: 0.6rem; color: var(--muted); white-space: nowrap; }
+
+      .topbar-search {
+        position: relative;
+        flex: 1;
+        max-width: 280px;
+      }
+      .topbar-search input {
+        width: 100%;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        padding: 0.38rem 0.75rem 0.38rem 2rem;
+        font-size: 0.78rem;
+        outline: none;
+        color: var(--text);
+        font-family: inherit;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      .topbar-search input:focus { border-color: var(--blue); background: #fff; }
+      .topbar-search .ts-icon {
+        position: absolute;
+        left: 0.65rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 0.7rem;
+        pointer-events: none;
+      }
+
+      /* MOBILE TABS */
+      .mobile-tabs {
+        display: none;
+        padding: 0.5rem 0.9rem;
+        gap: 0.4rem;
+        overflow-x: auto;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .mobile-tabs::-webkit-scrollbar { display: none; }
+
+      .tab-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 9999px;
+        font-size: 0.73rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        border: 1.5px solid var(--border);
+        color: var(--muted);
+        background: #fff;
+        transition: all 0.2s;
+        -webkit-user-select: none;
+        user-select: none;
+        flex-shrink: 0;
+      }
+      .tab-pill.active { color: #fff; border-color: transparent; }
+      .pill-count { font-size: 0.62rem; background: rgba(255,255,255,0.25); border-radius: 9999px; padding: 0 0.35rem; }
+      .tab-pill:not(.active) .pill-count { background: rgba(0,0,0,0.07); color: var(--muted); }
+
+      /* CONTENT AREA */
+      .content-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.1rem 1.25rem;
+      }
+      .content-area::-webkit-scrollbar { width: 5px; }
+      .content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+      /* SECTIONS */
+      .section-block { margin-bottom: 1.5rem; }
+      .section-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; }
+      .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+      .section-head h2 { font-size: 0.92rem; font-weight: 700; color: var(--navy); margin: 0; white-space: nowrap; }
+      .section-count {
+        font-size: 0.67rem; font-weight: 600; color: var(--muted);
+        background: var(--bg); border: 1px solid var(--border);
+        border-radius: 9999px; padding: 0.06rem 0.5rem; flex-shrink: 0;
+      }
+      .section-rule { flex: 1; height: 1.5px; border-radius: 1px; opacity: 0.35; min-width: 20px; }
+
+      /* CARDS */
+      .cards-grid {
         display: grid;
-        grid-template-rows: auto auto 1fr auto;
-        justify-items: center;
+        grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+        gap: 0.85rem;
+      }
+
+      .app-card {
+        background: var(--surface);
+        border-radius: 0.875rem;
+        border: 1px solid var(--border);
+        padding: 0 0 1rem;
+        display: grid;
+        grid-template-rows: 3px auto auto 1fr auto;
         align-content: start;
         text-align: center;
-        height: 100%;
+        justify-items: center;
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
-      .app-card .text-sm.mb-3 {
-        justify-self: stretch;
-        width: 100%;
-        align-self: start;
-        margin-bottom: 0;
-        text-align: justify;
-        text-align-last: left;
-        text-wrap: pretty;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-        hyphenate-limit-chars: 6 3 2;
-        line-height: 1.55;
-        word-spacing: normal;
-        letter-spacing: normal;
-        overflow-wrap: break-word;
+      .app-card .card-stripe { width: 100%; height: 3px; }
+      .app-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px rgba(28,61,89,0.13);
+        border-color: transparent;
       }
-      .app-card > a {
-        align-self: center;
-        padding-top: 0.75rem;
+
+      .card-icon {
+        width: 44px; height: 44px;
+        border-radius: 0.625rem;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0.85rem 0 0.55rem;
       }
-      .app-card h3.title-single-line {
-        white-space: nowrap;
-        width: 100%;
-        font-size: calc(1.125rem - 0.5px);
-        line-height: 1.75rem;
+      .card-icon i { color: #fff; font-size: 1.1rem; }
+      .card-title { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin: 0 0.75rem 0.4rem; line-height: 1.25; }
+      .card-desc {
+        font-size: 0.73rem; color: var(--muted);
+        margin: 0 0.85rem;
+        text-align: justify; text-align-last: left;
+        -webkit-hyphens: auto; hyphens: auto;
+        line-height: 1.5; align-self: start;
+        width: calc(100% - 1.7rem);
       }
-      @container (max-width: 212px) {
-        .app-card h3.title-single-line--long {
-          font-size: calc(1.0625rem - 0.5px);
-          line-height: 1.5rem;
-        }
+      .card-link {
+        display: inline-flex; align-items: center; gap: 0.35rem;
+        font-size: 0.75rem; font-weight: 700; text-decoration: none;
+        padding: 0.38rem 0.9rem; border-radius: 0.5rem; margin-top: 0.85rem;
+        transition: filter 0.2s, transform 0.2s; letter-spacing: .01em;
       }
-      @container (max-width: 200px) {
-        .app-card h3.title-single-line--long {
-          font-size: calc(1rem - 0.5px);
-          line-height: 1.5rem;
-        }
+      .card-link:hover { filter: brightness(1.08); transform: translateX(2px); }
+
+      /* EMPTY */
+      .empty-state { text-align: center; padding: 4rem 1rem 2rem; color: var(--muted); display: none; }
+      .empty-state i { font-size: 2.5rem; opacity: 0.22; display: block; margin-bottom: 0.75rem; }
+      .empty-state p { margin: 0; font-size: 0.88rem; }
+
+      /* FOOTER */
+      .footer {
+        padding: 0.55rem 1.25rem;
+        background: var(--navy);
+        color: rgba(255,255,255,0.42);
+        font-size: 0.66rem;
+        text-align: center;
+        flex-shrink: 0;
       }
-      .app-cards-grid {
-        align-items: stretch;
+      .footer strong { color: rgba(255,255,255,0.7); }
+      .footer-icon { margin-right: .35rem; }
+      .sidebar-icon-brand { color: var(--green); margin-right: .5rem; }
+      .topbar-icon-brand  { color: var(--blue);  margin-right: .35rem; }
+
+      /* ANIMATIONS */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
       }
-      .app-cards-grid > .app-card {
-        min-height: 100%;
+      .app-card { animation: fadeUp 0.28s ease both; }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .sidebar { display: none !important; }
+        .topbar-brand { display: none; }
+        .topbar-stats { display: none; }
+        .mobile-tabs { display: flex; }
+        .topbar-search { max-width: none; }
+        .cards-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); }
       }
-      .gradient-bg {
-        background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 100%);
-      }
-      .theme-header {
-        color: var(--navy);
-      }
-      .theme-divider {
-        background: linear-gradient(to right, var(--blue), var(--green));
-      }
+      @media (min-width: 769px) { .mobile-tabs { display: none !important; } }
+      @media (max-width: 1024px) { .topbar-stats { display: none; } }
     </style>
   </head>
-  <body class="h-screen flex flex-col">
-    <!-- Header -->
-    <header class="gradient-bg text-white py-6 px-4 flex-shrink-0">
-      <div class="max-w-7xl mx-auto text-center">
-        <h1 class="text-3xl md:text-4xl font-bold mb-2">
-          <i class="fas fa-cubes mr-3"></i>PLI Hub
-        </h1>
-        <p class="text-base text-blue-100 max-w-2xl mx-auto">
-          Central de Aplicações Web - Acesse todas as aplicações do PLI em um só
-          lugar
-        </p>
-      </div>
-    </header>
+  <body>
+    <div class="layout">
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-auto px-4 py-6">
-      <div class="max-w-7xl mx-auto">
-        <!-- Applications Grid -->
-        <div id="appsGrid" class="space-y-6">
-          <!-- SIGMA-PLI -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Sistemas Maiores"
-            data-name="SIGMA-PLI"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(135deg, var(--blue), var(--deep));
-              "
-            >
-              <i class="fas fa-project-diagram text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              SIGMA-PLI
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Sistema de Gestão e Monitoramento de Acidentes
-            </p>
-            <a
-              href="http://56.125.163.194/"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--blue)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <h1><i class="fas fa-cubes sidebar-icon-brand"></i>PLI Hub</h1>
+          <p>Central de Aplicações Web · PLI-SP</p>
+        </div>
+        <div class="sidebar-search">
+          <i class="fas fa-search s-icon"></i>
+          <input type="text" id="sidebarSearch" placeholder="Buscar aplicação…" autocomplete="off" />
+        </div>
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
+        <div class="sidebar-footer">
+          <div>© 2026 — VPC-GEOSER</div>
+          <div>Vinicius do Prado Capanema</div>
+        </div>
+      </aside>
+
+      <!-- MAIN AREA -->
+      <div class="main-area">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+          <button class="topbar-btn" id="sidebarToggle" title="Expandir/recolher menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="topbar-brand">
+            <span class="tb-title"><i class="fas fa-cubes topbar-icon-brand"></i>PLI Hub</span>
+            <span class="tb-sub">Central de Aplicações Web</span>
           </div>
-
-          <!-- SRA PLI Starter -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Ferramentas Analíticas e de Produção"
-            data-name="SRA PLI Starter"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  var(--green),
-                  var(--green-dk)
-                );
-              "
-            >
-              <i class="fas fa-rocket text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              SRA PLI Starter
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Sistema de Recursos Aéreos - Versão Starter
-            </p>
-            <a
-              href="https://sra-pli-starter.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--green)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- PLI Smart Router -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Sistemas Maiores"
-            data-name="PLI Smart Router"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="background: linear-gradient(135deg, #0ea5e9, #0369a1)"
-            >
-              <i class="fas fa-route text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              PLI Smart Router
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Roteador inteligente com cálculo de rotas por coordenadas ou CEP
-              usando OpenStreetMap, OSRM e ViaCEP
-            </p>
-            <a
-              href="http://pli-smartrouter.56-125-163-194.sslip.io/"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: #0ea5e9"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Sistema Apoio Tomada Decisão -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Sistemas Maiores"
-            data-name="Sistema Apoio Decisão"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(135deg, var(--navy), var(--deep));
-              "
-            >
-              <i class="fas fa-lightbulb text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              Sistema Apoio Decisão
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Ferramenta de Construção de Sistema de Apoio à Tomada de Decisão
-            </p>
-            <a
-              href="https://ferramenta-construcao-sistema-apoio.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--blue)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- PLI Reporta -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Sistemas Maiores"
-            data-name="PLI Reporta"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="background: linear-gradient(135deg, #f59e0b, #d97706)"
-            >
-              <i class="fas fa-bullhorn text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              PLI Reporta
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Reporte cidadão de ocorrências viárias - buracos, alagamentos,
-              acidentes, bloqueios, obras e sinalização - com mapa público e
-              moderação
-            </p>
-            <a
-              href="http://pli-reporta.56-125-163-194.sslip.io/"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: #d97706"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- PLI-HazardTrack -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Sistemas Maiores"
-            data-name="PLI-HazardTrack"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="background: linear-gradient(135deg, #7c3aed, #5b21b6)"
-            >
-              <i class="fas fa-cloud-showers-heavy text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              PLI-HazardTrack
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              SIGMA Resiliência Climática - monitoramento pluviométrico
-              MERGE/INPE com níveis operacionais PPDC para a malha do DER-SP.
-              Adaptado do SAMAEG
-            </p>
-            <a
-              href="http://pli-hazardtrack.56-125-163-194.sslip.io/"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: #7c3aed"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Acidentes Infosiga -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Análises Exploratórias"
-            data-name="Acidentes Infosiga"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="background: linear-gradient(135deg, #dc2626, #991b1b)"
-            >
-              <i class="fas fa-car-crash text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              Acidentes Infosiga
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Análise Exploratória de Acidentes - Infosiga
-            </p>
-            <a
-              href="https://acidentes-infosiga.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: #dc2626"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Acidentes DER Análise -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Análises Exploratórias"
-            data-name="Acidentes DER"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="background: linear-gradient(135deg, #ec4899, #db2777)"
-            >
-              <i class="fas fa-chart-bar text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              Acidentes DER
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Análise Exploratória de Acidentes - DER
-            </p>
-            <a
-              href="https://acidentes-der-analise-exploratoria.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: #ec4899"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Densidade Malha SP -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Análises Exploratórias"
-            data-name="Densidade Malha SP"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(135deg, var(--blue), var(--deep));
-              "
-            >
-              <i class="fas fa-road text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              Densidade Malha SP
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Análise de Densidade de Malha Estadual - SP
-            </p>
-            <a
-              href="https://densidade-de-malha-estadual-sp.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--blue)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Calculadora Aderência -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Ferramentas Analíticas e de Produção"
-            data-name="Calculadora Aderência 2.0"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  var(--green),
-                  var(--green-dk)
-                );
-              "
-            >
-              <i class="fas fa-calculator text-white text-xl"></i>
-            </div>
-            <h3
-              class="text-lg font-semibold mb-2 title-single-line title-single-line--long"
-              style="color: var(--navy)"
-            >
-              Calculadora Aderência 2.0
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Calculadora de Aderência de Indicadores
-            </p>
-            <a
-              href="https://calculadora-aderencia-indicadores-2-0.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--green)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- AHP Tool Calculator -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Ferramentas Analíticas e de Produção"
-            data-name="AHP Tool Calculator"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(135deg, var(--navy), var(--deep));
-              "
-            >
-              <i class="fas fa-balance-scale text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              AHP Tool Calculator
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Ferramenta de Análise Hierárquica (AHP)
-            </p>
-            <a
-              href="https://vpc-geoser-ahp-tool-calculator.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--blue)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Formulário Embarcadores -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Ferramentas Analíticas e de Produção"
-            data-name="Formulário Embarcadores"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(135deg, var(--blue), var(--deep));
-              "
-            >
-              <i class="fas fa-clipboard-list text-white text-xl"></i>
-            </div>
-            <h3
-              class="text-lg font-semibold mb-2 title-single-line"
-              style="color: var(--navy)"
-            >
-              Formulário Embarcadores
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Formulário de Entrevista com Embarcadores
-            </p>
-            <a
-              href="https://formulario-entrevista-embarcadores.onrender.com"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--blue)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-          </div>
-
-          <!-- Relatórios D11 -->
-          <div
-            class="app-card bg-white rounded-xl p-5 shadow-md card-hover border border-gray-200"
-            data-theme="Ferramentas Analíticas e de Produção"
-            data-name="Relatórios D11"
-          >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-              style="
-                background: linear-gradient(
-                  135deg,
-                  var(--green),
-                  var(--green-dk)
-                );
-              "
-            >
-              <i class="fas fa-folder-open text-white text-xl"></i>
-            </div>
-            <h3 class="text-lg font-semibold mb-2" style="color: var(--navy)">
-              Relatórios D11
-            </h3>
-            <p class="text-sm mb-3" style="color: var(--muted)">
-              Documentos de Execução - Silvio
-            </p>
-            <a
-              href="relatorios_d11.html"
-              target="_blank"
-              class="inline-flex items-center text-sm font-medium"
-              style="color: var(--green)"
-            >
-              Acessar <i class="fas fa-arrow-right ml-2"></i>
-            </a>
+          <div class="topbar-spacer"></div>
+          <div class="topbar-stats" id="topbarStats"></div>
+          <div class="topbar-search">
+            <i class="fas fa-search ts-icon"></i>
+            <input type="text" id="topbarSearch" placeholder="Buscar aplicação…" autocomplete="off" />
           </div>
         </div>
-      </div>
-    </main>
 
-    <!-- Footer -->
-    <footer
-      class="flex-shrink-0 py-4 px-4"
-      style="background: var(--navy); color: #e8f0f8"
-    >
-      <div class="max-w-7xl mx-auto text-center">
-        <p class="text-sm mb-1">
-          <i class="fas fa-code mr-2"></i>PLI Hub - Central de Aplicações Web
-        </p>
-        <p class="text-xs" style="color: rgba(255, 255, 255, 0.6)">
-          Desenvolvido por <strong>Vinicius do Prado Capanema</strong> -
-          <strong>VPC-GEOSER</strong>
-        </p>
-        <p class="text-xs mt-1" style="color: rgba(255, 255, 255, 0.5)">
-          © 2026 - Todos os direitos reservados
-        </p>
+        <!-- MOBILE TABS -->
+        <div class="mobile-tabs" id="mobileTabs"></div>
+
+        <!-- CONTENT -->
+        <div class="content-area" id="contentArea">
+          <div class="empty-state" id="emptyState">
+            <i class="fas fa-search"></i>
+            <p>Nenhuma aplicação encontrada para "<span id="emptyQuery"></span>".</p>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+          <i class="fas fa-code footer-icon"></i>
+          PLI Hub — Desenvolvido por <strong>Vinicius do Prado Capanema</strong> ·
+          <strong>VPC-GEOSER</strong> · © 2026 — Todos os direitos reservados
+        </div>
+
       </div>
-    </footer>
+    </div>
 
     <script>
-      // Group and sort cards by theme
-      function groupAndSortCards() {
-        const appsGrid = document.getElementById("appsGrid");
-        const appCards = Array.from(document.querySelectorAll(".app-card"));
+    const THEMES = [
+      { id:'major',    name:'Sistemas Maiores',                          dot:'#116593', gradient:'linear-gradient(90deg,#116593,#3ec26e)' },
+      { id:'analysis', name:'Análises Exploratórias',                    dot:'#f59e0b', gradient:'linear-gradient(90deg,#f59e0b,#ef4444)' },
+      { id:'tools',    name:'Ferramentas Analíticas e de Produção',      dot:'#3ec26e', gradient:'linear-gradient(90deg,#3ec26e,#0ea5e9)' },
+    ];
 
-        // Group cards by theme
-        const grouped = {};
-        appCards.forEach((card) => {
-          const theme = card.getAttribute("data-theme") || "Outros";
-          if (!grouped[theme]) {
-            grouped[theme] = [];
-          }
-          grouped[theme].push(card);
+    const APPS = [
+      // Sistemas Maiores
+      { theme:'major',    name:'SIGMA-PLI',                 icon:'fas fa-project-diagram',      iconBg:'linear-gradient(135deg,#116593,#003b5a)', url:'http://56.125.163.194/',                                                   desc:'Sistema integrado de gestão e monitoramento de acidentes e ocorrências na malha viária do PLI-SP.' },
+      { theme:'major',    name:'PLI Smart Router',           icon:'fas fa-route',                iconBg:'linear-gradient(135deg,#0ea5e9,#0369a1)', url:'http://pli-smartrouter.56-125-163-194.sslip.io/',                         desc:'Roteador inteligente com cálculo de rotas por coordenadas ou CEP usando OpenStreetMap, OSRM e ViaCEP.' },
+      { theme:'major',    name:'PLI Reporta',                icon:'fas fa-bullhorn',             iconBg:'linear-gradient(135deg,#f59e0b,#d97706)', url:'http://pli-reporta.56-125-163-194.sslip.io/',                            desc:'Reporte cidadão de ocorrências viárias — buracos, alagamentos, acidentes, bloqueios, obras e sinalização — com mapa público e moderação.' },
+      { theme:'major',    name:'PLI-HazardTrack',            icon:'fas fa-cloud-showers-heavy',  iconBg:'linear-gradient(135deg,#7c3aed,#5b21b6)', url:'http://pli-hazardtrack.56-125-163-194.sslip.io/',                        desc:'SIGMA Resiliência Climática — monitoramento pluviométrico MERGE/INPE com níveis operacionais PPDC para a malha do DER-SP. Adaptado do SAMAEG.' },
+      { theme:'major',    name:'FAD-Stats 2.0',              icon:'fas fa-chart-area',           iconBg:'linear-gradient(135deg,#0d9488,#0f766e)', url:'http://56.125.163.194/fad-stats/2_0/',                                   desc:'Plataforma de análise estatística e espacial de dados oficiais — IBGE, SECEX, MTE e ANTT. Explore produção agropecuária, comércio exterior, mercado de trabalho e logística com 21 tipos de gráfico e 6 de mapa.' },
+      // Análises Exploratórias
+      { theme:'analysis', name:'Acidentes Infosiga',         icon:'fas fa-car-crash',            iconBg:'linear-gradient(135deg,#dc2626,#991b1b)', url:'https://acidentes-infosiga.onrender.com',                                desc:'Análise exploratória de acidentes com dados do sistema Infosiga, com filtros por período, tipo e localização.' },
+      { theme:'analysis', name:'Acidentes DER',              icon:'fas fa-chart-bar',            iconBg:'linear-gradient(135deg,#ec4899,#db2777)', url:'https://acidentes-der-analise-exploratoria.onrender.com',                desc:'Análise exploratória de acidentes com dados do DER-SP, com visualizações interativas por rodovia e período.' },
+      { theme:'analysis', name:'Densidade Malha SP',         icon:'fas fa-road',                 iconBg:'linear-gradient(135deg,#116593,#003b5a)', url:'https://densidade-de-malha-estadual-sp.onrender.com',                    desc:'Análise de densidade da malha viária estadual paulista com visualizações por trecho e região.' },
+      // Ferramentas Analíticas e de Produção
+      { theme:'tools',    name:'SRA PLI Starter',            icon:'fas fa-rocket',               iconBg:'linear-gradient(135deg,#3ec26e,#2a9450)', url:'https://sra-pli-starter.onrender.com',                                   desc:'Sistema de Recursos Aéreos — Versão Starter para gestão de recursos e operações aéreas do PLI.' },
+      { theme:'tools',    name:'Sistema Apoio Decisão',      icon:'fas fa-lightbulb',            iconBg:'linear-gradient(135deg,#1c3d59,#003b5a)', url:'https://ferramenta-construcao-sistema-apoio.onrender.com',               desc:'Ferramenta de construção de sistema de apoio à tomada de decisão com estruturação multicritério.' },
+      { theme:'tools',    name:'Calculadora Aderência 2.0',  icon:'fas fa-calculator',           iconBg:'linear-gradient(135deg,#3ec26e,#2a9450)', url:'https://calculadora-aderencia-indicadores-2-0.onrender.com',             desc:'Calculadora de aderência de indicadores para avaliação de conformidade de metas e resultados.' },
+      { theme:'tools',    name:'AHP Tool Calculator',        icon:'fas fa-balance-scale',        iconBg:'linear-gradient(135deg,#1c3d59,#003b5a)', url:'https://vpc-geoser-ahp-tool-calculator.onrender.com',                   desc:'Ferramenta de análise hierárquica de processos (AHP) para priorização e ponderação de critérios.' },
+      { theme:'tools',    name:'Formulário Embarcadores',    icon:'fas fa-clipboard-list',       iconBg:'linear-gradient(135deg,#116593,#003b5a)', url:'https://formulario-entrevista-embarcadores.onrender.com',               desc:'Formulário de entrevista com embarcadores para levantamento de dados logísticos e de transporte.' },
+      { theme:'tools',    name:'Relatórios D11',             icon:'fas fa-folder-open',          iconBg:'linear-gradient(135deg,#3ec26e,#2a9450)', url:'relatorios_d11.html',                                                    desc:'Documentos de execução e relatórios técnicos referentes às atividades D11 do PLI.' },
+    ];
+
+    const LINK_STYLE = {
+      major:    { bg:'#e8f4fc', color:'#116593' },
+      analysis: { bg:'#fef3c7', color:'#d97706' },
+      tools:    { bg:'#ecfdf5', color:'#2a9450' },
+    };
+
+    let activeTheme = 'all';
+    let searchQuery  = '';
+
+    function buildSidebar() {
+      const nav = document.getElementById('sidebarNav');
+      nav.innerHTML = '';
+      nav.appendChild(makeNavItem('all', null, 'Todas as aplicações', APPS.length));
+      const lbl = document.createElement('div');
+      lbl.className = 'nav-section-label';
+      lbl.textContent = 'Categorias';
+      nav.appendChild(lbl);
+      THEMES.forEach(th => {
+        const count = APPS.filter(a => a.theme === th.id).length;
+        nav.appendChild(makeNavItem(th.id, th.dot, th.name, count));
+      });
+    }
+
+    function makeNavItem(id, dot, label, count) {
+      const el = document.createElement('div');
+      el.className = 'nav-item' + (activeTheme === id ? ' active' : '');
+      el.innerHTML = `<div class="nav-dot" style="background:${dot || 'rgba(255,255,255,0.35)'}"></div><span class="nav-label">${label}</span><span class="nav-count">${count}</span>`;
+      el.addEventListener('click', () => setTheme(id));
+      return el;
+    }
+
+    function buildMobileTabs() {
+      const tabs = document.getElementById('mobileTabs');
+      tabs.innerHTML = '';
+      tabs.appendChild(makePill('all', '#1c3d59', 'Todas', APPS.length));
+      THEMES.forEach(th => {
+        const count = APPS.filter(a => a.theme === th.id).length;
+        const short = th.name === 'Ferramentas Analíticas e de Produção' ? 'Ferramentas' : th.name;
+        tabs.appendChild(makePill(th.id, th.dot, short, count));
+      });
+    }
+
+    function makePill(id, color, label, count) {
+      const el = document.createElement('div');
+      const isActive = activeTheme === id;
+      el.className = 'tab-pill' + (isActive ? ' active' : '');
+      if (isActive) el.style.background = color;
+      el.innerHTML = `${label} <span class="pill-count">${count}</span>`;
+      el.addEventListener('click', () => setTheme(id));
+      return el;
+    }
+
+    function buildTopbarStats() {
+      const el = document.getElementById('topbarStats');
+      el.innerHTML = THEMES.map((th, i) => {
+        const count = APPS.filter(a => a.theme === th.id).length;
+        const short = th.name.split(' ')[0];
+        return (i > 0 ? '<div style="width:1px;height:20px;background:var(--border)"></div>' : '') +
+          `<div class="topbar-stat"><div class="ts-num" style="color:${th.dot}">${count}</div><div class="ts-lbl">${short}</div></div>`;
+      }).join('');
+    }
+
+    function render() {
+      const area  = document.getElementById('contentArea');
+      const empty = document.getElementById('emptyState');
+      Array.from(area.querySelectorAll('.section-block')).forEach(e => e.remove());
+      const q = searchQuery.trim().toLowerCase();
+      let total = 0;
+      const themes = activeTheme === 'all' ? THEMES : THEMES.filter(t => t.id === activeTheme);
+      themes.forEach(theme => {
+        const apps = APPS.filter(a => {
+          if (a.theme !== theme.id) return false;
+          if (!q) return true;
+          return a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q);
         });
-
-        // Sort cards within each theme (custom order where defined, then A–Z)
-        const cardOrderByTheme = {
-          "Sistemas Maiores": [
-            "SIGMA-PLI",
-            "PLI Smart Router",
-          ],
-        };
-
-        Object.keys(grouped).forEach((theme) => {
-          const order = cardOrderByTheme[theme];
-          grouped[theme].sort((a, b) => {
-            const nameA = a.getAttribute("data-name") || "";
-            const nameB = b.getAttribute("data-name") || "";
-            if (order) {
-              const indexA = order.indexOf(nameA);
-              const indexB = order.indexOf(nameB);
-              const rankA = indexA === -1 ? order.length + 1 : indexA;
-              const rankB = indexB === -1 ? order.length + 1 : indexB;
-              if (rankA !== rankB) return rankA - rankB;
-            }
-            return nameA.localeCompare(nameB);
-          });
+        if (!apps.length) return;
+        total += apps.length;
+        const section = document.createElement('div');
+        section.className = 'section-block';
+        const head = document.createElement('div');
+        head.className = 'section-head';
+        head.innerHTML = `<div class="section-dot" style="background:${theme.dot}"></div><h2>${theme.name}</h2><span class="section-count">${apps.length}</span><div class="section-rule" style="background:${theme.gradient}"></div>`;
+        section.appendChild(head);
+        const grid = document.createElement('div');
+        grid.className = 'cards-grid';
+        apps.forEach((app, i) => {
+          const ls = LINK_STYLE[app.theme];
+          const card = document.createElement('div');
+          card.className = 'app-card';
+          card.style.animationDelay = `${i * 35}ms`;
+          card.innerHTML = `<div class="card-stripe" style="background:${theme.gradient}"></div><div class="card-icon" style="background:${app.iconBg}"><i class="${app.icon}"></i></div><div class="card-title">${app.name}</div><p class="card-desc">${app.desc}</p><a href="${app.url}" target="_blank" rel="noopener" class="card-link" style="background:${ls.bg};color:${ls.color}">Acessar <i class="fas fa-arrow-right" style="font-size:.62rem"></i></a>`;
+          grid.appendChild(card);
         });
+        section.appendChild(grid);
+        area.insertBefore(section, empty);
+      });
+      document.getElementById('emptyQuery').textContent = q;
+      empty.style.display = total === 0 ? 'block' : 'none';
+    }
 
-        // Sort themes in custom order
-        const themeOrder = [
-          "Sistemas Maiores",
-          "Análises Exploratórias",
-          "Ferramentas Analíticas e de Produção",
-        ];
-        const sortedThemes = Object.keys(grouped).sort((a, b) => {
-          const indexA = themeOrder.indexOf(a);
-          const indexB = themeOrder.indexOf(b);
-          if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-          if (indexA !== -1) return -1;
-          if (indexB !== -1) return 1;
-          return a.localeCompare(b);
-        });
+    function setTheme(id) {
+      activeTheme = id;
+      buildSidebar();
+      buildMobileTabs();
+      render();
+    }
 
-        // Clear the grid
-        appsGrid.innerHTML = "";
+    function onSearch(q) {
+      searchQuery = q;
+      document.getElementById('sidebarSearch').value = q;
+      document.getElementById('topbarSearch').value  = q;
+      render();
+    }
 
-        // Create sections for each theme
-        sortedThemes.forEach((theme) => {
-          // Create theme header
-          const themeHeader = document.createElement("div");
-          themeHeader.className = "mb-4";
-          themeHeader.innerHTML = `
-            <h2 class="text-xl font-bold theme-header flex items-center">
-              <i class="fas fa-folder mr-3" style="color: var(--blue);"></i>${theme}
-            </h2>
-            <div class="h-1 theme-divider rounded-full mt-2" style="width: 60px;"></div>
-          `;
-          appsGrid.appendChild(themeHeader);
+    document.getElementById('sidebarSearch').addEventListener('input', e => onSearch(e.target.value));
+    document.getElementById('topbarSearch').addEventListener('input',  e => onSearch(e.target.value));
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    });
 
-          // Create grid for cards in this theme
-          const cardsGrid = document.createElement("div");
-          cardsGrid.className =
-            "app-cards-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4";
+    buildSidebar();
+    buildMobileTabs();
+    buildTopbarStats();
+    render();
 
-          grouped[theme].forEach((card) => {
-            cardsGrid.appendChild(card);
-          });
-
-          appsGrid.appendChild(cardsGrid);
-        });
-      }
-
-      // Initialize grouping on page load
-      document.addEventListener("DOMContentLoaded", groupAndSortCards);
-
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js").catch(() => {});
-        });
-      }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+    }
     </script>
   </body>
 </html>
