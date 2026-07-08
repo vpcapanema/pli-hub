@@ -1,17 +1,17 @@
 const CACHE_VERSION = "pli-hub-v1";
 
 const PRECACHE = [
-  "/",
-  "/index.html",
-  "/manifest.webmanifest",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/relatorios_d11.html",
-  "/aderencia_d11c_09_e_d11c_18_tdr_pli.html",
-  "/sumario_resultados_temas_d11.html",
-  "/carteira_projetos_d11c_09_18.html",
-  "/sistematizacao_temas_d11_pli.html",
-  "/resumo_metodologia_temas_d11.html",
+  "/pli-hub/",
+  "/pli-hub/index.html",
+  "/pli-hub/manifest.webmanifest",
+  "/pli-hub/icons/icon-192.png",
+  "/pli-hub/icons/icon-512.png",
+  "/pli-hub/relatorios_d11.html",
+  "/pli-hub/aderencia_d11c_09_e_d11c_18_tdr_pli.html",
+  "/pli-hub/sumario_resultados_temas_d11.html",
+  "/pli-hub/carteira_projetos_d11c_09_18.html",
+  "/pli-hub/sistematizacao_temas_d11_pli.html",
+  "/pli-hub/resumo_metodologia_temas_d11.html",
 ];
 
 self.addEventListener("install", (event) => {

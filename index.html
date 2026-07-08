@@ -8,9 +8,9 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PLI Hub" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="icon" href="/icons/icon-192.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="manifest" href="/pli-hub/manifest.webmanifest" />
+    <link rel="icon" href="/pli-hub/icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/pli-hub/icons/icon-192.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -472,10 +472,10 @@
     const APPS = [
       // Sistemas Maiores
       { theme:'major',    name:'SIGMA-PLI',                 icon:'fas fa-project-diagram',      iconBg:'linear-gradient(135deg,#116593,#003b5a)', url:'http://56.125.163.194/',                                                   desc:'Sistema integrado de gestão e monitoramento de acidentes e ocorrências na malha viária do PLI-SP.' },
-      { theme:'major',    name:'PLI Smart Router',           icon:'fas fa-route',                iconBg:'linear-gradient(135deg,#0ea5e9,#0369a1)', url:'http://pli-smartrouter.56-125-163-194.sslip.io/',                         desc:'Roteador inteligente com cálculo de rotas por coordenadas ou CEP usando OpenStreetMap, OSRM e ViaCEP.' },
-      { theme:'major',    name:'PLI Reporta',                icon:'fas fa-bullhorn',             iconBg:'linear-gradient(135deg,#f59e0b,#d97706)', url:'http://pli-reporta.56-125-163-194.sslip.io/',                            desc:'Reporte cidadão de ocorrências viárias — buracos, alagamentos, acidentes, bloqueios, obras e sinalização — com mapa público e moderação.' },
-      { theme:'major',    name:'PLI-HazardTrack',            icon:'fas fa-cloud-showers-heavy',  iconBg:'linear-gradient(135deg,#7c3aed,#5b21b6)', url:'http://pli-hazardtrack.56-125-163-194.sslip.io/',                        desc:'SIGMA Resiliência Climática — monitoramento pluviométrico MERGE/INPE com níveis operacionais PPDC para a malha do DER-SP. Adaptado do SAMAEG.' },
-      { theme:'major',    name:'FAD-Stats 2.0',              icon:'fas fa-chart-area',           iconBg:'linear-gradient(135deg,#0d9488,#0f766e)', url:'http://56.125.163.194/fad-stats/2_0/',                                   desc:'Plataforma de análise estatística e espacial de dados oficiais — IBGE, SECEX, MTE e ANTT. Explore produção agropecuária, comércio exterior, mercado de trabalho e logística com 21 tipos de gráfico e 6 de mapa.' },
+      { theme:'major',    name:'PLI Smart Router',           icon:'fas fa-route',                iconBg:'linear-gradient(135deg,#0ea5e9,#0369a1)', url:'https://56.125.163.194/smart-router/',                                     desc:'Roteador inteligente com cálculo de rotas por coordenadas ou CEP usando OpenStreetMap, OSRM e ViaCEP.' },
+      { theme:'major',    name:'PLI Reporta',                icon:'fas fa-bullhorn',             iconBg:'linear-gradient(135deg,#f59e0b,#d97706)', url:'https://56.125.163.194/pli-reporta/',                                    desc:'Reporte cidadão de ocorrências viárias — buracos, alagamentos, acidentes, bloqueios, obras e sinalização — com mapa público e moderação.' },
+      { theme:'major',    name:'PLI-HazardTrack',            icon:'fas fa-cloud-showers-heavy',  iconBg:'linear-gradient(135deg,#7c3aed,#5b21b6)', url:'https://56.125.163.194/pli-hazardtrack/',                                desc:'SIGMA Resiliência Climática — monitoramento pluviométrico MERGE/INPE com níveis operacionais PPDC para a malha do DER-SP. Adaptado do SAMAEG.' },
+      { theme:'major',    name:'FAD-Stats 2.0',              icon:'fas fa-chart-area',           iconBg:'linear-gradient(135deg,#0d9488,#0f766e)', url:'https://56.125.163.194/fad-stats/',                                      desc:'Plataforma de análise estatística e espacial de dados oficiais — IBGE, SECEX, MTE e ANTT. Explore produção agropecuária, comércio exterior, mercado de trabalho e logística com 21 tipos de gráfico e 6 de mapa.' },
       // Análises Exploratórias
       { theme:'analysis', name:'Acidentes Infosiga',         icon:'fas fa-car-crash',            iconBg:'linear-gradient(135deg,#dc2626,#991b1b)', url:'https://acidentes-infosiga.onrender.com',                                desc:'Análise exploratória de acidentes com dados do sistema Infosiga, com filtros por período, tipo e localização.' },
       { theme:'analysis', name:'Acidentes DER',              icon:'fas fa-chart-bar',            iconBg:'linear-gradient(135deg,#ec4899,#db2777)', url:'https://acidentes-der-analise-exploratoria.onrender.com',                desc:'Análise exploratória de acidentes com dados do DER-SP, com visualizações interativas por rodovia e período.' },
@@ -615,7 +615,7 @@
     render();
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js', { scope: '/pli-hub/' }).catch(() => {}); });
     }
     </script>
   </body>
