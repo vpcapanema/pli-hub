@@ -616,7 +616,7 @@
     render();
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js', { scope: '/pli-hub/' }).catch(() => {}); });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js?v=20260814', { scope: '/pli-hub/' }).catch(() => {}); });
     }
     </script>
   </body>
