@@ -482,12 +482,9 @@
       { theme:'analysis', name:'Acidentes DER',              icon:'fas fa-chart-bar',            iconBg:'linear-gradient(135deg,#ec4899,#db2777)', url:'https://acidentes-der-analise-exploratoria.onrender.com',                desc:'Análise exploratória de acidentes com dados do DER-SP, com visualizações interativas por rodovia e período.' },
       { theme:'analysis', name:'Densidade Malha SP',         icon:'fas fa-road',                 iconBg:'linear-gradient(135deg,#116593,#003b5a)', url:'https://densidade-de-malha-estadual-sp.onrender.com',                    desc:'Análise de densidade da malha viária estadual paulista com visualizações por trecho e região.' },
       // Ferramentas Analíticas e de Produção
-      { theme:'tools',    name:'SRA PLI Starter',            icon:'fas fa-rocket',               iconBg:'linear-gradient(135deg,#3ec26e,#2a9450)', url:'https://sra-pli-starter.onrender.com',                                   desc:'Sistema de Recursos Aéreos — Versão Starter para gestão de recursos e operações aéreas do PLI.' },
-      { theme:'tools',    name:'Sistema Apoio Decisão',      icon:'fas fa-lightbulb',            iconBg:'linear-gradient(135deg,#1c3d59,#003b5a)', url:'https://ferramenta-construcao-sistema-apoio.onrender.com',               desc:'Ferramenta de construção de sistema de apoio à tomada de decisão com estruturação multicritério.' },
       { theme:'tools',    name:'Calculadora Aderência 2.0',  icon:'fas fa-calculator',           iconBg:'linear-gradient(135deg,#3ec26e,#2a9450)', url:'https://calculadora-aderencia-indicadores-2-0.onrender.com',             desc:'Calculadora de aderência de indicadores para avaliação de conformidade de metas e resultados.' },
       { theme:'tools',    name:'AHP Tool Calculator',        icon:'fas fa-balance-scale',        iconBg:'linear-gradient(135deg,#1c3d59,#003b5a)', url:'https://vpc-geoser-ahp-tool-calculator.onrender.com',                   desc:'Ferramenta de análise hierárquica de processos (AHP) para priorização e ponderação de critérios.' },
       { theme:'tools',    name:'Formulário Embarcadores',    icon:'fas fa-clipboard-list',       iconBg:'linear-gradient(135deg,#116593,#003b5a)', url:'https://formulario-entrevista-embarcadores.onrender.com',               desc:'Formulário de entrevista com embarcadores para levantamento de dados logísticos e de transporte.' },
-      { theme:'tools',    name:'Relatórios D11',             icon:'fas fa-folder-open',          iconBg:'linear-gradient(135deg,#3ec26e,#2a9450)', url:'relatorios_d11.html',                                                    desc:'Documentos de execução e relatórios técnicos referentes às atividades D11 do PLI.' },
     ];
 
     const LINK_STYLE = {
@@ -616,7 +613,7 @@
     render();
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js?v=20260814', { scope: '/pli-hub/' }).catch(() => {}); });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js?v=20260831', { scope: '/pli-hub/' }).catch(() => {}); });
     }
     </script>
   </body>
