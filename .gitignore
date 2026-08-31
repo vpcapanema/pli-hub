@@ -3,3 +3,7 @@
 
 # Recortes derivados, gerados pelo gerar_apresentacao.py
 apresentacao/imagens/_pptx/
+
+# Lixo de ferramentas
+__pycache__/
+~$*
