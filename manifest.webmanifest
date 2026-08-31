@@ -1,7 +1,7 @@
 {
   "name": "PLI Hub — Central de Aplicações",
   "short_name": "PLI Hub",
-  "description": "Central de aplicações web do Programa Litoral Integrado (PLI-SP).",
+  "description": "Central das aplicações de apoio ao PLI-SP 2050 — Plano de Logística e Investimentos do Estado de São Paulo.",
   "start_url": "/pli-hub/",
   "scope": "/pli-hub/",
   "display": "standalone",

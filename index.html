@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PLI Hub - Central de Aplicações</title>
-    <meta name="description" content="Central de aplicações web do Programa Litoral Integrado (PLI-SP)." />
+    <meta name="description" content="Central das aplicações de apoio ao PLI-SP 2050 — Plano de Logística e Investimentos do Estado de São Paulo." />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="PLI Hub" />
@@ -408,7 +408,7 @@
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand">
           <h1><i class="fas fa-cubes sidebar-icon-brand"></i>PLI Hub</h1>
-          <p>Central de Aplicações Web · PLI-SP</p>
+          <p>Aplicações de apoio ao PLI-SP 2050</p>
         </div>
         <div class="sidebar-search">
           <i class="fas fa-search s-icon"></i>
@@ -613,7 +613,7 @@
     render();
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js?v=20260831', { scope: '/pli-hub/' }).catch(() => {}); });
+      window.addEventListener('load', () => { navigator.serviceWorker.register('/pli-hub/sw.js?v=20260831b', { scope: '/pli-hub/' }).catch(() => {}); });
     }
     </script>
   </body>
