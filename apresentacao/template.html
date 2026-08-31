@@ -420,6 +420,130 @@
   .fecho .bloco p { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.94rem; line-height: 1.5; }
   .fecho .bloco strong { color: var(--text); font-weight: 600; }
 
+
+  /* ---------- contexto institucional ---------- */
+
+  .ctx {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(1.5rem, 4vw, 3.2rem);
+    align-content: start;
+    margin-top: 0.4rem;
+  }
+  .ctx-fichas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1.5rem;
+    margin-top: 1.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--rule);
+  }
+  .ficha { display: flex; flex-direction: column; gap: 0.15rem; }
+  .ficha .k {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .ficha .v { font-size: 0.92rem; color: var(--text); line-height: 1.35; }
+
+  .bloco-lat + .bloco-lat { margin-top: 1.5rem; }
+  .bloco-lat h3 {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 0.8rem;
+    font-weight: 500;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  ol.etapas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  ol.etapas li { display: grid; grid-template-columns: 1.5rem 1fr auto; align-items: baseline; gap: 0.5rem; }
+  .et-n {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--blue);
+    font-variant-numeric: tabular-nums;
+  }
+  .et-nome { font-size: 0.92rem; color: var(--text); }
+  .et-prazo { font-family: var(--mono); font-size: 0.65rem; color: var(--dim); }
+  ul.lista-simples { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; }
+  ul.lista-simples li { font-size: 0.9rem; color: var(--muted); line-height: 1.4; }
+
+  /* ---------- cadeia de produtos ---------- */
+
+  .cadeia {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.9rem;
+    align-content: start;
+    margin-top: 1.5rem;
+  }
+  .elo {
+    border-top: 3px solid var(--cat, var(--green));
+    background: var(--surface);
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.85rem 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .elo-cod {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    color: var(--cat, var(--green));
+  }
+  .elo-nome { font-family: var(--display); font-weight: 600; font-size: 1rem; line-height: 1.15; }
+  .elo-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.4; margin: 0; flex: 1; }
+  .elo-apps { display: flex; flex-wrap: wrap; gap: 0.3rem; padding-top: 0.6rem; border-top: 1px solid var(--rule); }
+
+  /* ---------- fontes ---------- */
+
+  .fontes {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.1rem 2.2rem;
+    align-content: start;
+    margin-top: 1.6rem;
+  }
+  .fonte { display: grid; grid-template-columns: 2rem 1fr; gap: 0.6rem; align-items: start; }
+  .fonte .f-n {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.15rem;
+  }
+  .f-nome { font-family: var(--display); font-weight: 600; font-size: 1rem; margin-bottom: 0.2rem; }
+  .f-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.42; }
+
+  /* ---------- ancoragem no plano ---------- */
+
+  .ancora {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    color: var(--cat, var(--blue));
+    border: 1px solid var(--cat, var(--blue));
+    border-radius: 2px;
+    padding: 0.2rem 0.45rem;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 900px) {
+    .ctx { grid-template-columns: 1fr; }
+    .cadeia { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
   /* ---------- navegação ---------- */
 
   .progresso {
@@ -516,6 +640,7 @@ function slideApp(app, i, totalApps, nSlide, totalSlides) {
       <span class="eyebrow">Aplicação ${String(i + 1).padStart(2, "0")} / ${totalApps}</span>
       <span class="eyebrow eyebrow-dim">${esc(cat)}</span>
       <span class="grow"></span>
+      ${app.ancoragem ? `<span class="ancora">${esc(app.ancoragem)}</span>` : ""}
       ${statusChip(app)}
     </div>
     <div class="app-body">
@@ -571,7 +696,10 @@ function build() {
     </div>
   </section>`);
 
-  // 2 — panorama
+  // 2 — contexto institucional do plano
+  slides.push((n, t) => slideContexto(n, t));
+
+  // 3 — panorama
   slides.push((n, t) => {
     const cols = Object.entries(DADOS.categorias).map(([id, cat]) => {
       const lista = apps.filter((a) => a.categoria === id);
@@ -629,7 +757,10 @@ function build() {
     slides.push((n, t) => slideApp(app, k + 1, totalApps, n, t));
   });
 
-  // 16 — integrações
+  // cadeia de produtos do TDR
+  slides.push((n, t) => slideCadeia(n, t));
+
+  // integrações
   slides.push((n, t) => `<section class="slide" style="--cat:${cor("tools")}">
     <div class="slide-head"><span class="eyebrow">Arquitetura</span></div>
     <h2 class="slide-title">Como as peças conversam</h2>
@@ -666,6 +797,9 @@ function build() {
     </div>
     ${rodape(DADOS.hub_url, DADOS.org + " · " + DADOS.data, n, t)}
   </section>`);
+
+  // procedência
+  slides.push((n, t) => slideFontes(n, t));
 
   const total = slides.length;
   document.getElementById("deck").innerHTML = slides.map((f, i) => f(i + 1, total)).join("");
@@ -721,6 +855,8 @@ function diagrama() {
     ${seta(col[2], 369, col[1] + LB, 369, "método AHP")}
   </svg>`;
 }
+
+/*COMUM*/
 
 const total = build();
 const deck = document.getElementById("deck");

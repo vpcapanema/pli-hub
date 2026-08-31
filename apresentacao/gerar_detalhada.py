@@ -41,6 +41,9 @@ def cabeca(s, app, i, cor, rotulo=""):
     texto_cat = cat.upper() + (f" · {rotulo.upper()}" if rotulo else "")
     base.texto(s, MARGEM + Inches(2.3), Inches(0.5), Inches(6.5), Inches(0.24), texto_cat,
                tam=9, cor=DIM, fonte=MONO)
+    if app.get("ancoragem"):
+        base.texto(s, W - MARGEM - Inches(6.0), Inches(0.5), Inches(4.6), Inches(0.24),
+                   app["ancoragem"].upper(), tam=8, cor=cor, fonte=MONO, alinha=PP_ALIGN.RIGHT)
     if app["status"] == "no ar":
         base.pilula(s, W - MARGEM - Inches(0.85), Inches(0.45), "no ar", GREEN, base.DARKINK)
     else:
@@ -104,8 +107,14 @@ def slide_detalhe(prs, app, i, n, total):
     d = DETALHES[app["id"]]
     cabeca(s, app, i, cor, "detalhamento")
 
-    base.texto(s, MARGEM, Inches(1.0), Inches(8), Inches(0.5), f"{app['nome']} · por dentro",
+    base.texto(s, MARGEM, Inches(0.98), Inches(8), Inches(0.5), f"{app['nome']} · por dentro",
                tam=24, negrito=True, fonte=DISPLAY)
+
+    # chamada de largura total: o papel da aplicacao dentro do plano
+    barra_papel = base.caixa(s, MARGEM, Inches(1.52), Pt(3), Inches(0.5), preenche=cor)
+    barra_papel.line.fill.background()
+    base.texto(s, MARGEM + Inches(0.18), Inches(1.52), LARG - Inches(0.3), Inches(0.5),
+               d["no_plano"], tam=10.5, cor=MUTED, espaco=1.2)
 
     gap = Inches(0.45)
     c1 = Inches(4.9)
@@ -114,7 +123,7 @@ def slide_detalhe(prs, app, i, n, total):
     x1 = MARGEM
     x2 = x1 + c1 + gap
     x3 = x2 + c2 + gap
-    y0 = Inches(1.75)
+    y0 = Inches(2.28)
 
     def titulo(x, y, w, txt):
         base.texto(s, x, y, w, Inches(0.2), txt.upper(), tam=8, cor=DIM, fonte=MONO)
@@ -135,14 +144,14 @@ def slide_detalhe(prs, app, i, n, total):
     # coluna 3 — numeros e situacao
     y = titulo(x3, y0, c3, "Números")
     for valor, rotulo in d["numeros"]:
-        base.texto(s, x3, y, c3, Inches(0.32), valor, tam=17, negrito=True, fonte=DISPLAY, cor=cor)
-        base.texto(s, x3, y + Inches(0.3), c3, Inches(0.22), rotulo.upper(), tam=7.5, cor=DIM, fonte=MONO)
-        linha = base.caixa(s, x3, y + Inches(0.58), c3, Pt(0.75), preenche=RULE)
+        base.texto(s, x3, y, c3, Inches(0.28), valor, tam=15, negrito=True, fonte=DISPLAY, cor=cor)
+        base.texto(s, x3, y + Inches(0.25), c3, Inches(0.2), rotulo.upper(), tam=7.5, cor=DIM, fonte=MONO)
+        linha = base.caixa(s, x3, y + Inches(0.48), c3, Pt(0.75), preenche=RULE)
         linha.line.fill.background()
-        y += Inches(0.76)
+        y += Inches(0.62)
 
-    y = titulo(x3, y + Inches(0.16), c3, "Situação")
-    base.texto(s, x3, y, c3, Inches(1.6), d["situacao"], tam=9.5, cor=MUTED, espaco=1.28)
+    y = titulo(x3, y + Inches(0.14), c3, "Situação")
+    base.texto(s, x3, y, c3, Inches(1.3), d["situacao"], tam=9, cor=MUTED, espaco=1.24)
 
     base.rodape(s, app["url"], "  ·  ".join(app["stack"][:4]), n, total)
     return s
@@ -247,15 +256,18 @@ def slide_recorte(prs, n, total):
 def gerar_pptx(destino):
     prs = Presentation()
     prs.slide_width, prs.slide_height = W, H
-    total = 2 + len(APPS) * 2 + 1
+    total = 3 + len(APPS) * 2 + 3
 
     n = 1
     slide_capa(prs, n, total); n += 1
+    base.slide_contexto(prs, n, total); n += 1
     slide_recorte(prs, n, total); n += 1
     for i, app in enumerate(APPS):
         slide_vitrine(prs, app, i, n, total); n += 1
         slide_detalhe(prs, app, i, n, total); n += 1
-    base.slide_integracoes(prs, n, total)
+    base.slide_cadeia(prs, n, total); n += 1
+    base.slide_integracoes(prs, n, total); n += 1
+    base.slide_fontes(prs, n, total)
 
     prs.save(destino)
     return len(prs.slides._sldIdLst)
@@ -266,13 +278,15 @@ def gerar_html(destino):
     estilo_base = re.search(r"<style>(.*?)</style>", completo, re.S).group(1)
 
     template = (AQUI / "template_detalhe.html").read_text(encoding="utf-8")
-    for marcador in ("/*ESTILO_BASE*/", "/*DADOS*/", "/*DETALHES*/", "/*IMAGENS*/"):
+    for marcador in ("/*ESTILO_BASE*/", "/*DADOS*/", "/*DETALHES*/", "/*IMAGENS*/", "/*COMUM*/"):
         if marcador not in template:
             raise SystemExit(f"template_detalhe.html precisa do marcador {marcador}")
 
     imagens = {a["id"]: base.data_uri(a["imagem"]) for a in APPS}
 
+    comum = (AQUI / "comum.js").read_text(encoding="utf-8")
     saida = template.replace("/*ESTILO_BASE*/", estilo_base)
+    saida = saida.replace("/*COMUM*/", comum)
     saida = saida.replace("/*DADOS*/", json.dumps(DADOS, ensure_ascii=False, indent=2))
     saida = saida.replace("/*DETALHES*/", json.dumps(DETALHES, ensure_ascii=False, indent=2))
     saida = saida.replace("/*IMAGENS*/", json.dumps(imagens))

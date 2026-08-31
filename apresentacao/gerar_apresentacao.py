@@ -302,6 +302,9 @@ def slide_app(prs, app, i, total_apps, n, total):
     eyebrow(s, MARGEM, Inches(0.5), f"Aplicação {i + 1:02d} / {total_apps}", cor=cor, w=Inches(2.2))
     texto(s, MARGEM + Inches(2.3), Inches(0.5), Inches(5), Inches(0.24), cat.upper(),
           tam=9, cor=DIM, fonte=MONO)
+    if app.get("ancoragem"):
+        texto(s, W - MARGEM - Inches(6.0), Inches(0.5), Inches(4.6), Inches(0.24),
+              app["ancoragem"].upper(), tam=8, cor=cor, fonte=MONO, alinha=PP_ALIGN.RIGHT)
     if app["status"] == "no ar":
         pilula(s, W - MARGEM - Inches(0.85), Inches(0.45), "no ar", GREEN, DARKINK)
     else:
@@ -509,6 +512,116 @@ def slide_situacao(prs, n, total):
     return s
 
 
+
+def slide_contexto(prs, n, total):
+    """Enquadramento institucional: o que e o PLI-SP 2050."""
+    s = novo_slide(prs)
+    faixa(s, BLUE)
+    c = DADOS["contexto"]
+    eyebrow(s, MARGEM, Inches(0.5), "Contexto")
+    texto(s, MARGEM, Inches(0.86), Inches(11), Inches(0.6), c["titulo"], tam=32, negrito=True, fonte=DISPLAY)
+    texto(s, MARGEM, Inches(1.52), Inches(11.5), Inches(0.3), c["nome_oficial"], tam=11, cor=BLUE, fonte=MONO)
+
+    esq_w = Inches(6.6)
+    texto(s, MARGEM, Inches(2.05), esq_w, Inches(1.6), c["resumo"], tam=12.5, espaco=1.32)
+
+    caixa(s, MARGEM, Inches(3.85), esq_w, Pt(0.75), preenche=RULE)
+    y = Inches(4.05)
+    for i, (rot, val) in enumerate(c["fichas"]):
+        col = i % 2
+        if col == 0 and i:
+            y += Inches(0.72)
+        x = MARGEM + col * (esq_w / 2)
+        texto(s, x, y, esq_w / 2 - Inches(0.3), Inches(0.2), rot.upper(), tam=8, cor=DIM, fonte=MONO)
+        texto(s, x, y + Inches(0.22), esq_w / 2 - Inches(0.3), Inches(0.44), val, tam=11, espaco=1.15)
+
+    dir_x = MARGEM + esq_w + Inches(0.6)
+    dir_w = W - MARGEM - dir_x
+    texto(s, dir_x, Inches(2.05), dir_w, Inches(0.2), "AS QUATRO ETAPAS DO PLANO", tam=8, cor=DIM, fonte=MONO)
+    linha = caixa(s, dir_x, Inches(2.3), dir_w, Pt(0.75), preenche=RULE)
+    linha.line.fill.background()
+    y = Inches(2.5)
+    for num, nome, prazo in c["etapas"]:
+        texto(s, dir_x, y, Inches(0.3), Inches(0.26), num, tam=10, cor=BLUE, fonte=MONO)
+        texto(s, dir_x + Inches(0.4), y, dir_w - Inches(1.6), Inches(0.26), nome, tam=11.5)
+        texto(s, dir_x + dir_w - Inches(1.2), y, Inches(1.2), Inches(0.26), prazo,
+              tam=9, cor=DIM, fonte=MONO, alinha=PP_ALIGN.RIGHT)
+        y += Inches(0.42)
+
+    y += Inches(0.3)
+    texto(s, dir_x, y, dir_w, Inches(0.2), "O QUE O PLANO PERSEGUE", tam=8, cor=DIM, fonte=MONO)
+    linha = caixa(s, dir_x, y + Inches(0.25), dir_w, Pt(0.75), preenche=RULE)
+    linha.line.fill.background()
+    y += Inches(0.45)
+    for obj in c["objetivos"]:
+        t = caixa(s, dir_x, y + Inches(0.1), Inches(0.14), Pt(1.2), preenche=BLUE)
+        t.line.fill.background()
+        texto(s, dir_x + Inches(0.28), y, dir_w - Inches(0.3), Inches(0.3), obj, tam=10.5, cor=MUTED, espaco=1.15)
+        y += Inches(0.36)
+
+    rodape(s, "pli.semil.sp.gov.br", "Contexto", n, total)
+    return s
+
+
+def slide_cadeia(prs, n, total):
+    """Onde cada aplicacao entra na cadeia de produtos do TDR."""
+    s = novo_slide(prs)
+    faixa(s, GREEN)
+    c = DADOS["cadeia"]
+    eyebrow(s, MARGEM, Inches(0.5), "Cadeia de produtos do TDR", cor=GREEN)
+    texto(s, MARGEM, Inches(0.86), Inches(11), Inches(0.6), c["titulo"], tam=30, negrito=True, fonte=DISPLAY)
+    texto(s, MARGEM, Inches(1.55), Inches(12), Inches(0.6), c["resumo"], tam=12, cor=MUTED, espaco=1.25)
+
+    elos = c["elos"]
+    gap = Inches(0.2)
+    cw = (LARG - gap * (len(elos) - 1)) / len(elos)
+    x = MARGEM
+    topo = Inches(2.6)
+    alt = Inches(3.8)
+    for cod, nome, desc, apps in elos:
+        caixa(s, x, topo, cw, alt, preenche=SURFACE, borda=RULE)
+        caixa(s, x, topo, cw, Pt(3), preenche=GREEN)
+        texto(s, x + Inches(0.18), topo + Inches(0.2), cw - Inches(0.36), Inches(0.2), cod, tam=9, cor=GREEN, fonte=MONO)
+        texto(s, x + Inches(0.18), topo + Inches(0.45), cw - Inches(0.36), Inches(0.5), nome,
+              tam=13, negrito=True, fonte=DISPLAY, espaco=1.05)
+        texto(s, x + Inches(0.18), topo + Inches(1.05), cw - Inches(0.36), Inches(1.5), desc,
+              tam=9.5, cor=MUTED, espaco=1.2)
+        linha = caixa(s, x + Inches(0.18), topo + alt - Inches(1.2), cw - Inches(0.36), Pt(0.75), preenche=RULE)
+        linha.line.fill.background()
+        chips(s, x + Inches(0.18), topo + alt - Inches(1.02), cw - Inches(0.36), apps)
+        x += cw + gap
+
+    rodape(s, "Termo de Referencia do PLI-SP", "Cadeia de produtos", n, total)
+    return s
+
+
+def slide_fontes(prs, n, total):
+    """Procedencia: de onde vem cada afirmacao do documento."""
+    s = novo_slide(prs)
+    faixa(s, BLUE)
+    eyebrow(s, MARGEM, Inches(0.5), "Procedência")
+    texto(s, MARGEM, Inches(0.86), Inches(11), Inches(0.6), "De onde vem cada afirmação",
+          tam=32, negrito=True, fonte=DISPLAY)
+    texto(s, MARGEM, Inches(1.6), Inches(11.5), Inches(0.5),
+          "Nada neste documento foi escrito de memória. O enquadramento institucional vem das fontes "
+          "oficiais do plano; o detalhamento técnico, da documentação das próprias aplicações.",
+          tam=12, cor=MUTED, espaco=1.25)
+
+    y = Inches(2.55)
+    for i, (nome, desc) in enumerate(DADOS["fontes"], 1):
+        texto(s, MARGEM, y, Inches(0.4), Inches(0.26), f"{i:02d}", tam=10, cor=DIM, fonte=MONO)
+        texto(s, MARGEM + Inches(0.6), y - Inches(0.03), Inches(4.4), Inches(0.3), nome,
+              tam=13, negrito=True, fonte=DISPLAY)
+        texto(s, MARGEM + Inches(5.3), y, LARG - Inches(5.3), Inches(0.5), desc,
+              tam=11, cor=MUTED, espaco=1.18)
+        linha = caixa(s, MARGEM, y + Inches(0.62), LARG, Pt(0.75), preenche=RULE)
+        linha.line.fill.background()
+        y += Inches(0.82)
+
+    rodape(s, DADOS["hub_url"], f"{DADOS['org']} · {DADOS['data']}", n, total)
+    return s
+
+
 # ---------------------------------------------------------------- saidas
 
 
@@ -516,17 +629,20 @@ def gerar_pptx(destino):
     prs = Presentation()
     prs.slide_width, prs.slide_height = W, H
     apps = DADOS["apps"]
-    total = 4 + (len(apps) - 1) + 2
+    total = 4 + (len(apps) - 1) + 2 + 3  # + contexto, cadeia e fontes
 
     n = 1
     slide_capa(prs, n, total); n += 1
+    slide_contexto(prs, n, total); n += 1
     slide_panorama(prs, n, total); n += 1
     slide_app(prs, apps[0], 0, len(apps), n, total); n += 1
     slide_modulos(prs, n, total); n += 1
     for i, app in enumerate(apps[1:], start=1):
         slide_app(prs, app, i, len(apps), n, total); n += 1
+    slide_cadeia(prs, n, total); n += 1
     slide_integracoes(prs, n, total); n += 1
     slide_situacao(prs, n, total); n += 1
+    slide_fontes(prs, n, total); n += 1
 
     prs.save(destino)
     return len(prs.slides._sldIdLst)
@@ -539,13 +655,16 @@ def data_uri(caminho):
 
 def gerar_html(destino):
     template = (AQUI / "template.html").read_text(encoding="utf-8")
-    if "/*DADOS*/" not in template or "/*IMAGENS*/" not in template:
-        raise SystemExit("template.html precisa dos marcadores /*DADOS*/ e /*IMAGENS*/")
+    for marcador in ("/*DADOS*/", "/*IMAGENS*/", "/*COMUM*/"):
+        if marcador not in template:
+            raise SystemExit(f"template.html precisa do marcador {marcador}")
 
     imagens = {a["id"]: data_uri(a["imagem"]) for a in DADOS["apps"] if a.get("imagem")}
     imagens["modulos"] = data_uri(DADOS["imagem_modulos"])
 
-    saida = template.replace("/*DADOS*/", json.dumps(DADOS, ensure_ascii=False, indent=2))
+    comum = (AQUI / "comum.js").read_text(encoding="utf-8")
+    saida = template.replace("/*COMUM*/", comum)
+    saida = saida.replace("/*DADOS*/", json.dumps(DADOS, ensure_ascii=False, indent=2))
     saida = saida.replace("/*IMAGENS*/", json.dumps(imagens))
     destino.write_text(saida, encoding="utf-8")
     return len(imagens)

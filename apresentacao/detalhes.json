@@ -20,8 +20,22 @@
       "GeoServer, Memgraph, Cloudflare R2 e R Shiny Server",
       "Nginx como proxy reverso, tudo em Docker Compose"
     ],
-    "numeros": [["11", "módulos"], ["10", "ativos"], ["1", "parcial"]],
-    "situacao": "Dez dos onze módulos estão ativos em produção. Apenas o M05 (Calendário) segue parcial. É a aplicação mais madura do portfólio e a única de que outra aplicação depende."
+    "numeros": [
+      [
+        "11",
+        "módulos"
+      ],
+      [
+        "10",
+        "ativos"
+      ],
+      [
+        "1",
+        "parcial"
+      ]
+    ],
+    "situacao": "Dez dos onze módulos estão ativos em produção. Apenas o M05 (Calendário) segue parcial. É a aplicação mais madura do portfólio e a única de que outra aplicação depende.",
+    "no_plano": "É o repositório técnico do plano: guarda o metadado, o arquivo e a relação entre eles. Sustenta a entrega de governança do D-17 e dá identidade única às demais aplicações do consórcio."
   },
   "sicard": {
     "como_funciona": [
@@ -42,8 +56,22 @@
       "API sob o prefixo /api; páginas públicas em /public/ e operacionais em /restrict/",
       "URLs antigas respondem 308 preservando a query string"
     ],
-    "numeros": [["3", "fases de status"], ["3", "fases + síntese"], ["AHP", "método"]],
-    "situacao": "Inventário de implementação de 19 de julho de 2026: cadastro, análise, aprovação, configuração AHP, comparação colaborativa e hierarquização estão implementados e em uso."
+    "numeros": [
+      [
+        "3",
+        "fases de status"
+      ],
+      [
+        "3",
+        "fases + síntese"
+      ],
+      [
+        "AHP",
+        "método"
+      ]
+    ],
+    "situacao": "Inventário de implementação de 19 de julho de 2026: cadastro, análise, aprovação, configuração AHP, comparação colaborativa e hierarquização estão implementados e em uso.",
+    "no_plano": "Executa as Metas 4.1 a 4.4 do TDR: reúne o universo comparável de intervenções, aplica os critérios e devolve o ranking que alimenta o plano de ação."
   },
   "smartrouter": {
     "como_funciona": [
@@ -64,8 +92,22 @@
       "Endereços dos serviços configuráveis por variável de ambiente",
       "Publicável em qualquer host com gunicorn"
     ],
-    "numeros": [["v0.4", "versão atual"], ["3", "modos de entrada"], ["500 m", "buffer de desvio"]],
-    "situacao": "A versão Streamlit (v0.1) foi descontinuada. O backend Flask em app_flask.py é a única implementação suportada."
+    "numeros": [
+      [
+        "v0.4",
+        "versão atual"
+      ],
+      [
+        "3",
+        "modos de entrada"
+      ],
+      [
+        "500 m",
+        "buffer de desvio"
+      ]
+    ],
+    "situacao": "A versão Streamlit (v0.1) foi descontinuada. O backend Flask em app_flask.py é a única implementação suportada.",
+    "no_plano": "Responde à pergunta do eixo E2 do D-11 — demanda, acessibilidade e intermodalidade —, mostrando como o risco muda o custo real do deslocamento."
   },
   "reporta": {
     "como_funciona": [
@@ -85,8 +127,22 @@
       "Alimenta o PLI Smart Router como camada de incidentes verificados",
       "Aplicação independente: roda em qualquer host com Python 3.10+"
     ],
-    "numeros": [["5", "estados no ciclo"], ["2", "scores ortogonais"], ["PWA", "instalável"]],
-    "situacao": "Separar veracidade de relevância é decisão deliberada: um buraco pequeno em rua sem volume é verdadeiro mas irrelevante; um bloqueio em corredor estratégico é relevante mesmo com confiança moderada."
+    "numeros": [
+      [
+        "5",
+        "estados no ciclo"
+      ],
+      [
+        "2",
+        "scores ortogonais"
+      ],
+      [
+        "PWA",
+        "instalável"
+      ]
+    ],
+    "situacao": "Separar veracidade de relevância é decisão deliberada: um buraco pequeno em rua sem volume é verdadeiro mas irrelevante; um bloqueio em corredor estratégico é relevante mesmo com confiança moderada.",
+    "no_plano": "Produz dado primário de campo sobre condição da via, complementando a caracterização do sistema de transporte do D-3 com informação que nenhuma base oficial traz em tempo real."
   },
   "hazardtrack": {
     "como_funciona": [
@@ -107,8 +163,26 @@
       "Atualização a cada 10 minutos no servidor e a cada 30 segundos no cliente",
       "Se a rede do INPE falhar, o snapshot vai para no_data — não há dado simulado no caminho operacional"
     ],
-    "numeros": [["4", "regiões"], ["24", "pontos"], ["96", "GRIB2 por ciclo"], ["10 min", "atualização"]],
-    "situacao": "Validado por backtest do evento de 19/02/2023 em São Sebastião: Juquehy chegou a RD4, Camburi a RD3 e Maresias a RD1. Vinte testes unitários cobrem as equações de risco."
+    "numeros": [
+      [
+        "4",
+        "regiões"
+      ],
+      [
+        "24",
+        "pontos"
+      ],
+      [
+        "96",
+        "GRIB2 por ciclo"
+      ],
+      [
+        "10 min",
+        "atualização"
+      ]
+    ],
+    "situacao": "Validado por backtest do evento de 19/02/2023 em São Sebastião: Juquehy chegou a RD4, Camburi a RD3 e Maresias a RD1. Vinte testes unitários cobrem as equações de risco.",
+    "no_plano": "É o tema D11c_18 convertido em ferramenta. A avaliação de aderência ao TDR recomendou trocar “mudanças climáticas” por resiliência da infraestrutura e eventos extremos; o HazardTrack calcula exatamente essa variável."
   },
   "fadstats": {
     "como_funciona": [
@@ -129,8 +203,22 @@
       "Interface pública com a barra padrão do Governo de São Paulo",
       "Banco PostgreSQL 17 dedicado"
     ],
-    "numeros": [["21", "tipos de gráfico"], ["6", "tipos de mapa"], ["4", "fontes oficiais"]],
-    "situacao": "Segunda geração da ferramenta, com frontend reescrito em HTML puro para eliminar a dependência de React e a etapa de build."
+    "numeros": [
+      [
+        "21",
+        "tipos de gráfico"
+      ],
+      [
+        "6",
+        "tipos de mapa"
+      ],
+      [
+        "4",
+        "fontes oficiais"
+      ]
+    ],
+    "situacao": "Segunda geração da ferramenta, com frontend reescrito em HTML puro para eliminar a dependência de React e a etapa de build.",
+    "no_plano": "Instrumenta o Produto D-2, a caracterização socioeconômica do Estado, que abre o diagnóstico e baliza as projeções de demanda."
   },
   "infosiga": {
     "como_funciona": [
@@ -141,17 +229,35 @@
       "Os dados brutos não são versionados: entram na pasta dados/ e saem como artefatos"
     ],
     "dados": [
-      "CSVs oficiais do InfoSiga-SP: pessoas, sinistros e veículos",
-      "Shapefile da Malha Rodoviária Estadual",
-      "Base oficial do Detran-SP cruzada com a malha do DER/SP",
-      "Série de 2014 a 2026"
+      "Infosiga-SP, do Detran-SP: Sistema de Informações Gerenciais de Sinistros de Trânsito",
+      "Registros consolidados de Polícia Militar, PMR e PRF, atualizados mensalmente",
+      "Óbitos contados até 30 dias após o sinistro, conforme o critério oficial",
+      "Cobertura dos 645 municípios paulistas, cruzada com o shapefile da malha estadual"
     ],
     "integracoes": [
       "Publicação estática, sem backend em execução",
       "Dashboards navegáveis por portal, análise geográfica, relatório executivo e guia"
     ],
-    "numeros": [["1.364.070", "sinistros"], ["62.029", "óbitos"], ["95.166", "feridos graves"], ["92,3%", "geolocalizados"]],
-    "situacao": "Serviço suspenso no Render. O pipeline continua reproduzível a partir do repositório: basta rodar os três scripts para regerar os dashboards."
+    "numeros": [
+      [
+        "1.364.070",
+        "sinistros"
+      ],
+      [
+        "62.029",
+        "óbitos"
+      ],
+      [
+        "95.166",
+        "feridos graves"
+      ],
+      [
+        "92,3%",
+        "geolocalizados"
+      ]
+    ],
+    "situacao": "Serviço suspenso no Render. O pipeline continua reproduzível a partir do repositório: basta rodar os três scripts para regerar os dashboards.",
+    "no_plano": "Alimenta o eixo E3 do D-11 — resiliência, segurança e sustentabilidade — com a externalidade que precisa ser parametrizada nos cenários: a sinistralidade."
   },
   "acidentesder": {
     "como_funciona": [
@@ -161,7 +267,8 @@
       "Cada gráfico é uma página HTML independente, o que permite reaproveitá-los em relatórios"
     ],
     "dados": [
-      "Registros de acidentes das rodovias estaduais sob gestão do DER-SP",
+      "Registros de sinistros nas rodovias sob gestão do DER-SP",
+      "DER-SP: autarquia que administra mais de 12 mil km de malha estadual",
       "Série consolidada de 2023, 2024 e 2025",
       "Base única dados_completos.csv gerada pelo pipeline"
     ],
@@ -169,8 +276,26 @@
       "Publicação estática, sem backend em execução",
       "Complementa o Infosiga com o recorte específico do DER"
     ],
-    "numeros": [["39.578", "acidentes"], ["34.324", "vítimas"], ["2.065", "óbitos"], ["29", "gráficos"]],
-    "situacao": "Serviço suspenso no Render. Por ano: 14.389 acidentes em 2023, 13.882 em 2024 e 11.307 em 2025 — queda que merece checagem de completude antes de ser lida como tendência."
+    "numeros": [
+      [
+        "39.578",
+        "acidentes"
+      ],
+      [
+        "34.324",
+        "vítimas"
+      ],
+      [
+        "2.065",
+        "óbitos"
+      ],
+      [
+        "29",
+        "gráficos"
+      ]
+    ],
+    "situacao": "Serviço suspenso no Render. Por ano: 14.389 acidentes em 2023, 13.882 em 2024 e 11.307 em 2025 — queda que merece checagem de completude antes de ser lida como tendência.",
+    "no_plano": "Recorta a mesma externalidade do eixo E3 para a malha sob gestão estadual, que é onde as intervenções do plano de ação incidem."
   },
   "densidade": {
     "como_funciona": [
@@ -181,15 +306,29 @@
       "Os dados de entrada e saída ficam fora do versionamento para manter o repositório leve"
     ],
     "dados": [
-      "DER/SP — malha rodoviária estadual",
-      "IBGE — malha territorial e população",
+      "DER-SP — malha rodoviária estadual e classificação dos trechos",
+      "IBGE — malha territorial e população municipal",
       "Recorte estadual completo, ano-base 2025"
     ],
     "integracoes": [
       "Publicação estática (Static Site) no Render",
       "Mapas interativos anexos ao relatório"
     ],
-    "numeros": [["2025", "ano-base"], ["2", "indicadores de densidade"], ["3", "classificações"]],
-    "situacao": "Serviço suspenso no Render. O relatório pode ser aberto localmente a partir de relatorio/index.html, sem necessidade de servidor."
+    "numeros": [
+      [
+        "2025",
+        "ano-base"
+      ],
+      [
+        "2",
+        "indicadores de densidade"
+      ],
+      [
+        "3",
+        "classificações"
+      ]
+    ],
+    "situacao": "Serviço suspenso no Render. O relatório pode ser aberto localmente a partir de relatorio/index.html, sem necessidade de servidor.",
+    "no_plano": "Sustenta o Produto D-3 Tomo 1, o diagnóstico do sistema rodoviário, com a leitura de cobertura da rede por área e por população."
   }
 }

@@ -98,6 +98,16 @@
   }
   .miniatura img { display: block; width: 100%; height: 118px; object-fit: cover; object-position: top center; }
 
+  .papel-plano {
+    margin: 1.1rem 0 0;
+    padding-left: 0.85rem;
+    border-left: 3px solid var(--cat, var(--blue));
+    font-size: clamp(0.88rem, 1.15vw, 1rem);
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 108ch;
+  }
+
   @media (max-width: 900px) {
     .vitrine, .detalhe { grid-template-columns: 1fr; }
   }
@@ -139,6 +149,7 @@ function cabeca(app, i, rotulo) {
     <span class="eyebrow">Aplicação ${String(i + 1).padStart(2, "0")} / ${APPS.length}</span>
     <span class="eyebrow eyebrow-dim">${esc(cat)}${rotulo ? " · " + esc(rotulo) : ""}</span>
     <span class="grow"></span>
+    ${app.ancoragem ? `<span class="ancora">${esc(app.ancoragem)}</span>` : ""}
     ${statusChip(app)}
   </div>`;
 }
@@ -176,7 +187,8 @@ function slideDetalhe(app, i, n, t) {
   return `<section class="slide" style="--cat:${c}">
     ${cabeca(app, i, "detalhamento")}
     <h2 class="slide-title" style="font-size:clamp(1.5rem,2.6vw,2.1rem)">${esc(app.nome)} <span style="color:var(--dim);font-weight:500">· por dentro</span></h2>
-    <div class="detalhe" style="margin-top:1.3rem">
+    <p class="papel-plano">${esc(d.no_plano)}</p>
+    <div class="detalhe" style="margin-top:1.1rem">
       <div>
         <div class="bloco-det">
           <h3>Como funciona</h3>
@@ -241,6 +253,8 @@ function build() {
     </div>
   </section>`);
 
+  slides.push((n, t) => slideContexto(n, t));
+
   slides.push((n, t) => `<section class="slide" style="--cat:${cor("major")}">
     <div class="slide-head"><span class="eyebrow">Recorte deste documento</span></div>
     <h2 class="slide-title">Só o que já tem tela</h2>
@@ -270,6 +284,8 @@ function build() {
     slides.push((n, t) => slideDetalhe(app, i, n, t));
   });
 
+  slides.push((n, t) => slideCadeia(n, t));
+
   slides.push((n, t) => `<section class="slide" style="--cat:${cor("tools")}">
     <div class="slide-head"><span class="eyebrow">Arquitetura</span></div>
     <h2 class="slide-title">Como as peças conversam</h2>
@@ -277,6 +293,8 @@ function build() {
     <div class="fluxo">${diagrama()}</div>
     ${rodape("4 integrações em produção", "Arquitetura", n, t)}
   </section>`);
+
+  slides.push((n, t) => slideFontes(n, t));
 
   const total = slides.length;
   document.getElementById("deck").innerHTML = slides.map((f, i) => f(i + 1, total)).join("");
@@ -324,6 +342,8 @@ function diagrama() {
     ${seta(col[2], 369, col[1] + LB, 369, "método AHP")}
   </svg>`;
 }
+
+/*COMUM*/
 
 const total = build();
 const deck = document.getElementById("deck");
