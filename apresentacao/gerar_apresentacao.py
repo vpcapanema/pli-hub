@@ -369,7 +369,7 @@ def slide_integracoes(prs, n, total):
         tam=13, cor=MUTED, espaco=1.2,
     )
 
-    bw, bh = Inches(3.5), Inches(1.0)
+    bw, bh = Inches(3.0), Inches(1.0)
 
     def bloco(x, y, cor, nome, sub):
         caixa(s, x, y, bw, bh, preenche=SURFACE, borda=cor)
@@ -382,36 +382,36 @@ def slide_integracoes(prs, n, total):
         con.line.color.rgb = DIM
         con.line.width = Pt(1.25)
         mx, my = (x1 + x2) / 2, (y1 + y2) / 2
-        texto(s, Emu(int(mx - Inches(1.1))), Emu(int(my - Inches(0.32))), Inches(2.2), Inches(0.24),
-              rotulo.upper(), tam=8, cor=DIM, fonte=MONO, alinha=PP_ALIGN.CENTER)
+        texto(s, Emu(int(mx - Inches(0.62))), Emu(int(my - Inches(0.34))), Inches(1.24), Inches(0.24),
+              rotulo.upper(), tam=7.5, cor=DIM, fonte=MONO, alinha=PP_ALIGN.CENTER)
 
     col1, col2, col3 = MARGEM, MARGEM + Inches(4.3), MARGEM + Inches(8.6)
 
-    texto(s, col1, Inches(2.35), Inches(3.5), Inches(0.22), "SENSORES E COLETA", tam=8.5, cor=DIM, fonte=MONO)
+    texto(s, col1, Inches(2.35), Inches(3.0), Inches(0.22), "SENSORES E COLETA", tam=8.5, cor=DIM, fonte=MONO)
     bloco(col1, Inches(2.6), BLUE, "PLI-HazardTrack", "chuva MERGE/INPE → risco por trecho")
     bloco(col1, Inches(3.85), BLUE, "PLI Reporta", "relato do cidadão → incidente verificado")
 
-    texto(s, col2, Inches(2.35), Inches(3.5), Inches(0.22), "OPERAÇÃO", tam=8.5, cor=DIM, fonte=MONO)
+    texto(s, col2, Inches(2.35), Inches(3.0), Inches(0.22), "OPERAÇÃO", tam=8.5, cor=DIM, fonte=MONO)
     bloco(col2, Inches(3.2), BLUE, "PLI Smart Router", "rota que desvia do risco")
 
     seta(col1 + bw, Inches(3.1), col2, Inches(3.5), "camadas de risco")
     seta(col1 + bw, Inches(4.35), col2, Inches(3.95), "geojson")
 
-    texto(s, col3, Inches(2.35), Inches(3.5), Inches(0.22), "LEITURA DO TERRITÓRIO", tam=8.5, cor=DIM, fonte=MONO)
+    texto(s, col3, Inches(2.35), Inches(3.0), Inches(0.22), "LEITURA DO TERRITÓRIO", tam=8.5, cor=DIM, fonte=MONO)
     bloco(col3, Inches(2.6), BLUE, "FAD-Stats 2.0", "IBGE · SECEX · MTE · ANTT")
     bloco(col3, Inches(3.85), AMBER, "Análises Exploratórias", "sinistralidade e densidade da malha")
 
-    texto(s, col1, Inches(5.4), Inches(3.5), Inches(0.22), "PLATAFORMA CENTRAL", tam=8.5, cor=DIM, fonte=MONO)
+    texto(s, col1, Inches(5.4), Inches(3.0), Inches(0.22), "PLATAFORMA CENTRAL", tam=8.5, cor=DIM, fonte=MONO)
     bloco(col1, Inches(5.65), GREEN, "SIGMA-PLI", "metadados, identidade e grafo")
 
-    texto(s, col2, Inches(5.4), Inches(3.5), Inches(0.22), "DECISÃO", tam=8.5, cor=DIM, fonte=MONO)
+    texto(s, col2, Inches(5.4), Inches(3.0), Inches(0.22), "DECISÃO", tam=8.5, cor=DIM, fonte=MONO)
     bloco(col2, Inches(5.65), BLUE, "SICARD", "carteira hierarquizada por AHP")
 
-    texto(s, col3, Inches(5.4), Inches(3.5), Inches(0.22), "MÉTODO", tam=8.5, cor=DIM, fonte=MONO)
+    texto(s, col3, Inches(5.4), Inches(3.0), Inches(0.22), "MÉTODO", tam=8.5, cor=DIM, fonte=MONO)
     bloco(col3, Inches(5.65), GREEN, "AHP Tool Calculator", "pesos e consistência")
 
-    seta(col1 + bw, Inches(6.15), col2, Inches(6.15), "autenticação e cadastros")
-    seta(col3, Inches(6.15), col2 + bw, Inches(6.15), "método multicritério")
+    seta(col1 + bw, Inches(6.15), col2, Inches(6.15), "login e cadastros")
+    seta(col3, Inches(6.15), col2 + bw, Inches(6.15), "método AHP")
 
     rodape(s, "4 integrações em produção", "Arquitetura", n, total)
     return s
