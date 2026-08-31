@@ -1,0 +1,351 @@
+<title>PLI Hub em Detalhe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+/*ESTILO_BASE*/
+
+  /* ---------- vitrine (slide A de cada aplicação) ---------- */
+
+  .vitrine {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(1.4rem, 3vw, 2.6rem);
+    align-content: center;
+  }
+  .vitrine .shot img { height: clamp(240px, 52vh, 470px); }
+
+  /* ---------- detalhamento (slide B de cada aplicação) ---------- */
+
+  .detalhe {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 0.85fr);
+    gap: clamp(1.2rem, 2.6vw, 2.4rem);
+    align-content: start;
+  }
+  .bloco-det + .bloco-det { margin-top: 1.4rem; }
+  .bloco-det h3 {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 0.7rem;
+    font-weight: 500;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  ul.lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  ul.lista li {
+    display: grid;
+    grid-template-columns: 1.1rem 1fr;
+    align-items: start;
+    font-size: clamp(0.8rem, 1.05vw, 0.92rem);
+    line-height: 1.42;
+    color: #d3e3ec;
+  }
+  ul.lista li::before {
+    content: "";
+    width: 0.6rem;
+    height: 1px;
+    background: var(--cat, var(--blue));
+    margin-top: 0.7em;
+  }
+  ul.lista.fina li { color: var(--muted); }
+
+  .kpis { display: flex; flex-direction: column; gap: 0.75rem; }
+  .kpi {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.6rem;
+  }
+  .kpi .v {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 1.9vw, 1.55rem);
+    color: var(--cat, var(--blue));
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .k {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .situacao {
+    font-size: clamp(0.82rem, 1.05vw, 0.93rem);
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .miniatura {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .miniatura img { display: block; width: 100%; height: 118px; object-fit: cover; object-position: top center; }
+
+  @media (max-width: 900px) {
+    .vitrine, .detalhe { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="progresso" id="progresso"></div>
+<div class="deck" id="deck"></div>
+<div class="nav">
+  <button id="btnPrev" title="Slide anterior" aria-label="Slide anterior">&#8593;</button>
+  <button id="btnNext" title="Próximo slide" aria-label="Próximo slide">&#8595;</button>
+</div>
+
+<script>
+const DADOS = /*DADOS*/;
+const DETALHES = /*DETALHES*/;
+const IMAGENS = /*IMAGENS*/;
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const cor = (cat) => DADOS.categorias[cat].cor;
+const noAr = (a) => a.status === "no ar";
+const APPS = DADOS.apps.filter((a) => a.imagem && DETALHES[a.id]);
+
+function rodape(esq, dir, n, total) {
+  return `<div class="slide-foot">
+    <span>${esc(esq)}</span><span class="grow"></span><span>${esc(dir)}</span>
+    <span>${String(n).padStart(2, "0")}/${total}</span>
+  </div>`;
+}
+
+function statusChip(a) {
+  return noAr(a)
+    ? '<span class="status status-ok">no ar</span>'
+    : '<span class="status status-off">suspensa</span>';
+}
+
+function cabeca(app, i, rotulo) {
+  const cat = DADOS.categorias[app.categoria].nome;
+  return `<div class="slide-head">
+    <span class="eyebrow">Aplicação ${String(i + 1).padStart(2, "0")} / ${APPS.length}</span>
+    <span class="eyebrow eyebrow-dim">${esc(cat)}${rotulo ? " · " + esc(rotulo) : ""}</span>
+    <span class="grow"></span>
+    ${statusChip(app)}
+  </div>`;
+}
+
+function slideVitrine(app, i, n, t) {
+  const c = cor(app.categoria);
+  return `<section class="slide" style="--cat:${c}">
+    ${cabeca(app, i, "")}
+    <div class="vitrine">
+      <div>
+        <h2 class="slide-title">${esc(app.nome)}</h2>
+        <p class="extenso">${esc(app.extenso)}</p>
+        <p class="resumo">${esc(app.resumo)}</p>
+        <div class="papel">${esc(app.papel)}</div>
+        <div class="entrega" style="margin-top:1.5rem">
+          <h3>O que ela entrega</h3>
+          <ul class="destaques">
+            ${app.destaques.map((d) => `<li><span>${esc(d)}</span></li>`).join("")}
+          </ul>
+        </div>
+      </div>
+      <figure class="shot">
+        <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span>${esc(app.url)}</div>
+        <img src="${IMAGENS[app.id]}" alt="Captura de tela — ${esc(app.imagem_legenda)}" />
+        <figcaption>${esc(app.imagem_legenda)}</figcaption>
+      </figure>
+    </div>
+    ${rodape(app.url, DADOS.categorias[app.categoria].nome, n, t)}
+  </section>`;
+}
+
+function slideDetalhe(app, i, n, t) {
+  const c = cor(app.categoria);
+  const d = DETALHES[app.id];
+  return `<section class="slide" style="--cat:${c}">
+    ${cabeca(app, i, "detalhamento")}
+    <h2 class="slide-title" style="font-size:clamp(1.5rem,2.6vw,2.1rem)">${esc(app.nome)} <span style="color:var(--dim);font-weight:500">· por dentro</span></h2>
+    <div class="detalhe" style="margin-top:1.3rem">
+      <div>
+        <div class="bloco-det">
+          <h3>Como funciona</h3>
+          <ul class="lista">${d.como_funciona.map((x) => `<li><span>${esc(x)}</span></li>`).join("")}</ul>
+        </div>
+      </div>
+      <div>
+        <div class="bloco-det">
+          <h3>Dados e fontes</h3>
+          <ul class="lista fina">${d.dados.map((x) => `<li><span>${esc(x)}</span></li>`).join("")}</ul>
+        </div>
+        <div class="bloco-det">
+          <h3>Integrações e publicação</h3>
+          <ul class="lista fina">${d.integracoes.map((x) => `<li><span>${esc(x)}</span></li>`).join("")}</ul>
+        </div>
+      </div>
+      <div>
+        <div class="miniatura"><img src="${IMAGENS[app.id]}" alt="" /></div>
+        <div class="bloco-det" style="margin-top:0">
+          <h3>Números</h3>
+          <div class="kpis">
+            ${d.numeros.map(([v, k]) => `<div class="kpi"><span class="v">${esc(v)}</span><span class="k">${esc(k)}</span></div>`).join("")}
+          </div>
+        </div>
+        <div class="bloco-det">
+          <h3>Situação</h3>
+          <p class="situacao">${esc(d.situacao)}</p>
+        </div>
+      </div>
+    </div>
+    ${rodape(app.url, app.stack.join("  ·  "), n, t)}
+  </section>`;
+}
+
+function build() {
+  const slides = [];
+  const noArQtd = APPS.filter(noAr).length;
+
+  slides.push(() => `<section class="slide cover" style="--cat:${cor("major")}">
+    <div class="cover-grid">
+      <div>
+        <span class="eyebrow">${esc(DADOS.org)} · ${esc(DADOS.data)}</span>
+        <h1>PLI Hub <em>em detalhe</em></h1>
+        <p class="lede">As ${APPS.length} aplicações com tela registrada, uma a uma: o que fazem, como funcionam e de que dados vivem.</p>
+        <div class="cover-meta">
+          <div>Recorte<b>${APPS.length} de ${DADOS.apps.length} aplicações do hub</b></div>
+          <div>Central de acesso<b>${esc(DADOS.hub_url)}</b></div>
+          <div>Responsável técnico<b>${esc(DADOS.autor)}</b></div>
+        </div>
+      </div>
+      <div class="indice">
+        <span class="eyebrow">Neste documento</span>
+        ${Object.entries(DADOS.categorias).map(([id, cat]) => {
+          const lista = APPS.filter((a) => a.categoria === id);
+          if (!lista.length) return "";
+          return `<div class="indice-cat" style="--c:${cat.cor}">
+            <h4>${esc(cat.nome)}</h4>
+            <ul>${lista.map((a) => `<li>${esc(a.nome)}</li>`).join("")}</ul>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>
+  </section>`);
+
+  slides.push((n, t) => `<section class="slide" style="--cat:${cor("major")}">
+    <div class="slide-head"><span class="eyebrow">Recorte deste documento</span></div>
+    <h2 class="slide-title">Só o que já tem tela</h2>
+    <p class="extenso" style="max-width:64ch">Das ${DADOS.apps.length} aplicações do PLI Hub, ${APPS.length} têm registro visual da interface — capturadas ao vivo no servidor de produção ou recuperadas das capturas do relatório de atividades. São essas que este documento detalha, com dois slides cada: a vitrine e o funcionamento por dentro.</p>
+    <div class="numeros" style="margin-top:1.6rem">
+      <div class="numero"><div class="v">${APPS.length}</div><div class="k">aplicações detalhadas</div></div>
+      <div class="numero"><div class="v" style="color:var(--green)">${noArQtd}</div><div class="k">no ar</div></div>
+      <div class="numero"><div class="v" style="color:var(--amber)">${APPS.length - noArQtd}</div><div class="k">suspensas</div></div>
+      <div class="numero"><div class="v">${APPS.length * 2}</div><div class="k">slides de conteúdo</div></div>
+    </div>
+    <div class="panorama">
+      ${Object.entries(DADOS.categorias).map(([id, cat]) => {
+        const lista = APPS.filter((a) => a.categoria === id);
+        if (!lista.length) return "";
+        return `<div class="col-cat" style="--c:${cat.cor}">
+          <h3>${esc(cat.nome)}</h3>
+          <div class="qtd">${lista.length} ${lista.length === 1 ? "aplicação" : "aplicações"}</div>
+          <ol>${lista.map((a, k) => `<li><span class="n">${String(k + 1).padStart(2, "0")}</span>${esc(a.nome)}<span class="st ${noAr(a) ? "st-ok" : "st-off"}"></span></li>`).join("")}</ol>
+        </div>`;
+      }).join("")}
+    </div>
+    ${rodape(DADOS.hub_url, "Recorte", n, t)}
+  </section>`);
+
+  APPS.forEach((app, i) => {
+    slides.push((n, t) => slideVitrine(app, i, n, t));
+    slides.push((n, t) => slideDetalhe(app, i, n, t));
+  });
+
+  slides.push((n, t) => `<section class="slide" style="--cat:${cor("tools")}">
+    <div class="slide-head"><span class="eyebrow">Arquitetura</span></div>
+    <h2 class="slide-title">Como as peças conversam</h2>
+    <p class="extenso">Quatro integrações já em produção ligam sensor, cadastro e decisão.</p>
+    <div class="fluxo">${diagrama()}</div>
+    ${rodape("4 integrações em produção", "Arquitetura", n, t)}
+  </section>`);
+
+  const total = slides.length;
+  document.getElementById("deck").innerHTML = slides.map((f, i) => f(i + 1, total)).join("");
+  return total;
+}
+
+function diagrama() {
+  const LB = 250, HB = 74;
+  const col = [0, 375, 750];
+  const cx = (x, y, cor2, nome, sub) => `
+    <g>
+      <rect x="${x}" y="${y}" width="${LB}" height="${HB}" rx="3" fill="#0c2939" stroke="${cor2}" stroke-width="1.5"></rect>
+      <rect x="${x}" y="${y}" width="4" height="${HB}" fill="${cor2}"></rect>
+      <text class="nm" x="${x + 16}" y="${y + 30}">${nome}</text>
+      <text class="sub" x="${x + 16}" y="${y + 51}">${sub}</text>
+    </g>`;
+  const seta = (x1, y1, x2, y2, rotulo) => `
+    <g>
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#2b5f7d" stroke-width="1.5" marker-end="url(#p)"></line>
+      <text class="lbl" x="${(x1 + x2) / 2}" y="${(y1 + y2) / 2 - 10}" text-anchor="middle">${rotulo}</text>
+    </g>`;
+  return `<svg viewBox="0 0 1000 480" role="img" aria-label="Diagrama de integração entre as aplicações do PLI">
+    <defs>
+      <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2b5f7d"></path>
+      </marker>
+    </defs>
+    <text class="lbl" x="${col[0]}" y="14">SENSORES E COLETA</text>
+    ${cx(col[0], 30, "#3aa6d9", "PLI-HazardTrack", "chuva MERGE/INPE → risco por trecho")}
+    ${cx(col[0], 152, "#3aa6d9", "PLI Reporta", "relato do cidadão → incidente verificado")}
+    <text class="lbl" x="${col[1]}" y="14">OPERAÇÃO</text>
+    ${cx(col[1], 91, "#3aa6d9", "PLI Smart Router", "rota que desvia do risco")}
+    ${seta(col[0] + LB, 67, col[1], 112, "camadas de risco")}
+    ${seta(col[0] + LB, 189, col[1], 144, "GeoJSON")}
+    <text class="lbl" x="${col[2]}" y="14">LEITURA DO TERRITÓRIO</text>
+    ${cx(col[2], 30, "#3aa6d9", "FAD-Stats 2.0", "IBGE · SECEX · MTE · ANTT")}
+    ${cx(col[2], 152, "#e0a33a", "Análises Exploratórias", "sinistralidade e densidade da malha")}
+    <text class="lbl" x="${col[0]}" y="316">PLATAFORMA CENTRAL</text>
+    ${cx(col[0], 332, "#3ec26e", "SIGMA-PLI", "metadados, identidade e grafo")}
+    <text class="lbl" x="${col[1]}" y="316">DECISÃO</text>
+    ${cx(col[1], 332, "#3aa6d9", "SICARD", "carteira hierarquizada por AHP")}
+    <text class="lbl" x="${col[2]}" y="316">MÉTODO</text>
+    ${cx(col[2], 332, "#3ec26e", "AHP Tool Calculator", "pesos e consistência")}
+    ${seta(col[0] + LB, 369, col[1], 369, "login e cadastros")}
+    ${seta(col[2], 369, col[1] + LB, 369, "método AHP")}
+  </svg>`;
+}
+
+const total = build();
+const deck = document.getElementById("deck");
+const barra = document.getElementById("progresso");
+
+function slideAtual() { return Math.round(deck.scrollTop / deck.clientHeight); }
+function irPara(i) {
+  const alvo = Math.max(0, Math.min(total - 1, i));
+  deck.scrollTo({ top: alvo * deck.clientHeight, behavior: "smooth" });
+}
+function atualizarBarra() {
+  barra.style.width = (total > 1 ? (slideAtual() / (total - 1)) * 100 : 100) + "%";
+}
+
+deck.addEventListener("scroll", atualizarBarra, { passive: true });
+document.getElementById("btnNext").addEventListener("click", () => irPara(slideAtual() + 1));
+document.getElementById("btnPrev").addEventListener("click", () => irPara(slideAtual() - 1));
+document.addEventListener("keydown", (e) => {
+  if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); irPara(slideAtual() + 1); }
+  if (["ArrowUp", "ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); irPara(slideAtual() - 1); }
+  if (e.key === "Home") { e.preventDefault(); irPara(0); }
+  if (e.key === "End") { e.preventDefault(); irPara(total - 1); }
+});
+atualizarBarra();
+</script>

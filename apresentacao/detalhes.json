@@ -1,0 +1,195 @@
+{
+  "_nota": "Detalhamento tecnico por aplicacao, usado apenas na versao detalhada (9 aplicacoes com captura de tela). Fontes: READMEs e documentacao das proprias aplicacoes no servidor de producao e nos repositorios locais, mais os dashboards publicados.",
+  "sigma": {
+    "como_funciona": [
+      "FastAPI serve a API e as páginas Jinja2; o frontend é HTML/CSS/JS modular, sem framework SPA",
+      "Autenticação por JWT somada a sessões; cadastro PF/PJ com verificação de e-mail via SendGrid",
+      "PostgreSQL 17 com PostGIS guarda cadastros, metadados e geometrias",
+      "Memgraph, por protocolo Bolt, mantém o grafo de conhecimento e os algoritmos de navegação",
+      "GeoServer publica as camadas em padrões OGC (WMS/WFS/WCS) consumidas pelo WebGIS",
+      "Arquivos do dicionário de dados vão para o Cloudflare R2, compatível com S3"
+    ],
+    "dados": [
+      "Metadados e arquivos enviados pelos próprios usuários",
+      "Catálogo do dicionário de dados do PLI",
+      "Camadas geoespaciais publicadas no GeoServer",
+      "Cadastros de pessoas físicas e jurídicas"
+    ],
+    "integracoes": [
+      "Fornece autenticação e cadastros ao SICARD (somente leitura)",
+      "GeoServer, Memgraph, Cloudflare R2 e R Shiny Server",
+      "Nginx como proxy reverso, tudo em Docker Compose"
+    ],
+    "numeros": [["11", "módulos"], ["10", "ativos"], ["1", "parcial"]],
+    "situacao": "Dez dos onze módulos estão ativos em produção. Apenas o M05 (Calendário) segue parcial. É a aplicação mais madura do portfólio e a única de que outra aplicação depende."
+  },
+  "sicard": {
+    "como_funciona": [
+      "Cada demanda — plano, programa ou projeto — vive em uma única linha do esquema demandas e avança no ciclo de vida sem cópias",
+      "O status percorre três fases: cadastro_analise, hierarquizacao e execucao, com a matriz de transições guardada no banco",
+      "O AHP cobre critérios, premissas, matriz de comparação pareada, cálculo de pesos, razão de consistência e homologação",
+      "Ambientes colaborativos permitem convidar avaliadores com prazo e token público; o cálculo do servidor é a fonte da verdade",
+      "A hierarquização é uma rodada persistida em JSONB: Fase 1 elegibilidade e interseções territoriais, Fase 2 favorabilidade, Fase 3 ajuste fino, e a síntese gera o ranking"
+    ],
+    "dados": [
+      "PostgreSQL 17 + PostGIS 3.5 como fonte definitiva",
+      "SIGMA-PLI externo, consultado apenas para leitura",
+      "Catálogo territorial e conteúdo geoespacial próprios",
+      "Trilha de auditoria de todas as decisões"
+    ],
+    "integracoes": [
+      "Login, pessoas e instituições vêm do SIGMA-PLI; o SICARD nunca grava no banco dele",
+      "API sob o prefixo /api; páginas públicas em /public/ e operacionais em /restrict/",
+      "URLs antigas respondem 308 preservando a query string"
+    ],
+    "numeros": [["3", "fases de status"], ["3", "fases + síntese"], ["AHP", "método"]],
+    "situacao": "Inventário de implementação de 19 de julho de 2026: cadastro, análise, aprovação, configuração AHP, comparação colaborativa e hierarquização estão implementados e em uso."
+  },
+  "smartrouter": {
+    "como_funciona": [
+      "Origem e destino podem ser dados por coordenada, busca textual ou clique no mapa",
+      "O geocoding detecta o tipo sozinho: CEP vai para o ViaCEP, endereço e cidade vão para o Nominatim/OSM, com autocomplete a cada 300 ms",
+      "O traçado sai do OSRM sobre a base OpenStreetMap, aceitando waypoints intermediários",
+      "Um catálogo dinâmico de camadas puxa risco do HazardTrack e incidentes do PLI Reporta em tempo real",
+      "Com camadas ativas, o smart route calcula automaticamente uma alternativa desviando dos obstáculos, com buffer de 500 m"
+    ],
+    "dados": [
+      "OpenStreetMap e OSRM para a malha e o roteamento",
+      "Nominatim e ViaCEP para geocodificação",
+      "PLI-HazardTrack: movimento de massa, inundação e risco de fogo por trecho",
+      "PLI Reporta: bloqueios, alagamentos, lentidão, acidentes e obras"
+    ],
+    "integracoes": [
+      "Consome os dois serviços de alerta do próprio ecossistema PLI",
+      "Endereços dos serviços configuráveis por variável de ambiente",
+      "Publicável em qualquer host com gunicorn"
+    ],
+    "numeros": [["v0.4", "versão atual"], ["3", "modos de entrada"], ["500 m", "buffer de desvio"]],
+    "situacao": "A versão Streamlit (v0.1) foi descontinuada. O backend Flask em app_flask.py é a única implementação suportada."
+  },
+  "reporta": {
+    "como_funciona": [
+      "A unidade de análise é o incidente geoespacial verificável, não o formulário preenchido",
+      "Cada incidente percorre o ciclo submetido → triado → validado → publicado → expirado/resolvido",
+      "Dois scores independentes qualificam o relato: veracidade (é real?) e relevância (importa para a rota?)",
+      "A veracidade é média ponderada de sinais, V = Σ(wᵢ·sᵢ)/Σwᵢ, e a combinação com a relevância define a prioridade",
+      "Toda decisão automática registra os sinais que a produziram, e o cidadão pode saber por que o reporte foi aceito ou descartado"
+    ],
+    "dados": [
+      "Relatos do cidadão, georreferenciados e com mídia",
+      "Sinais de reconfirmação por outros usuários",
+      "Camadas PostGIS de incidentes publicados"
+    ],
+    "integracoes": [
+      "Expõe um endpoint GeoJSON estável para o roteador",
+      "Alimenta o PLI Smart Router como camada de incidentes verificados",
+      "Aplicação independente: roda em qualquer host com Python 3.10+"
+    ],
+    "numeros": [["5", "estados no ciclo"], ["2", "scores ortogonais"], ["PWA", "instalável"]],
+    "situacao": "Separar veracidade de relevância é decisão deliberada: um buraco pequeno em rua sem volume é verdadeiro mas irrelevante; um bloqueio em corredor estratégico é relevante mesmo com confiança moderada."
+  },
+  "hazardtrack": {
+    "como_funciona": [
+      "A cada ciclo, 96 arquivos GRIB2 horários do INPE são baixados em streaming direto para a memória — nada toca o disco",
+      "A amostragem usa uma única chamada nativa para todos os pontos, com ThreadPool de 8 workers",
+      "O índice de chuva vira CPC = I / (K_região · Ac96h^-0,9), com K próprio de cada região",
+      "O ICC é classificado de 0 a 4 em duas vias, geológica e hidrológica, conforme os limiares da região",
+      "O Risco Dinâmico sai da matriz oficial RD = RA × ICC, e o RD final é o maior entre a via geológica e a hidrológica"
+    ],
+    "dados": [
+      "Chuva MERGE/CPTEC/INPE — intensidade da última hora, acumulado em 24 h e em 96 h",
+      "Quatro regiões climático-geológico-geomorfológicas com buffer de 1.000 m do eixo cadastral do DER",
+      "Tabelas oficiais do relatório REGEA-NIPPON 2021 (Produto 06)",
+      "24 pontos amostrais ao longo da SP-055 e da SP-098"
+    ],
+    "integracoes": [
+      "Entrega as camadas de risco por trecho ao PLI Smart Router",
+      "Atualização a cada 10 minutos no servidor e a cada 30 segundos no cliente",
+      "Se a rede do INPE falhar, o snapshot vai para no_data — não há dado simulado no caminho operacional"
+    ],
+    "numeros": [["4", "regiões"], ["24", "pontos"], ["96", "GRIB2 por ciclo"], ["10 min", "atualização"]],
+    "situacao": "Validado por backtest do evento de 19/02/2023 em São Sebastião: Juquehy chegou a RD4, Camburi a RD3 e Maresias a RD1. Vinte testes unitários cobrem as equações de risco."
+  },
+  "fadstats": {
+    "como_funciona": [
+      "Backend FastAPI dividido em routers, services, queries e models, com settings, rate limit e métricas no core",
+      "Cinco routers atendem análise, catálogo, comércio exterior, análise PLI e health check",
+      "O frontend é HTML, CSS e JavaScript puros, sem etapa de build",
+      "Um catálogo GeoJSON no backend sustenta os recortes espaciais",
+      "As consultas são montadas a partir de templates parametrizados por recorte e período"
+    ],
+    "dados": [
+      "IBGE — produção agropecuária e base territorial",
+      "SECEX — comércio exterior por município",
+      "MTE / RAIS — mercado de trabalho",
+      "ANTT — logística e transporte"
+    ],
+    "integracoes": [
+      "Publicada sob /fad-stats/ no mesmo Nginx dos demais sistemas",
+      "Interface pública com a barra padrão do Governo de São Paulo",
+      "Banco PostgreSQL 17 dedicado"
+    ],
+    "numeros": [["21", "tipos de gráfico"], ["6", "tipos de mapa"], ["4", "fontes oficiais"]],
+    "situacao": "Segunda geração da ferramenta, com frontend reescrito em HTML puro para eliminar a dependência de React e a etapa de build."
+  },
+  "infosiga": {
+    "como_funciona": [
+      "Pipeline em três etapas executadas em sequência",
+      "01_processa_dados.py faz o ETL e consolida os CSVs do InfoSiga",
+      "02_analise_geografica.py cruza os sinistros com a malha rodoviária estadual",
+      "03_gera_html.py produz os dashboards HTML interativos, publicados como site estático",
+      "Os dados brutos não são versionados: entram na pasta dados/ e saem como artefatos"
+    ],
+    "dados": [
+      "CSVs oficiais do InfoSiga-SP: pessoas, sinistros e veículos",
+      "Shapefile da Malha Rodoviária Estadual",
+      "Base oficial do Detran-SP cruzada com a malha do DER/SP",
+      "Série de 2014 a 2026"
+    ],
+    "integracoes": [
+      "Publicação estática, sem backend em execução",
+      "Dashboards navegáveis por portal, análise geográfica, relatório executivo e guia"
+    ],
+    "numeros": [["1.364.070", "sinistros"], ["62.029", "óbitos"], ["95.166", "feridos graves"], ["92,3%", "geolocalizados"]],
+    "situacao": "Serviço suspenso no Render. O pipeline continua reproduzível a partir do repositório: basta rodar os três scripts para regerar os dashboards."
+  },
+  "acidentesder": {
+    "como_funciona": [
+      "Os arquivos Excel originais do DER são consolidados em uma base única em CSV",
+      "Scripts Python geram os gráficos interativos a partir dessa base",
+      "O resultado é um conjunto de páginas estáticas: portal, dashboard principal com abas, dashboard compacto, relatório executivo e guia de acesso",
+      "Cada gráfico é uma página HTML independente, o que permite reaproveitá-los em relatórios"
+    ],
+    "dados": [
+      "Registros de acidentes das rodovias estaduais sob gestão do DER-SP",
+      "Série consolidada de 2023, 2024 e 2025",
+      "Base única dados_completos.csv gerada pelo pipeline"
+    ],
+    "integracoes": [
+      "Publicação estática, sem backend em execução",
+      "Complementa o Infosiga com o recorte específico do DER"
+    ],
+    "numeros": [["39.578", "acidentes"], ["34.324", "vítimas"], ["2.065", "óbitos"], ["29", "gráficos"]],
+    "situacao": "Serviço suspenso no Render. Por ano: 14.389 acidentes em 2023, 13.882 em 2024 e 11.307 em 2025 — queda que merece checagem de completude antes de ser lida como tendência."
+  },
+  "densidade": {
+    "como_funciona": [
+      "Análise geoespacial em Python com GeoPandas e Folium",
+      "Calcula densidade da malha por área e por população",
+      "Classifica os trechos por tipo de administração, categoria de rodovia e localização urbana ou rural",
+      "O relatório final é um site estático com contextualização, objetivos, dados, metodologia, resultados e anexo de mapas",
+      "Os dados de entrada e saída ficam fora do versionamento para manter o repositório leve"
+    ],
+    "dados": [
+      "DER/SP — malha rodoviária estadual",
+      "IBGE — malha territorial e população",
+      "Recorte estadual completo, ano-base 2025"
+    ],
+    "integracoes": [
+      "Publicação estática (Static Site) no Render",
+      "Mapas interativos anexos ao relatório"
+    ],
+    "numeros": [["2025", "ano-base"], ["2", "indicadores de densidade"], ["3", "classificações"]],
+    "situacao": "Serviço suspenso no Render. O relatório pode ser aberto localmente a partir de relatorio/index.html, sem necessidade de servidor."
+  }
+}
