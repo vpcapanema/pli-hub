@@ -1,0 +1,2 @@
+# Backups gerados durante deploys manuais no servidor
+*.bak-*
