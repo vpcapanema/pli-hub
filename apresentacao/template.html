@@ -15,7 +15,6 @@
     --blue:     #3aa6d9;
     --green:    #3ec26e;
     --amber:    #e0a33a;
-    --red:      #e0654a;
 
     --display: "Archivo", "Segoe UI", system-ui, sans-serif;
     --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
@@ -42,9 +41,7 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .deck { scroll-behavior: auto; }
-  }
+  @media (prefers-reduced-motion: reduce) { .deck { scroll-behavior: auto; } }
 
   .slide {
     scroll-snap-align: start;
@@ -52,29 +49,27 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: clamp(2rem, 4.5vh, 3.4rem) clamp(1.5rem, 5vw, 5rem) 4.5rem;
+    padding: clamp(1.6rem, 3.6vh, 2.6rem) clamp(1.5rem, 4vw, 3.6rem) 3.9rem;
     background: var(--ground);
     border-bottom: 1px solid var(--rule);
     overflow: hidden;
   }
-
-  /* faixa superior de categoria */
   .slide::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
     height: 3px;
     background: var(--cat, var(--blue));
-    opacity: 0.9;
   }
 
   .slide-head {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: clamp(1.2rem, 3vh, 2.4rem);
+    margin-bottom: clamp(0.8rem, 2vh, 1.4rem);
   }
+  .slide-head .grow { flex: 1; }
 
   .eyebrow {
     font-family: var(--mono);
@@ -87,22 +82,20 @@
 
   .slide-foot {
     position: absolute;
-    left: clamp(1.5rem, 5vw, 5rem);
-    right: clamp(1.5rem, 5vw, 5rem);
-    bottom: 1.5rem;
+    left: clamp(1.5rem, 4vw, 3.6rem);
+    right: clamp(1.5rem, 4vw, 3.6rem);
+    bottom: 1.2rem;
     display: flex;
     align-items: center;
     gap: 1rem;
     font-family: var(--mono);
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     color: var(--dim);
     border-top: 1px solid var(--rule);
-    padding-top: 0.7rem;
+    padding-top: 0.6rem;
     padding-right: 5rem;
   }
   .slide-foot .grow { flex: 1; }
-  .slide-foot a { color: var(--dim); text-decoration: none; }
-  .slide-foot a:hover, .slide-foot a:focus-visible { color: var(--text); }
 
   /* ---------- capa ---------- */
 
@@ -113,93 +106,84 @@
       radial-gradient(90% 70% at 100% 100%, #0a3a34 0%, transparent 55%),
       var(--ground);
   }
+  .cover-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
   .cover h1 {
     font-family: var(--display);
     font-weight: 700;
-    font-size: clamp(3.4rem, 11vw, 9rem);
+    font-size: clamp(3.2rem, 9vw, 7.4rem);
     line-height: 0.9;
     letter-spacing: -0.035em;
-    margin: 0 0 1.2rem;
-    text-wrap: balance;
+    margin: 0.6rem 0 1rem;
   }
-  .cover h1 em {
-    font-style: normal;
-    color: var(--blue);
-  }
+  .cover h1 em { font-style: normal; color: var(--blue); }
   .cover .lede {
-    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    font-size: clamp(1rem, 1.9vw, 1.35rem);
     color: var(--muted);
-    max-width: 34ch;
+    max-width: 32ch;
     font-weight: 300;
-    margin: 0 0 2.6rem;
+    margin: 0 0 2rem;
   }
   .cover-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 2.4rem;
+    gap: 2rem;
     font-family: var(--mono);
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     color: var(--dim);
   }
-  .cover-meta b {
-    display: block;
-    color: var(--text);
-    font-weight: 500;
-    margin-top: 0.25rem;
-  }
-  .cover-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-    gap: clamp(2rem, 6vw, 5rem);
-    align-items: center;
-  }
-  .indice { display: flex; flex-direction: column; gap: 1.5rem; }
+  .cover-meta b { display: block; color: var(--text); font-weight: 500; margin-top: 0.25rem; }
+
+  .indice { display: flex; flex-direction: column; gap: 1.3rem; }
   .indice > .eyebrow { color: var(--dim); }
-  .indice-cat { border-top: 2px solid var(--c); padding-top: 0.7rem; }
+  .indice-cat { border-top: 2px solid var(--c); padding-top: 0.65rem; }
   .indice-cat h4 {
     font-family: var(--display);
-    font-size: 1.02rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--c);
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.45rem;
   }
-  .indice-cat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.22rem; }
-  .indice-cat li { color: var(--muted); font-size: 0.94rem; }
-  @media (max-width: 860px) { .cover-grid { grid-template-columns: 1fr; } }
+  .indice-cat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+  .indice-cat li { color: var(--muted); font-size: 0.92rem; }
 
   /* ---------- tipografia geral ---------- */
 
   h2.slide-title {
     font-family: var(--display);
     font-weight: 600;
-    font-size: clamp(1.9rem, 4.4vw, 3.3rem);
+    font-size: clamp(1.8rem, 3.6vw, 2.9rem);
     line-height: 1.02;
     letter-spacing: -0.025em;
     margin: 0;
     text-wrap: balance;
   }
   .extenso {
-    font-size: clamp(0.95rem, 1.5vw, 1.12rem);
+    font-size: clamp(0.9rem, 1.25vw, 1.02rem);
     color: var(--muted);
     font-weight: 300;
-    margin: 0.7rem 0 0;
-    max-width: 46ch;
+    margin: 0.55rem 0 0;
+    max-width: 42ch;
   }
   .resumo {
-    font-size: clamp(1rem, 1.7vw, 1.22rem);
-    line-height: 1.55;
-    max-width: 44ch;
-    margin: 1.6rem 0 0;
+    font-size: clamp(0.94rem, 1.3vw, 1.06rem);
+    line-height: 1.5;
+    max-width: 42ch;
+    margin: 1.1rem 0 0;
   }
   .papel {
     display: inline-block;
-    margin-top: 1.5rem;
+    margin-top: 1.2rem;
     font-family: var(--display);
     font-weight: 600;
-    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    font-size: clamp(0.95rem, 1.35vw, 1.1rem);
     color: var(--cat, var(--blue));
     border-left: 3px solid var(--cat, var(--blue));
-    padding-left: 0.8rem;
+    padding-left: 0.75rem;
     line-height: 1.3;
   }
 
@@ -208,78 +192,117 @@
   .app-body {
     flex: 1;
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: clamp(1.5rem, 4vw, 4rem);
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: clamp(1.4rem, 3vw, 2.8rem);
     align-content: center;
   }
+  .col-dir { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
 
-  .panel {
-    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  /* moldura de captura de tela */
+  figure.shot {
+    margin: 0;
     border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: clamp(1.2rem, 2.6vw, 2rem);
-    align-self: start;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
   }
-  .panel h3 {
+  .shot-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.65rem;
+    border-bottom: 1px solid var(--rule);
+    background: var(--surface-2);
     font-family: var(--mono);
-    font-size: 0.68rem;
+    font-size: 0.6rem;
+    color: var(--dim);
+  }
+  .shot-bar .dots { display: flex; gap: 0.28rem; }
+  .shot-bar .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: clamp(180px, 40vh, 360px);
+    object-fit: cover;
+    object-position: top center;
+  }
+  .shot figcaption {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--dim);
+    padding: 0.42rem 0.65rem;
+    border-top: 1px solid var(--rule);
+  }
+  .sem-shot {
+    border: 1px dashed var(--rule);
+    border-radius: 4px;
+    padding: 1.1rem 1.2rem;
+    color: var(--dim);
+    font-size: 0.88rem;
+    line-height: 1.45;
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .sem-shot b { color: var(--amber); font-weight: 600; display: block; margin-bottom: 0.25rem; font-family: var(--display); }
+
+  .entrega h3 {
+    font-family: var(--mono);
+    font-size: 0.64rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--dim);
-    margin: 0 0 1.1rem;
+    margin: 0 0 0.7rem;
     font-weight: 500;
   }
-
   ul.destaques {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.5rem;
   }
   ul.destaques li {
     display: grid;
-    grid-template-columns: 1.4rem 1fr;
+    grid-template-columns: 1.2rem 1fr;
     align-items: start;
-    font-size: clamp(0.9rem, 1.35vw, 1.02rem);
-    line-height: 1.45;
+    font-size: clamp(0.82rem, 1.1vw, 0.94rem);
+    line-height: 1.4;
     color: #d3e3ec;
   }
   ul.destaques li::before {
     content: "";
-    width: 0.8rem;
+    width: 0.72rem;
     height: 1px;
     background: var(--cat, var(--blue));
-    margin-top: 0.72em;
+    margin-top: 0.7em;
   }
 
   .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 1.6rem;
-    padding-top: 1.3rem;
+    gap: 0.35rem;
+    margin-top: 1.3rem;
+    padding-top: 1rem;
     border-top: 1px solid var(--rule);
   }
   .chip {
     font-family: var(--mono);
-    font-size: 0.66rem;
+    font-size: 0.63rem;
     color: var(--muted);
     border: 1px solid var(--rule);
     border-radius: 2px;
-    padding: 0.24rem 0.5rem;
+    padding: 0.22rem 0.45rem;
     white-space: nowrap;
   }
 
   .status {
     font-family: var(--mono);
-    font-size: 0.66rem;
+    font-size: 0.64rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 0.28rem 0.6rem;
+    padding: 0.26rem 0.55rem;
     border-radius: 2px;
-    white-space: nowrap;
   }
   .status-ok  { color: #0a2a16; background: var(--green); }
   .status-off { color: #2a1408; background: var(--amber); }
@@ -293,67 +316,48 @@
     gap: clamp(1rem, 2.5vw, 2rem);
     align-content: start;
   }
-  .col-cat {
-    border-top: 3px solid var(--c);
-    padding-top: 1.1rem;
-  }
+  .col-cat { border-top: 3px solid var(--c); padding-top: 1rem; }
   .col-cat h3 {
     font-family: var(--display);
-    font-size: clamp(1rem, 1.7vw, 1.3rem);
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
     font-weight: 600;
     margin: 0 0 0.2rem;
     color: var(--c);
     line-height: 1.15;
   }
-  .col-cat .qtd {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--dim);
-  }
+  .col-cat .qtd { font-family: var(--mono); font-size: 0.68rem; color: var(--dim); }
   .col-cat ol {
     list-style: none;
-    margin: 1.1rem 0 0;
+    margin: 1rem 0 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.5rem;
   }
   .col-cat li {
     display: flex;
     align-items: baseline;
     gap: 0.6rem;
-    font-size: clamp(0.88rem, 1.3vw, 1rem);
+    font-size: clamp(0.86rem, 1.2vw, 0.98rem);
     border-bottom: 1px solid var(--rule);
-    padding-bottom: 0.55rem;
+    padding-bottom: 0.5rem;
   }
-  .col-cat li .n {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--dim);
-    font-variant-numeric: tabular-nums;
-  }
-  .col-cat li .st {
-    margin-left: auto;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex: none;
-    align-self: center;
-  }
-  .st-ok  { background: var(--green); }
+  .col-cat li .n { font-family: var(--mono); font-size: 0.66rem; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .col-cat li .st { margin-left: auto; width: 7px; height: 7px; border-radius: 50%; flex: none; align-self: center; }
+  .st-ok { background: var(--green); }
   .st-off { background: var(--amber); }
 
   .numeros {
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(1.5rem, 5vw, 4rem);
-    margin-bottom: clamp(1.2rem, 3vh, 2.2rem);
-    padding-bottom: clamp(1.2rem, 3vh, 2rem);
+    gap: clamp(1.5rem, 4vw, 3.4rem);
+    margin-bottom: clamp(1rem, 2.4vh, 1.8rem);
+    padding-bottom: clamp(1rem, 2.4vh, 1.6rem);
     border-bottom: 1px solid var(--rule);
   }
   .numero .v {
     font-family: var(--display);
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-size: clamp(2rem, 4vw, 3.1rem);
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
@@ -361,60 +365,46 @@
   }
   .numero .k {
     font-family: var(--mono);
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--dim);
-    margin-top: 0.45rem;
+    margin-top: 0.4rem;
   }
 
   /* ---------- módulos do SIGMA ---------- */
 
-  .modulos {
+  .mod-body {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 0.7rem;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 2fr);
+    gap: clamp(1.4rem, 3vw, 2.6rem);
+    align-content: center;
+  }
+  .modulos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
     align-content: start;
   }
   .modulo {
     border: 1px solid var(--rule);
     border-left: 3px solid var(--blue);
     border-radius: 2px;
-    padding: 0.75rem 0.9rem;
+    padding: 0.6rem 0.75rem;
     background: var(--surface);
   }
-  .modulo .cod {
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    color: var(--blue);
-    letter-spacing: 0.08em;
-  }
-  .modulo .nm {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1rem;
-    margin: 0.15rem 0 0.3rem;
-  }
-  .modulo .ds {
-    font-size: 0.84rem;
-    color: var(--muted);
-    line-height: 1.4;
-  }
+  .modulo .cod { font-family: var(--mono); font-size: 0.62rem; color: var(--blue); letter-spacing: 0.08em; }
+  .modulo .nm { font-family: var(--display); font-weight: 600; font-size: 0.94rem; margin: 0.1rem 0 0.22rem; }
+  .modulo .ds { font-size: 0.78rem; color: var(--muted); line-height: 1.35; }
 
   /* ---------- integrações ---------- */
 
-  .fluxo {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 0;
-  }
-  .fluxo svg { width: 100%; height: auto; max-height: 60vh; }
+  .fluxo { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+  .fluxo svg { width: 100%; height: auto; max-height: 58vh; }
   .fluxo text { font-family: var(--body); fill: var(--text); }
   .fluxo .lbl { font-family: var(--mono); font-size: 11px; fill: var(--dim); }
-  .fluxo .nm  { font-family: var(--display); font-size: 17px; font-weight: 600; }
+  .fluxo .nm { font-family: var(--display); font-size: 17px; font-weight: 600; }
   .fluxo .sub { font-size: 12.5px; fill: var(--muted); }
 
   /* ---------- encerramento ---------- */
@@ -422,22 +412,12 @@
   .fecho {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: clamp(1.2rem, 3vw, 2.4rem);
     align-content: start;
   }
-  .fecho .bloco h3 {
-    font-family: var(--display);
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 0 0 0.7rem;
-  }
-  .fecho .bloco p {
-    margin: 0 0 0.7rem;
-    color: var(--muted);
-    font-size: 0.98rem;
-    line-height: 1.5;
-  }
+  .fecho .bloco h3 { font-family: var(--display); font-size: 1.1rem; font-weight: 600; margin: 0 0 0.6rem; }
+  .fecho .bloco p { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.94rem; line-height: 1.5; }
   .fecho .bloco strong { color: var(--text); font-weight: 600; }
 
   /* ---------- navegação ---------- */
@@ -453,8 +433,8 @@
   }
   .nav {
     position: fixed;
-    right: clamp(1rem, 2vw, 1.6rem);
-    bottom: clamp(1rem, 2vw, 1.4rem);
+    right: clamp(1rem, 2vw, 1.4rem);
+    bottom: clamp(0.9rem, 2vw, 1.2rem);
     display: flex;
     gap: 0.4rem;
     z-index: 20;
@@ -474,9 +454,10 @@
   .nav button:hover { color: var(--text); border-color: var(--muted); }
   .nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-  @media (max-width: 860px) {
-    .app-body, .panorama { grid-template-columns: 1fr; }
-    .slide { min-height: auto; padding-bottom: 4rem; }
+  @media (max-width: 900px) {
+    .app-body, .panorama, .cover-grid, .mod-body { grid-template-columns: 1fr; }
+    .modulos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .slide { min-height: auto; padding-bottom: 3.6rem; }
     .deck { scroll-snap-type: none; }
   }
 
@@ -496,6 +477,7 @@
 
 <script>
 const DADOS = /*DADOS*/;
+const IMAGENS = /*IMAGENS*/;
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const cor = (cat) => DADOS.categorias[cat].cor;
@@ -513,14 +495,27 @@ function rodape(esq, dir, n, total) {
   </div>`;
 }
 
+function captura(chave, url, legenda) {
+  const src = IMAGENS[chave];
+  if (!src) return "";
+  return `<figure class="shot">
+    <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span>${esc(url)}</div>
+    <img src="${src}" alt="Captura de tela — ${esc(legenda)}" />
+    <figcaption>${esc(legenda)}</figcaption>
+  </figure>`;
+}
+
 function slideApp(app, i, totalApps, nSlide, totalSlides) {
   const c = cor(app.categoria);
   const cat = DADOS.categorias[app.categoria].nome;
+  const visual = app.imagem
+    ? captura(app.id, app.url, app.imagem_legenda)
+    : `<div class="sem-shot"><b>Sem captura disponível</b>A aplicação está suspensa no Render e não aparece nas capturas do relatório de atividades. A tela entra assim que o serviço for reativado.</div>`;
   return `<section class="slide" style="--cat:${c}">
     <div class="slide-head">
       <span class="eyebrow">Aplicação ${String(i + 1).padStart(2, "0")} / ${totalApps}</span>
       <span class="eyebrow eyebrow-dim">${esc(cat)}</span>
-      <span class="grow" style="flex:1"></span>
+      <span class="grow"></span>
       ${statusChip(app)}
     </div>
     <div class="app-body">
@@ -529,14 +524,15 @@ function slideApp(app, i, totalApps, nSlide, totalSlides) {
         <p class="extenso">${esc(app.extenso)}</p>
         <p class="resumo">${esc(app.resumo)}</p>
         <div class="papel">${esc(app.papel)}</div>
+        <div class="chips">${app.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
       </div>
-      <div class="panel">
-        <h3>O que ela entrega</h3>
-        <ul class="destaques">
-          ${app.destaques.map((d) => `<li><span>${esc(d)}</span></li>`).join("")}
-        </ul>
-        <div class="chips">
-          ${app.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}
+      <div class="col-dir">
+        ${visual}
+        <div class="entrega">
+          <h3>O que ela entrega</h3>
+          <ul class="destaques">
+            ${app.destaques.map((d) => `<li><span>${esc(d)}</span></li>`).join("")}
+          </ul>
         </div>
       </div>
     </div>
@@ -548,6 +544,7 @@ function build() {
   const apps = DADOS.apps;
   const totalApps = apps.length;
   const noArQtd = apps.filter(noAr).length;
+  const comShot = apps.filter((a) => a.imagem).length;
 
   const slides = [];
 
@@ -589,11 +586,12 @@ function build() {
     return `<section class="slide" style="--cat:${cor("major")}">
       <div class="slide-head"><span class="eyebrow">Panorama</span></div>
       <h2 class="slide-title">O portfólio em um relance</h2>
-      <div class="numeros" style="margin-top:1.6rem">
+      <div class="numeros" style="margin-top:1.4rem">
         <div class="numero"><div class="v">${totalApps}</div><div class="k">aplicações</div></div>
         <div class="numero"><div class="v">3</div><div class="k">categorias</div></div>
         <div class="numero"><div class="v" style="color:var(--green)">${noArQtd}</div><div class="k">no ar hoje</div></div>
         <div class="numero"><div class="v" style="color:var(--amber)">${totalApps - noArQtd}</div><div class="k">suspensas</div></div>
+        <div class="numero"><div class="v">${comShot}</div><div class="k">com tela registrada</div></div>
       </div>
       <div class="panorama">${cols}</div>
       ${rodape(DADOS.hub_url, "Panorama", n, t)}
@@ -610,13 +608,18 @@ function build() {
       <span class="eyebrow eyebrow-dim">${DADOS.modulos_sigma.length} módulos</span>
     </div>
     <h2 class="slide-title">A plataforma central, módulo a módulo</h2>
-    <p class="extenso">Cada módulo é uma área funcional própria. Juntos, formam a base sobre a qual as outras aplicações do PLI se apoiam.</p>
-    <div class="modulos" style="margin-top:1.8rem">
-      ${DADOS.modulos_sigma.map(([cod, nm, ds]) => `<div class="modulo">
-        <div class="cod">${esc(cod)}</div>
-        <div class="nm">${esc(nm)}</div>
-        <div class="ds">${esc(ds)}</div>
-      </div>`).join("")}
+    <div class="mod-body" style="margin-top:1.2rem">
+      <div class="col-dir">
+        ${captura("modulos", apps[0].url, DADOS.imagem_modulos_legenda)}
+        <p class="extenso" style="margin-top:0.2rem">Cada módulo é uma área funcional própria. Juntos, formam a base sobre a qual as outras aplicações do PLI se apoiam.</p>
+      </div>
+      <div class="modulos">
+        ${DADOS.modulos_sigma.map(([cod, nm, ds]) => `<div class="modulo">
+          <div class="cod">${esc(cod)}</div>
+          <div class="nm">${esc(nm)}</div>
+          <div class="ds">${esc(ds)}</div>
+        </div>`).join("")}
+      </div>
     </div>
     ${rodape(apps[0].url, "Sistemas Maiores", n, t)}
   </section>`);
@@ -639,7 +642,7 @@ function build() {
   slides.push((n, t) => `<section class="slide" style="--cat:${cor("major")}">
     <div class="slide-head"><span class="eyebrow">Situação e próximos passos</span></div>
     <h2 class="slide-title">Onde o portfólio está hoje</h2>
-    <div class="numeros" style="margin-top:1.6rem">
+    <div class="numeros" style="margin-top:1.4rem">
       <div class="numero"><div class="v" style="color:var(--green)">${noArQtd}</div><div class="k">no servidor próprio</div></div>
       <div class="numero"><div class="v" style="color:var(--amber)">${totalApps - noArQtd}</div><div class="k">suspensas no Render</div></div>
       <div class="numero"><div class="v">4</div><div class="k">integrações ativas</div></div>
@@ -670,12 +673,12 @@ function build() {
 }
 
 function diagrama() {
-  const W = 250, HH = 74;
+  const LB = 250, HB = 74;
   const col = [0, 375, 750];
   const cx = (x, y, cor2, nome, sub) => `
     <g>
-      <rect x="${x}" y="${y}" width="${W}" height="${HH}" rx="3" fill="#0c2939" stroke="${cor2}" stroke-width="1.5"></rect>
-      <rect x="${x}" y="${y}" width="4" height="${HH}" fill="${cor2}"></rect>
+      <rect x="${x}" y="${y}" width="${LB}" height="${HB}" rx="3" fill="#0c2939" stroke="${cor2}" stroke-width="1.5"></rect>
+      <rect x="${x}" y="${y}" width="4" height="${HB}" fill="${cor2}"></rect>
       <text class="nm" x="${x + 16}" y="${y + 30}">${nome}</text>
       <text class="sub" x="${x + 16}" y="${y + 51}">${sub}</text>
     </g>`;
@@ -698,8 +701,8 @@ function diagrama() {
     <text class="lbl" x="${col[1]}" y="14">OPERAÇÃO</text>
     ${cx(col[1], 91, "#3aa6d9", "PLI Smart Router", "rota que desvia do risco")}
 
-    ${seta(col[0] + W, 67, col[1], 112, "camadas de risco")}
-    ${seta(col[0] + W, 189, col[1], 144, "GeoJSON")}
+    ${seta(col[0] + LB, 67, col[1], 112, "camadas de risco")}
+    ${seta(col[0] + LB, 189, col[1], 144, "GeoJSON")}
 
     <text class="lbl" x="${col[2]}" y="14">LEITURA DO TERRITÓRIO</text>
     ${cx(col[2], 30, "#3aa6d9", "FAD-Stats 2.0", "IBGE · SECEX · MTE · ANTT")}
@@ -714,8 +717,8 @@ function diagrama() {
     <text class="lbl" x="${col[2]}" y="316">MÉTODO</text>
     ${cx(col[2], 332, "#3ec26e", "AHP Tool Calculator", "pesos e consistência")}
 
-    ${seta(col[0] + W, 369, col[1], 369, "login e cadastros")}
-    ${seta(col[2], 369, col[1] + W, 369, "método AHP")}
+    ${seta(col[0] + LB, 369, col[1], 369, "login e cadastros")}
+    ${seta(col[2], 369, col[1] + LB, 369, "método AHP")}
   </svg>`;
 }
 
@@ -723,16 +726,13 @@ const total = build();
 const deck = document.getElementById("deck");
 const barra = document.getElementById("progresso");
 
-function slideAtual() {
-  return Math.round(deck.scrollTop / deck.clientHeight);
-}
+function slideAtual() { return Math.round(deck.scrollTop / deck.clientHeight); }
 function irPara(i) {
   const alvo = Math.max(0, Math.min(total - 1, i));
   deck.scrollTo({ top: alvo * deck.clientHeight, behavior: "smooth" });
 }
 function atualizarBarra() {
-  const p = total > 1 ? (slideAtual() / (total - 1)) * 100 : 100;
-  barra.style.width = p + "%";
+  barra.style.width = (total > 1 ? (slideAtual() / (total - 1)) * 100 : 100) + "%";
 }
 
 deck.addEventListener("scroll", atualizarBarra, { passive: true });

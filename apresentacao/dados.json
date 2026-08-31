@@ -6,9 +6,18 @@
   "org": "VPC-GEOSER",
   "hub_url": "https://56.125.163.194/pli-hub/",
   "categorias": {
-    "major": { "nome": "Sistemas Maiores", "cor": "#3aa6d9" },
-    "analysis": { "nome": "Análises Exploratórias", "cor": "#e0a33a" },
-    "tools": { "nome": "Ferramentas Analíticas e de Produção", "cor": "#3ec26e" }
+    "major": {
+      "nome": "Sistemas Maiores",
+      "cor": "#3aa6d9"
+    },
+    "analysis": {
+      "nome": "Análises Exploratórias",
+      "cor": "#e0a33a"
+    },
+    "tools": {
+      "nome": "Ferramentas Analíticas e de Produção",
+      "cor": "#3ec26e"
+    }
   },
   "apps": [
     {
@@ -27,7 +36,17 @@
         "WebGIS próprio: camadas OGC (WMS/WFS) publicadas via GeoServer",
         "Dashboards interativos em R Shiny e painel administrativo completo"
       ],
-      "stack": ["FastAPI · Python 3.12", "PostgreSQL 17 + PostGIS", "Memgraph", "GeoServer", "R Shiny", "Cloudflare R2", "Docker + Nginx"]
+      "stack": [
+        "FastAPI · Python 3.12",
+        "PostgreSQL 17 + PostGIS",
+        "Memgraph",
+        "GeoServer",
+        "R Shiny",
+        "Cloudflare R2",
+        "Docker + Nginx"
+      ],
+      "imagem": "imagens/sigma.jpg",
+      "imagem_legenda": "Painel do SIGMA-PLI · relatório de atividades, jun/2026"
     },
     {
       "id": "sicard",
@@ -45,7 +64,14 @@
         "Login e cadastro de pessoas e instituições consumidos do SIGMA-PLI",
         "Trilha de auditoria de ponta a ponta"
       ],
-      "stack": ["FastAPI · Python 3.11+", "PostgreSQL 17 + PostGIS 3.5", "HTML/CSS/JS", "API do SIGMA-PLI"]
+      "stack": [
+        "FastAPI · Python 3.11+",
+        "PostgreSQL 17 + PostGIS 3.5",
+        "HTML/CSS/JS",
+        "API do SIGMA-PLI"
+      ],
+      "imagem": "imagens/sicard.jpg",
+      "imagem_legenda": "Portal público do SICARD · captura ao vivo, 31/ago/2026"
     },
     {
       "id": "smartrouter",
@@ -63,7 +89,14 @@
         "Camadas ao vivo de risco (HazardTrack) e de incidentes (PLI Reporta)",
         "Smart route: rota alternativa com buffer de segurança de 500 m"
       ],
-      "stack": ["Flask", "Leaflet", "OSRM · OpenStreetMap", "Nominatim · ViaCEP"]
+      "stack": [
+        "Flask",
+        "Leaflet",
+        "OSRM · OpenStreetMap",
+        "Nominatim · ViaCEP"
+      ],
+      "imagem": "imagens/smartrouter.jpg",
+      "imagem_legenda": "Malha e camadas de risco · captura ao vivo, 31/ago/2026"
     },
     {
       "id": "reporta",
@@ -81,7 +114,14 @@
         "Endpoint GeoJSON estável para integração com o roteador",
         "Instalável como PWA, pensado para uso em campo"
       ],
-      "stack": ["FastAPI · Uvicorn", "PostGIS", "PWA mobile-first", "GeoJSON"]
+      "stack": [
+        "FastAPI · Uvicorn",
+        "PostGIS",
+        "PWA mobile-first",
+        "GeoJSON"
+      ],
+      "imagem": "imagens/reporta.jpg",
+      "imagem_legenda": "Tela de reporte do cidadão · captura ao vivo, 31/ago/2026"
     },
     {
       "id": "hazardtrack",
@@ -99,7 +139,14 @@
         "Camadas de movimento de massa, inundação e risco de fogo",
         "Níveis operacionais compatíveis com o PPDC"
       ],
-      "stack": ["Python", "MERGE/CPTEC/INPE", "PostGIS", "Docker"]
+      "stack": [
+        "Python",
+        "MERGE/CPTEC/INPE",
+        "PostGIS",
+        "Docker"
+      ],
+      "imagem": "imagens/hazardtrack.jpg",
+      "imagem_legenda": "Mapa integrado de riscos climáticos · captura ao vivo, 31/ago/2026"
     },
     {
       "id": "fadstats",
@@ -116,7 +163,14 @@
         "Recortes municipais e regionais",
         "Interface pública com a barra padrão do Governo de São Paulo"
       ],
-      "stack": ["Python", "PostgreSQL 17", "Docker", "Nginx"]
+      "stack": [
+        "Python",
+        "PostgreSQL 17",
+        "Docker",
+        "Nginx"
+      ],
+      "imagem": "imagens/fadstats.jpg",
+      "imagem_legenda": "Hub de dashboards da FAD-Stats · relatório de atividades, jun/2026"
     },
     {
       "id": "infosiga",
@@ -132,7 +186,12 @@
         "Filtros por período, tipo e localização",
         "Visualizações interativas de séries e distribuições"
       ],
-      "stack": ["Python", "Render"]
+      "stack": [
+        "Python",
+        "Render"
+      ],
+      "imagem": "imagens/infosiga.jpg",
+      "imagem_legenda": "Portal de acidentes rodoviários · relatório de atividades, jun/2026"
     },
     {
       "id": "acidentesder",
@@ -148,7 +207,12 @@
         "Séries temporais e comparação entre trechos",
         "Insumo direto para priorização de intervenções"
       ],
-      "stack": ["Python", "Render"]
+      "stack": [
+        "Python",
+        "Render"
+      ],
+      "imagem": "imagens/acidentesder.jpg",
+      "imagem_legenda": "Análise consolidada 2023-2025 · relatório de atividades, jun/2026"
     },
     {
       "id": "densidade",
@@ -164,7 +228,12 @@
         "Leitura territorial dos vazios de cobertura",
         "Base para estudos de expansão da malha"
       ],
-      "stack": ["Python", "Render"]
+      "stack": [
+        "Python",
+        "Render"
+      ],
+      "imagem": "imagens/densidade.jpg",
+      "imagem_legenda": "Análise geoespacial da malha · relatório de atividades, jun/2026"
     },
     {
       "id": "aderencia",
@@ -180,7 +249,12 @@
         "Critério uniforme entre diferentes equipes",
         "Segunda geração da calculadora original"
       ],
-      "stack": ["Python", "Render"]
+      "stack": [
+        "Python",
+        "Render"
+      ],
+      "imagem": null,
+      "imagem_legenda": null
     },
     {
       "id": "ahp",
@@ -196,7 +270,12 @@
         "Pesos e razão de consistência calculados",
         "Mesmo método aplicado dentro do SICARD"
       ],
-      "stack": ["Python", "Render"]
+      "stack": [
+        "Python",
+        "Render"
+      ],
+      "imagem": null,
+      "imagem_legenda": null
     },
     {
       "id": "embarcadores",
@@ -212,26 +291,93 @@
         "Levantamento de origem, destino e modal",
         "Dado primário que alimenta os estudos logísticos"
       ],
-      "stack": ["Python", "Render"]
+      "stack": [
+        "Python",
+        "Render"
+      ],
+      "imagem": null,
+      "imagem_legenda": null
     }
   ],
   "modulos_sigma": [
-    ["M00", "Home", "Página pública, status do sistema e health checks"],
-    ["M01", "Auth", "Login, cadastro PF/PJ e verificação de e-mail"],
-    ["M02", "Dashboard", "Painel pós-login, KPIs e navegação"],
-    ["M03", "Dicionário", "Catálogo de metadados, upload S3 e WebGIS"],
-    ["M04", "Minha Área", "Perfil, calendário, tarefas e uploads"],
-    ["M05", "Calendário", "Calendário de atividades e eventos"],
-    ["M06", "Relatórios", "Relatórios de cadastros e usuários"],
-    ["M07", "Ferramentas", "Hub de ferramentas, GeoServer ETL e Shiny"],
-    ["M08", "Management", "Painel admin, cadastros, sessões e solicitações"],
-    ["M09", "Memgraph", "Explorador de grafo, busca e governança"],
-    ["MX", "SIGMA", "Monitoramento de infraestrutura e da VM"]
+    [
+      "M00",
+      "Home",
+      "Página pública, status do sistema e health checks"
+    ],
+    [
+      "M01",
+      "Auth",
+      "Login, cadastro PF/PJ e verificação de e-mail"
+    ],
+    [
+      "M02",
+      "Dashboard",
+      "Painel pós-login, KPIs e navegação"
+    ],
+    [
+      "M03",
+      "Dicionário",
+      "Catálogo de metadados, upload S3 e WebGIS"
+    ],
+    [
+      "M04",
+      "Minha Área",
+      "Perfil, calendário, tarefas e uploads"
+    ],
+    [
+      "M05",
+      "Calendário",
+      "Calendário de atividades e eventos"
+    ],
+    [
+      "M06",
+      "Relatórios",
+      "Relatórios de cadastros e usuários"
+    ],
+    [
+      "M07",
+      "Ferramentas",
+      "Hub de ferramentas, GeoServer ETL e Shiny"
+    ],
+    [
+      "M08",
+      "Management",
+      "Painel admin, cadastros, sessões e solicitações"
+    ],
+    [
+      "M09",
+      "Memgraph",
+      "Explorador de grafo, busca e governança"
+    ],
+    [
+      "MX",
+      "SIGMA",
+      "Monitoramento de infraestrutura e da VM"
+    ]
   ],
   "integracoes": [
-    ["PLI-HazardTrack", "PLI Smart Router", "camadas de risco climático por trecho"],
-    ["PLI Reporta", "PLI Smart Router", "incidentes verificados em GeoJSON"],
-    ["SIGMA-PLI", "SICARD", "autenticação, pessoas e instituições"],
-    ["AHP Tool Calculator", "SICARD", "método multicritério de priorização"]
-  ]
+    [
+      "PLI-HazardTrack",
+      "PLI Smart Router",
+      "camadas de risco climático por trecho"
+    ],
+    [
+      "PLI Reporta",
+      "PLI Smart Router",
+      "incidentes verificados em GeoJSON"
+    ],
+    [
+      "SIGMA-PLI",
+      "SICARD",
+      "autenticação, pessoas e instituições"
+    ],
+    [
+      "AHP Tool Calculator",
+      "SICARD",
+      "método multicritério de priorização"
+    ]
+  ],
+  "imagem_modulos": "imagens/sigma_grafo.jpg",
+  "imagem_modulos_legenda": "Explorador de grafo do módulo M09 · relatório de atividades, jun/2026"
 }

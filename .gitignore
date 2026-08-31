@@ -1,2 +1,5 @@
 # Backups gerados durante deploys manuais no servidor
 *.bak-*
+
+# Recortes derivados, gerados pelo gerar_apresentacao.py
+apresentacao/imagens/_pptx/
