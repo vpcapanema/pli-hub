@@ -1,0 +1,237 @@
+{
+  "titulo": "PLI Hub",
+  "subtitulo": "Portfólio de aplicações web do Programa Litoral Integrado",
+  "data": "31 de agosto de 2026",
+  "autor": "Vinicius do Prado Capanema",
+  "org": "VPC-GEOSER",
+  "hub_url": "https://56.125.163.194/pli-hub/",
+  "categorias": {
+    "major": { "nome": "Sistemas Maiores", "cor": "#3aa6d9" },
+    "analysis": { "nome": "Análises Exploratórias", "cor": "#e0a33a" },
+    "tools": { "nome": "Ferramentas Analíticas e de Produção", "cor": "#3ec26e" }
+  },
+  "apps": [
+    {
+      "id": "sigma",
+      "nome": "SIGMA-PLI",
+      "extenso": "Sistema Integrado de Gestão, Monitoramento e Apoio Técnico ao Plano de Legado de Informações",
+      "categoria": "major",
+      "url": "https://56.125.163.194/",
+      "status": "no ar",
+      "papel": "Plataforma central do ecossistema",
+      "resumo": "Cataloga, organiza e disponibiliza os dados técnicos do Plano de Legado de Informações do Estado de São Paulo. É a plataforma central: além de entregar valor por si só, fornece autenticação e cadastro de pessoas e instituições para as demais aplicações.",
+      "destaques": [
+        "Catálogo de metadados com upload, indexação e busca avançada",
+        "Autenticação JWT e cadastro PF/PJ com verificação de e-mail",
+        "Grafo de conhecimento em Memgraph para descobrir relações entre dados",
+        "WebGIS próprio: camadas OGC (WMS/WFS) publicadas via GeoServer",
+        "Dashboards interativos em R Shiny e painel administrativo completo"
+      ],
+      "stack": ["FastAPI · Python 3.12", "PostgreSQL 17 + PostGIS", "Memgraph", "GeoServer", "R Shiny", "Cloudflare R2", "Docker + Nginx"]
+    },
+    {
+      "id": "sicard",
+      "nome": "SICARD",
+      "extenso": "Sistema Inteligente de Cadastro e Ranking de Demandas",
+      "categoria": "major",
+      "url": "https://56.125.163.194/sicard/",
+      "status": "no ar",
+      "papel": "Apoio à decisão sobre a carteira",
+      "resumo": "Cadastra, analisa, hierarquiza e acompanha planos, programas e projetos. Combina análise multicritério AHP, processamento geoespacial e trilha de auditoria para transformar demandas soltas em uma carteira priorizada.",
+      "destaques": [
+        "Hierarquização multicritério por AHP, com pesos auditáveis",
+        "Triagem socioambiental e favorabilidade territorial",
+        "Bancadas espaciais e painéis de acompanhamento",
+        "Login e cadastro de pessoas e instituições consumidos do SIGMA-PLI",
+        "Trilha de auditoria de ponta a ponta"
+      ],
+      "stack": ["FastAPI · Python 3.11+", "PostgreSQL 17 + PostGIS 3.5", "HTML/CSS/JS", "API do SIGMA-PLI"]
+    },
+    {
+      "id": "smartrouter",
+      "nome": "PLI Smart Router",
+      "extenso": "Roteirizador com resiliência climática",
+      "categoria": "major",
+      "url": "https://56.125.163.194/smart-router/",
+      "status": "no ar",
+      "papel": "Onde o alerta vira decisão operacional",
+      "resumo": "Calcula rotas reais sobre a malha do PLI/SP 2050, sobrepõe os alertas em tempo real do HazardTrack e do PLI Reporta e recalcula o trajeto automaticamente, desviando das áreas afetadas.",
+      "destaques": [
+        "Origem e destino por coordenada, busca textual ou clique no mapa",
+        "Geocoding automático: CEP via ViaCEP, endereço via Nominatim/OSM",
+        "Roteamento OSRM com waypoints intermediários",
+        "Camadas ao vivo de risco (HazardTrack) e de incidentes (PLI Reporta)",
+        "Smart route: rota alternativa com buffer de segurança de 500 m"
+      ],
+      "stack": ["Flask", "Leaflet", "OSRM · OpenStreetMap", "Nominatim · ViaCEP"]
+    },
+    {
+      "id": "reporta",
+      "nome": "PLI Reporta",
+      "extenso": "PWA colaborativa de reportes viários georreferenciados",
+      "categoria": "major",
+      "url": "https://56.125.163.194/pli-reporta/",
+      "status": "no ar",
+      "papel": "A camada de incidentes verificados",
+      "resumo": "Aplicativo mobile-first em que o cidadão reporta ocorrências na via. Os relatos passam por um pipeline de veracidade e relevância e só então alimentam os serviços de roteamento e alerta como incidentes verificados.",
+      "destaques": [
+        "Reportes de buraco, alagamento, acidente, bloqueio, obra e sinalização",
+        "Pipeline de veracidade e relevância antes da publicação",
+        "Mapa público e fluxo de moderação",
+        "Endpoint GeoJSON estável para integração com o roteador",
+        "Instalável como PWA, pensado para uso em campo"
+      ],
+      "stack": ["FastAPI · Uvicorn", "PostGIS", "PWA mobile-first", "GeoJSON"]
+    },
+    {
+      "id": "hazardtrack",
+      "nome": "PLI-HazardTrack",
+      "extenso": "SAMAEG-PLI · Monitoramento, Análise e Alerta Geodinâmico",
+      "categoria": "major",
+      "url": "https://56.125.163.194/pli-hazardtrack/",
+      "status": "no ar",
+      "papel": "O sensor climático da malha",
+      "resumo": "Monitora chuva em streaming e traduz o dado bruto em risco por trecho rodoviário do DER-SP. Implementa o conceito do Produto 06 do relatório REGEA-NIPPON 2021, com o modelo oficial de Risco Dinâmico.",
+      "destaques": [
+        "Dados reais de chuva MERGE/CPTEC/INPE consumidos em streaming",
+        "Modelo de Risco Dinâmico RD = RA × ICC",
+        "Quatro regiões climático-geológico-geomorfológicas do litoral norte e da baixada santista",
+        "Camadas de movimento de massa, inundação e risco de fogo",
+        "Níveis operacionais compatíveis com o PPDC"
+      ],
+      "stack": ["Python", "MERGE/CPTEC/INPE", "PostGIS", "Docker"]
+    },
+    {
+      "id": "fadstats",
+      "nome": "FAD-Stats 2.0",
+      "extenso": "Ferramenta de Análise Dinamizada de Dados",
+      "categoria": "major",
+      "url": "https://56.125.163.194/fad-stats/",
+      "status": "no ar",
+      "papel": "Leitura socioeconômica do território",
+      "resumo": "Plataforma de análise estatística e espacial de dados oficiais. Reúne produção agropecuária, comércio exterior, mercado de trabalho e logística em uma única bancada de exploração.",
+      "destaques": [
+        "Fontes oficiais: IBGE, SECEX, MTE e ANTT",
+        "21 tipos de gráfico e 6 tipos de mapa",
+        "Recortes municipais e regionais",
+        "Interface pública com a barra padrão do Governo de São Paulo"
+      ],
+      "stack": ["Python", "PostgreSQL 17", "Docker", "Nginx"]
+    },
+    {
+      "id": "infosiga",
+      "nome": "Acidentes Infosiga",
+      "extenso": "Análise exploratória da base Infosiga",
+      "categoria": "analysis",
+      "url": "https://acidentes-infosiga.onrender.com",
+      "status": "suspensa",
+      "papel": "Diagnóstico de sinistralidade",
+      "resumo": "Análise exploratória dos acidentes registrados no sistema Infosiga, com filtros por período, tipo de ocorrência e localização.",
+      "destaques": [
+        "Base oficial Infosiga de sinistros de trânsito",
+        "Filtros por período, tipo e localização",
+        "Visualizações interativas de séries e distribuições"
+      ],
+      "stack": ["Python", "Render"]
+    },
+    {
+      "id": "acidentesder",
+      "nome": "Acidentes DER",
+      "extenso": "Análise exploratória da base do DER-SP",
+      "categoria": "analysis",
+      "url": "https://acidentes-der-analise-exploratoria.onrender.com",
+      "status": "suspensa",
+      "papel": "Sinistralidade por rodovia",
+      "resumo": "Análise exploratória dos acidentes registrados pelo DER-SP, organizada por rodovia e por período.",
+      "destaques": [
+        "Recorte por rodovia sob gestão do DER-SP",
+        "Séries temporais e comparação entre trechos",
+        "Insumo direto para priorização de intervenções"
+      ],
+      "stack": ["Python", "Render"]
+    },
+    {
+      "id": "densidade",
+      "nome": "Densidade Malha SP",
+      "extenso": "Densidade da malha viária estadual paulista",
+      "categoria": "analysis",
+      "url": "https://densidade-de-malha-estadual-sp.onrender.com",
+      "status": "suspensa",
+      "papel": "Cobertura da rede",
+      "resumo": "Mede e visualiza a densidade da malha viária estadual por trecho e por região, expondo vazios e concentrações de cobertura.",
+      "destaques": [
+        "Densidade calculada por trecho e por região",
+        "Leitura territorial dos vazios de cobertura",
+        "Base para estudos de expansão da malha"
+      ],
+      "stack": ["Python", "Render"]
+    },
+    {
+      "id": "aderencia",
+      "nome": "Calculadora Aderência 2.0",
+      "extenso": "Aderência de indicadores a metas e resultados",
+      "categoria": "tools",
+      "url": "https://calculadora-aderencia-indicadores-2-0.onrender.com",
+      "status": "suspensa",
+      "papel": "Conformidade de indicadores",
+      "resumo": "Calcula a aderência de indicadores para avaliar a conformidade de metas e resultados, padronizando o julgamento entre equipes.",
+      "destaques": [
+        "Avaliação de conformidade de metas e resultados",
+        "Critério uniforme entre diferentes equipes",
+        "Segunda geração da calculadora original"
+      ],
+      "stack": ["Python", "Render"]
+    },
+    {
+      "id": "ahp",
+      "nome": "AHP Tool Calculator",
+      "extenso": "Análise hierárquica de processos",
+      "categoria": "tools",
+      "url": "https://vpc-geoser-ahp-tool-calculator.onrender.com",
+      "status": "suspensa",
+      "papel": "O motor de priorização",
+      "resumo": "Ferramenta de análise hierárquica de processos (AHP) para ponderar critérios e priorizar alternativas. É o método que o SICARD incorpora na hierarquização da carteira.",
+      "destaques": [
+        "Matriz de comparação par a par entre critérios",
+        "Pesos e razão de consistência calculados",
+        "Mesmo método aplicado dentro do SICARD"
+      ],
+      "stack": ["Python", "Render"]
+    },
+    {
+      "id": "embarcadores",
+      "nome": "Formulário Embarcadores",
+      "extenso": "Entrevista com embarcadores",
+      "categoria": "tools",
+      "url": "https://formulario-entrevista-embarcadores.onrender.com",
+      "status": "suspensa",
+      "papel": "Coleta primária de dado logístico",
+      "resumo": "Formulário estruturado de entrevista com embarcadores para levantamento de dados logísticos e de transporte em campo.",
+      "destaques": [
+        "Roteiro de entrevista padronizado",
+        "Levantamento de origem, destino e modal",
+        "Dado primário que alimenta os estudos logísticos"
+      ],
+      "stack": ["Python", "Render"]
+    }
+  ],
+  "modulos_sigma": [
+    ["M00", "Home", "Página pública, status do sistema e health checks"],
+    ["M01", "Auth", "Login, cadastro PF/PJ e verificação de e-mail"],
+    ["M02", "Dashboard", "Painel pós-login, KPIs e navegação"],
+    ["M03", "Dicionário", "Catálogo de metadados, upload S3 e WebGIS"],
+    ["M04", "Minha Área", "Perfil, calendário, tarefas e uploads"],
+    ["M05", "Calendário", "Calendário de atividades e eventos"],
+    ["M06", "Relatórios", "Relatórios de cadastros e usuários"],
+    ["M07", "Ferramentas", "Hub de ferramentas, GeoServer ETL e Shiny"],
+    ["M08", "Management", "Painel admin, cadastros, sessões e solicitações"],
+    ["M09", "Memgraph", "Explorador de grafo, busca e governança"],
+    ["MX", "SIGMA", "Monitoramento de infraestrutura e da VM"]
+  ],
+  "integracoes": [
+    ["PLI-HazardTrack", "PLI Smart Router", "camadas de risco climático por trecho"],
+    ["PLI Reporta", "PLI Smart Router", "incidentes verificados em GeoJSON"],
+    ["SIGMA-PLI", "SICARD", "autenticação, pessoas e instituições"],
+    ["AHP Tool Calculator", "SICARD", "método multicritério de priorização"]
+  ]
+}

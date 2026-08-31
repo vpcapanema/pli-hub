@@ -1,0 +1,1071 @@
+<title>Portfólio PLI Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+  :root {
+    --ground:   #061a26;
+    --ground-2: #04131c;
+    --surface:  #0c2939;
+    --surface-2:#103246;
+    --rule:     #1a465f;
+    --text:     #e8f1f6;
+    --muted:    #8fb0c2;
+    --dim:      #5d8296;
+    --blue:     #3aa6d9;
+    --green:    #3ec26e;
+    --amber:    #e0a33a;
+    --red:      #e0654a;
+
+    --display: "Archivo", "Segoe UI", system-ui, sans-serif;
+    --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground-2);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- estrutura do deck ---------- */
+
+  .deck {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .deck { scroll-behavior: auto; }
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2rem, 4.5vh, 3.4rem) clamp(1.5rem, 5vw, 5rem) 4.5rem;
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  /* faixa superior de categoria */
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--cat, var(--blue));
+    opacity: 0.9;
+  }
+
+  .slide-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(1.2rem, 3vh, 2.4rem);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cat, var(--blue));
+  }
+  .eyebrow-dim { color: var(--dim); }
+
+  .slide-foot {
+    position: absolute;
+    left: clamp(1.5rem, 5vw, 5rem);
+    right: clamp(1.5rem, 5vw, 5rem);
+    bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--dim);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.7rem;
+  }
+  .slide-foot .grow { flex: 1; }
+  .slide-foot a { color: var(--dim); text-decoration: none; }
+  .slide-foot a:hover, .slide-foot a:focus-visible { color: var(--text); }
+
+  /* ---------- capa ---------- */
+
+  .cover {
+    justify-content: center;
+    background:
+      radial-gradient(120% 90% at 12% 0%, #0d3549 0%, transparent 62%),
+      radial-gradient(90% 70% at 100% 100%, #0a3a34 0%, transparent 55%),
+      var(--ground);
+  }
+  .cover h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(3.4rem, 11vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    margin: 0 0 1.2rem;
+    text-wrap: balance;
+  }
+  .cover h1 em {
+    font-style: normal;
+    color: var(--blue);
+  }
+  .cover .lede {
+    font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    color: var(--muted);
+    max-width: 34ch;
+    font-weight: 300;
+    margin: 0 0 2.6rem;
+  }
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.4rem;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--dim);
+  }
+  .cover-meta b {
+    display: block;
+    color: var(--text);
+    font-weight: 500;
+    margin-top: 0.25rem;
+  }
+
+  /* ---------- tipografia geral ---------- */
+
+  h2.slide-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.9rem, 4.4vw, 3.3rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .extenso {
+    font-size: clamp(0.95rem, 1.5vw, 1.12rem);
+    color: var(--muted);
+    font-weight: 300;
+    margin: 0.7rem 0 0;
+    max-width: 46ch;
+  }
+  .resumo {
+    font-size: clamp(1rem, 1.7vw, 1.22rem);
+    line-height: 1.55;
+    max-width: 44ch;
+    margin: 1.6rem 0 0;
+  }
+  .papel {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: var(--cat, var(--blue));
+    border-left: 3px solid var(--cat, var(--blue));
+    padding-left: 0.8rem;
+    line-height: 1.3;
+  }
+
+  /* ---------- slide de aplicação ---------- */
+
+  .app-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-content: start;
+  }
+
+  .panel {
+    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: clamp(1.2rem, 2.6vw, 2rem);
+    align-self: start;
+  }
+  .panel h3 {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 1.1rem;
+    font-weight: 500;
+  }
+
+  ul.destaques {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  ul.destaques li {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    align-items: start;
+    font-size: clamp(0.9rem, 1.35vw, 1.02rem);
+    line-height: 1.45;
+    color: #d3e3ec;
+  }
+  ul.destaques li::before {
+    content: "";
+    width: 0.8rem;
+    height: 1px;
+    background: var(--cat, var(--blue));
+    margin-top: 0.72em;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.6rem;
+    padding-top: 1.3rem;
+    border-top: 1px solid var(--rule);
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--muted);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.24rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .status {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.6rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .status-ok  { color: #0a2a16; background: var(--green); }
+  .status-off { color: #2a1408; background: var(--amber); }
+
+  /* ---------- panorama ---------- */
+
+  .panorama {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-content: start;
+  }
+  .col-cat {
+    border-top: 3px solid var(--c);
+    padding-top: 1.1rem;
+  }
+  .col-cat h3 {
+    font-family: var(--display);
+    font-size: clamp(1rem, 1.7vw, 1.3rem);
+    font-weight: 600;
+    margin: 0 0 0.2rem;
+    color: var(--c);
+    line-height: 1.15;
+  }
+  .col-cat .qtd {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--dim);
+  }
+  .col-cat ol {
+    list-style: none;
+    margin: 1.1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .col-cat li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: clamp(0.88rem, 1.3vw, 1rem);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.55rem;
+  }
+  .col-cat li .n {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .col-cat li .st {
+    margin-left: auto;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: none;
+    align-self: center;
+  }
+  .st-ok  { background: var(--green); }
+  .st-off { background: var(--amber); }
+
+  .numeros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    margin-bottom: clamp(1.2rem, 3vh, 2.2rem);
+    padding-bottom: clamp(1.2rem, 3vh, 2rem);
+    border-bottom: 1px solid var(--rule);
+  }
+  .numero .v {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .numero .k {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 0.45rem;
+  }
+
+  /* ---------- módulos do SIGMA ---------- */
+
+  .modulos {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.7rem;
+    align-content: start;
+  }
+  .modulo {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--blue);
+    border-radius: 2px;
+    padding: 0.75rem 0.9rem;
+    background: var(--surface);
+  }
+  .modulo .cod {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--blue);
+    letter-spacing: 0.08em;
+  }
+  .modulo .nm {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0.15rem 0 0.3rem;
+  }
+  .modulo .ds {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ---------- integrações ---------- */
+
+  .fluxo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  .fluxo svg { width: 100%; height: auto; max-height: 60vh; }
+  .fluxo text { font-family: var(--body); fill: var(--text); }
+  .fluxo .lbl { font-family: var(--mono); font-size: 11px; fill: var(--dim); }
+  .fluxo .nm  { font-family: var(--display); font-size: 17px; font-weight: 600; }
+  .fluxo .sub { font-size: 12.5px; fill: var(--muted); }
+
+  /* ---------- encerramento ---------- */
+
+  .fecho {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(1.2rem, 3vw, 2.4rem);
+    align-content: start;
+  }
+  .fecho .bloco h3 {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 0.7rem;
+  }
+  .fecho .bloco p {
+    margin: 0 0 0.7rem;
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+  .fecho .bloco strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- navegação ---------- */
+
+  .progresso {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--text);
+    width: 0;
+    z-index: 20;
+    transition: width 0.25s ease;
+    mix-blend-mode: difference;
+  }
+  .nav {
+    position: fixed;
+    right: clamp(1rem, 2vw, 1.6rem);
+    bottom: clamp(1rem, 2vw, 1.4rem);
+    display: flex;
+    gap: 0.4rem;
+    z-index: 20;
+  }
+  .nav button {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    border: 1px solid var(--rule);
+    background: rgba(6, 26, 38, 0.86);
+    color: var(--muted);
+    border-radius: 2px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .nav button:hover { color: var(--text); border-color: var(--muted); }
+  .nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+  @media (max-width: 860px) {
+    .app-body, .panorama { grid-template-columns: 1fr; }
+    .slide { min-height: auto; padding-bottom: 4rem; }
+    .deck { scroll-snap-type: none; }
+  }
+
+  @media print {
+    .deck { height: auto; overflow: visible; }
+    .slide { page-break-after: always; min-height: 0; height: 19cm; }
+    .nav, .progresso { display: none; }
+  }
+</style>
+
+<div class="progresso" id="progresso"></div>
+<div class="deck" id="deck"></div>
+<div class="nav">
+  <button id="btnPrev" title="Slide anterior" aria-label="Slide anterior">&#8593;</button>
+  <button id="btnNext" title="Próximo slide" aria-label="Próximo slide">&#8595;</button>
+</div>
+
+<script>
+const DADOS = {
+  "titulo": "PLI Hub",
+  "subtitulo": "Portfólio de aplicações web do Programa Litoral Integrado",
+  "data": "31 de agosto de 2026",
+  "autor": "Vinicius do Prado Capanema",
+  "org": "VPC-GEOSER",
+  "hub_url": "https://56.125.163.194/pli-hub/",
+  "categorias": {
+    "major": {
+      "nome": "Sistemas Maiores",
+      "cor": "#3aa6d9"
+    },
+    "analysis": {
+      "nome": "Análises Exploratórias",
+      "cor": "#e0a33a"
+    },
+    "tools": {
+      "nome": "Ferramentas Analíticas e de Produção",
+      "cor": "#3ec26e"
+    }
+  },
+  "apps": [
+    {
+      "id": "sigma",
+      "nome": "SIGMA-PLI",
+      "extenso": "Sistema Integrado de Gestão, Monitoramento e Apoio Técnico ao Plano de Legado de Informações",
+      "categoria": "major",
+      "url": "https://56.125.163.194/",
+      "status": "no ar",
+      "papel": "Plataforma central do ecossistema",
+      "resumo": "Cataloga, organiza e disponibiliza os dados técnicos do Plano de Legado de Informações do Estado de São Paulo. É a plataforma central: além de entregar valor por si só, fornece autenticação e cadastro de pessoas e instituições para as demais aplicações.",
+      "destaques": [
+        "Catálogo de metadados com upload, indexação e busca avançada",
+        "Autenticação JWT e cadastro PF/PJ com verificação de e-mail",
+        "Grafo de conhecimento em Memgraph para descobrir relações entre dados",
+        "WebGIS próprio: camadas OGC (WMS/WFS) publicadas via GeoServer",
+        "Dashboards interativos em R Shiny e painel administrativo completo"
+      ],
+      "stack": [
+        "FastAPI · Python 3.12",
+        "PostgreSQL 17 + PostGIS",
+        "Memgraph",
+        "GeoServer",
+        "R Shiny",
+        "Cloudflare R2",
+        "Docker + Nginx"
+      ]
+    },
+    {
+      "id": "sicard",
+      "nome": "SICARD",
+      "extenso": "Sistema Inteligente de Cadastro e Ranking de Demandas",
+      "categoria": "major",
+      "url": "https://56.125.163.194/sicard/",
+      "status": "no ar",
+      "papel": "Apoio à decisão sobre a carteira",
+      "resumo": "Cadastra, analisa, hierarquiza e acompanha planos, programas e projetos. Combina análise multicritério AHP, processamento geoespacial e trilha de auditoria para transformar demandas soltas em uma carteira priorizada.",
+      "destaques": [
+        "Hierarquização multicritério por AHP, com pesos auditáveis",
+        "Triagem socioambiental e favorabilidade territorial",
+        "Bancadas espaciais e painéis de acompanhamento",
+        "Login e cadastro de pessoas e instituições consumidos do SIGMA-PLI",
+        "Trilha de auditoria de ponta a ponta"
+      ],
+      "stack": [
+        "FastAPI · Python 3.11+",
+        "PostgreSQL 17 + PostGIS 3.5",
+        "HTML/CSS/JS",
+        "API do SIGMA-PLI"
+      ]
+    },
+    {
+      "id": "smartrouter",
+      "nome": "PLI Smart Router",
+      "extenso": "Roteirizador com resiliência climática",
+      "categoria": "major",
+      "url": "https://56.125.163.194/smart-router/",
+      "status": "no ar",
+      "papel": "Onde o alerta vira decisão operacional",
+      "resumo": "Calcula rotas reais sobre a malha do PLI/SP 2050, sobrepõe os alertas em tempo real do HazardTrack e do PLI Reporta e recalcula o trajeto automaticamente, desviando das áreas afetadas.",
+      "destaques": [
+        "Origem e destino por coordenada, busca textual ou clique no mapa",
+        "Geocoding automático: CEP via ViaCEP, endereço via Nominatim/OSM",
+        "Roteamento OSRM com waypoints intermediários",
+        "Camadas ao vivo de risco (HazardTrack) e de incidentes (PLI Reporta)",
+        "Smart route: rota alternativa com buffer de segurança de 500 m"
+      ],
+      "stack": [
+        "Flask",
+        "Leaflet",
+        "OSRM · OpenStreetMap",
+        "Nominatim · ViaCEP"
+      ]
+    },
+    {
+      "id": "reporta",
+      "nome": "PLI Reporta",
+      "extenso": "PWA colaborativa de reportes viários georreferenciados",
+      "categoria": "major",
+      "url": "https://56.125.163.194/pli-reporta/",
+      "status": "no ar",
+      "papel": "A camada de incidentes verificados",
+      "resumo": "Aplicativo mobile-first em que o cidadão reporta ocorrências na via. Os relatos passam por um pipeline de veracidade e relevância e só então alimentam os serviços de roteamento e alerta como incidentes verificados.",
+      "destaques": [
+        "Reportes de buraco, alagamento, acidente, bloqueio, obra e sinalização",
+        "Pipeline de veracidade e relevância antes da publicação",
+        "Mapa público e fluxo de moderação",
+        "Endpoint GeoJSON estável para integração com o roteador",
+        "Instalável como PWA, pensado para uso em campo"
+      ],
+      "stack": [
+        "FastAPI · Uvicorn",
+        "PostGIS",
+        "PWA mobile-first",
+        "GeoJSON"
+      ]
+    },
+    {
+      "id": "hazardtrack",
+      "nome": "PLI-HazardTrack",
+      "extenso": "SAMAEG-PLI · Monitoramento, Análise e Alerta Geodinâmico",
+      "categoria": "major",
+      "url": "https://56.125.163.194/pli-hazardtrack/",
+      "status": "no ar",
+      "papel": "O sensor climático da malha",
+      "resumo": "Monitora chuva em streaming e traduz o dado bruto em risco por trecho rodoviário do DER-SP. Implementa o conceito do Produto 06 do relatório REGEA-NIPPON 2021, com o modelo oficial de Risco Dinâmico.",
+      "destaques": [
+        "Dados reais de chuva MERGE/CPTEC/INPE consumidos em streaming",
+        "Modelo de Risco Dinâmico RD = RA × ICC",
+        "Quatro regiões climático-geológico-geomorfológicas do litoral norte e da baixada santista",
+        "Camadas de movimento de massa, inundação e risco de fogo",
+        "Níveis operacionais compatíveis com o PPDC"
+      ],
+      "stack": [
+        "Python",
+        "MERGE/CPTEC/INPE",
+        "PostGIS",
+        "Docker"
+      ]
+    },
+    {
+      "id": "fadstats",
+      "nome": "FAD-Stats 2.0",
+      "extenso": "Ferramenta de Análise Dinamizada de Dados",
+      "categoria": "major",
+      "url": "https://56.125.163.194/fad-stats/",
+      "status": "no ar",
+      "papel": "Leitura socioeconômica do território",
+      "resumo": "Plataforma de análise estatística e espacial de dados oficiais. Reúne produção agropecuária, comércio exterior, mercado de trabalho e logística em uma única bancada de exploração.",
+      "destaques": [
+        "Fontes oficiais: IBGE, SECEX, MTE e ANTT",
+        "21 tipos de gráfico e 6 tipos de mapa",
+        "Recortes municipais e regionais",
+        "Interface pública com a barra padrão do Governo de São Paulo"
+      ],
+      "stack": [
+        "Python",
+        "PostgreSQL 17",
+        "Docker",
+        "Nginx"
+      ]
+    },
+    {
+      "id": "infosiga",
+      "nome": "Acidentes Infosiga",
+      "extenso": "Análise exploratória da base Infosiga",
+      "categoria": "analysis",
+      "url": "https://acidentes-infosiga.onrender.com",
+      "status": "suspensa",
+      "papel": "Diagnóstico de sinistralidade",
+      "resumo": "Análise exploratória dos acidentes registrados no sistema Infosiga, com filtros por período, tipo de ocorrência e localização.",
+      "destaques": [
+        "Base oficial Infosiga de sinistros de trânsito",
+        "Filtros por período, tipo e localização",
+        "Visualizações interativas de séries e distribuições"
+      ],
+      "stack": [
+        "Python",
+        "Render"
+      ]
+    },
+    {
+      "id": "acidentesder",
+      "nome": "Acidentes DER",
+      "extenso": "Análise exploratória da base do DER-SP",
+      "categoria": "analysis",
+      "url": "https://acidentes-der-analise-exploratoria.onrender.com",
+      "status": "suspensa",
+      "papel": "Sinistralidade por rodovia",
+      "resumo": "Análise exploratória dos acidentes registrados pelo DER-SP, organizada por rodovia e por período.",
+      "destaques": [
+        "Recorte por rodovia sob gestão do DER-SP",
+        "Séries temporais e comparação entre trechos",
+        "Insumo direto para priorização de intervenções"
+      ],
+      "stack": [
+        "Python",
+        "Render"
+      ]
+    },
+    {
+      "id": "densidade",
+      "nome": "Densidade Malha SP",
+      "extenso": "Densidade da malha viária estadual paulista",
+      "categoria": "analysis",
+      "url": "https://densidade-de-malha-estadual-sp.onrender.com",
+      "status": "suspensa",
+      "papel": "Cobertura da rede",
+      "resumo": "Mede e visualiza a densidade da malha viária estadual por trecho e por região, expondo vazios e concentrações de cobertura.",
+      "destaques": [
+        "Densidade calculada por trecho e por região",
+        "Leitura territorial dos vazios de cobertura",
+        "Base para estudos de expansão da malha"
+      ],
+      "stack": [
+        "Python",
+        "Render"
+      ]
+    },
+    {
+      "id": "aderencia",
+      "nome": "Calculadora Aderência 2.0",
+      "extenso": "Aderência de indicadores a metas e resultados",
+      "categoria": "tools",
+      "url": "https://calculadora-aderencia-indicadores-2-0.onrender.com",
+      "status": "suspensa",
+      "papel": "Conformidade de indicadores",
+      "resumo": "Calcula a aderência de indicadores para avaliar a conformidade de metas e resultados, padronizando o julgamento entre equipes.",
+      "destaques": [
+        "Avaliação de conformidade de metas e resultados",
+        "Critério uniforme entre diferentes equipes",
+        "Segunda geração da calculadora original"
+      ],
+      "stack": [
+        "Python",
+        "Render"
+      ]
+    },
+    {
+      "id": "ahp",
+      "nome": "AHP Tool Calculator",
+      "extenso": "Análise hierárquica de processos",
+      "categoria": "tools",
+      "url": "https://vpc-geoser-ahp-tool-calculator.onrender.com",
+      "status": "suspensa",
+      "papel": "O motor de priorização",
+      "resumo": "Ferramenta de análise hierárquica de processos (AHP) para ponderar critérios e priorizar alternativas. É o método que o SICARD incorpora na hierarquização da carteira.",
+      "destaques": [
+        "Matriz de comparação par a par entre critérios",
+        "Pesos e razão de consistência calculados",
+        "Mesmo método aplicado dentro do SICARD"
+      ],
+      "stack": [
+        "Python",
+        "Render"
+      ]
+    },
+    {
+      "id": "embarcadores",
+      "nome": "Formulário Embarcadores",
+      "extenso": "Entrevista com embarcadores",
+      "categoria": "tools",
+      "url": "https://formulario-entrevista-embarcadores.onrender.com",
+      "status": "suspensa",
+      "papel": "Coleta primária de dado logístico",
+      "resumo": "Formulário estruturado de entrevista com embarcadores para levantamento de dados logísticos e de transporte em campo.",
+      "destaques": [
+        "Roteiro de entrevista padronizado",
+        "Levantamento de origem, destino e modal",
+        "Dado primário que alimenta os estudos logísticos"
+      ],
+      "stack": [
+        "Python",
+        "Render"
+      ]
+    }
+  ],
+  "modulos_sigma": [
+    [
+      "M00",
+      "Home",
+      "Página pública, status do sistema e health checks"
+    ],
+    [
+      "M01",
+      "Auth",
+      "Login, cadastro PF/PJ e verificação de e-mail"
+    ],
+    [
+      "M02",
+      "Dashboard",
+      "Painel pós-login, KPIs e navegação"
+    ],
+    [
+      "M03",
+      "Dicionário",
+      "Catálogo de metadados, upload S3 e WebGIS"
+    ],
+    [
+      "M04",
+      "Minha Área",
+      "Perfil, calendário, tarefas e uploads"
+    ],
+    [
+      "M05",
+      "Calendário",
+      "Calendário de atividades e eventos"
+    ],
+    [
+      "M06",
+      "Relatórios",
+      "Relatórios de cadastros e usuários"
+    ],
+    [
+      "M07",
+      "Ferramentas",
+      "Hub de ferramentas, GeoServer ETL e Shiny"
+    ],
+    [
+      "M08",
+      "Management",
+      "Painel admin, cadastros, sessões e solicitações"
+    ],
+    [
+      "M09",
+      "Memgraph",
+      "Explorador de grafo, busca e governança"
+    ],
+    [
+      "MX",
+      "SIGMA",
+      "Monitoramento de infraestrutura e da VM"
+    ]
+  ],
+  "integracoes": [
+    [
+      "PLI-HazardTrack",
+      "PLI Smart Router",
+      "camadas de risco climático por trecho"
+    ],
+    [
+      "PLI Reporta",
+      "PLI Smart Router",
+      "incidentes verificados em GeoJSON"
+    ],
+    [
+      "SIGMA-PLI",
+      "SICARD",
+      "autenticação, pessoas e instituições"
+    ],
+    [
+      "AHP Tool Calculator",
+      "SICARD",
+      "método multicritério de priorização"
+    ]
+  ]
+};
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const cor = (cat) => DADOS.categorias[cat].cor;
+const noAr = (a) => a.status === "no ar";
+const statusChip = (a) => noAr(a)
+  ? '<span class="status status-ok">no ar</span>'
+  : '<span class="status status-off">suspensa</span>';
+
+function rodape(esq, dir, n, total) {
+  return `<div class="slide-foot">
+    <span>${esc(esq)}</span>
+    <span class="grow"></span>
+    <span>${esc(dir)}</span>
+    <span>${String(n).padStart(2, "0")}/${total}</span>
+  </div>`;
+}
+
+function slideApp(app, i, totalApps, nSlide, totalSlides) {
+  const c = cor(app.categoria);
+  const cat = DADOS.categorias[app.categoria].nome;
+  return `<section class="slide" style="--cat:${c}">
+    <div class="slide-head">
+      <span class="eyebrow">Aplicação ${String(i + 1).padStart(2, "0")} / ${totalApps}</span>
+      <span class="eyebrow eyebrow-dim">${esc(cat)}</span>
+      <span class="grow" style="flex:1"></span>
+      ${statusChip(app)}
+    </div>
+    <div class="app-body">
+      <div>
+        <h2 class="slide-title">${esc(app.nome)}</h2>
+        <p class="extenso">${esc(app.extenso)}</p>
+        <p class="resumo">${esc(app.resumo)}</p>
+        <div class="papel">${esc(app.papel)}</div>
+      </div>
+      <div class="panel">
+        <h3>O que ela entrega</h3>
+        <ul class="destaques">
+          ${app.destaques.map((d) => `<li><span></span>${esc(d)}</li>`).join("")}
+        </ul>
+        <div class="chips">
+          ${app.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}
+        </div>
+      </div>
+    </div>
+    ${rodape(app.url, cat, nSlide, totalSlides)}
+  </section>`;
+}
+
+function build() {
+  const apps = DADOS.apps;
+  const totalApps = apps.length;
+  const noArQtd = apps.filter(noAr).length;
+
+  const slides = [];
+
+  // 1 — capa
+  slides.push(() => `<section class="slide cover" style="--cat:${cor("major")}">
+    <span class="eyebrow">${esc(DADOS.org)} · ${esc(DADOS.data)}</span>
+    <h1>PLI <em>Hub</em></h1>
+    <p class="lede">${esc(DADOS.subtitulo)}</p>
+    <div class="cover-meta">
+      <div>Aplicações<b>${totalApps} sistemas em 3 categorias</b></div>
+      <div>Central de acesso<b>${esc(DADOS.hub_url)}</b></div>
+      <div>Responsável técnico<b>${esc(DADOS.autor)}</b></div>
+    </div>
+  </section>`);
+
+  // 2 — panorama
+  slides.push((n, t) => {
+    const cols = Object.entries(DADOS.categorias).map(([id, cat]) => {
+      const lista = apps.filter((a) => a.categoria === id);
+      return `<div class="col-cat" style="--c:${cat.cor}">
+        <h3>${esc(cat.nome)}</h3>
+        <div class="qtd">${lista.length} ${lista.length === 1 ? "aplicação" : "aplicações"}</div>
+        <ol>
+          ${lista.map((a, k) => `<li><span class="n">${String(k + 1).padStart(2, "0")}</span>${esc(a.nome)}<span class="st ${noAr(a) ? "st-ok" : "st-off"}" title="${noAr(a) ? "no ar" : "suspensa"}"></span></li>`).join("")}
+        </ol>
+      </div>`;
+    }).join("");
+    return `<section class="slide" style="--cat:${cor("major")}">
+      <div class="slide-head"><span class="eyebrow">Panorama</span></div>
+      <h2 class="slide-title">O portfólio em um relance</h2>
+      <div class="numeros" style="margin-top:1.6rem">
+        <div class="numero"><div class="v">${totalApps}</div><div class="k">aplicações</div></div>
+        <div class="numero"><div class="v">3</div><div class="k">categorias</div></div>
+        <div class="numero"><div class="v" style="color:var(--green)">${noArQtd}</div><div class="k">no ar hoje</div></div>
+        <div class="numero"><div class="v" style="color:var(--amber)">${totalApps - noArQtd}</div><div class="k">suspensas</div></div>
+      </div>
+      <div class="panorama">${cols}</div>
+      ${rodape(DADOS.hub_url, "Panorama", n, t)}
+    </section>`;
+  });
+
+  // 3 — SIGMA (aplicação 01)
+  slides.push((n, t) => slideApp(apps[0], 0, totalApps, n, t));
+
+  // 4 — módulos do SIGMA
+  slides.push((n, t) => `<section class="slide" style="--cat:${cor("major")}">
+    <div class="slide-head">
+      <span class="eyebrow">SIGMA-PLI · por dentro</span>
+      <span class="eyebrow eyebrow-dim">${DADOS.modulos_sigma.length} módulos</span>
+    </div>
+    <h2 class="slide-title">A plataforma central, módulo a módulo</h2>
+    <p class="extenso">Cada módulo é uma área funcional própria. Juntos, formam a base sobre a qual as outras aplicações do PLI se apoiam.</p>
+    <div class="modulos" style="margin-top:1.8rem">
+      ${DADOS.modulos_sigma.map(([cod, nm, ds]) => `<div class="modulo">
+        <div class="cod">${esc(cod)}</div>
+        <div class="nm">${esc(nm)}</div>
+        <div class="ds">${esc(ds)}</div>
+      </div>`).join("")}
+    </div>
+    ${rodape(apps[0].url, "Sistemas Maiores", n, t)}
+  </section>`);
+
+  // 5..15 — demais aplicações
+  apps.slice(1).forEach((app, k) => {
+    slides.push((n, t) => slideApp(app, k + 1, totalApps, n, t));
+  });
+
+  // 16 — integrações
+  slides.push((n, t) => `<section class="slide" style="--cat:${cor("tools")}">
+    <div class="slide-head"><span class="eyebrow">Arquitetura</span></div>
+    <h2 class="slide-title">Como as peças conversam</h2>
+    <p class="extenso">O portfólio não é um conjunto de sistemas isolados: quatro integrações já em produção ligam sensor, cadastro e decisão.</p>
+    <div class="fluxo">${diagrama()}</div>
+    ${rodape("4 integrações em produção", "Arquitetura", n, t)}
+  </section>`);
+
+  // 17 — situação
+  slides.push((n, t) => `<section class="slide" style="--cat:${cor("major")}">
+    <div class="slide-head"><span class="eyebrow">Situação e próximos passos</span></div>
+    <h2 class="slide-title">Onde o portfólio está hoje</h2>
+    <div class="numeros" style="margin-top:1.6rem">
+      <div class="numero"><div class="v" style="color:var(--green)">${noArQtd}</div><div class="k">no servidor próprio</div></div>
+      <div class="numero"><div class="v" style="color:var(--amber)">${totalApps - noArQtd}</div><div class="k">suspensas no Render</div></div>
+      <div class="numero"><div class="v">4</div><div class="k">integrações ativas</div></div>
+    </div>
+    <div class="fecho">
+      <div class="bloco">
+        <h3>Infraestrutura própria</h3>
+        <p>As ${noArQtd} aplicações dos <strong>Sistemas Maiores</strong> rodam em containers Docker atrás de um Nginx na instância EC2 do PLI, cada uma com seu banco PostgreSQL/PostGIS.</p>
+        <p>É a base madura do portfólio: disponível, versionada e integrada.</p>
+      </div>
+      <div class="bloco">
+        <h3>Hospedagem externa</h3>
+        <p>As ${totalApps - noArQtd} aplicações de <strong>Análises Exploratórias</strong> e <strong>Ferramentas</strong> estão no Render e hoje respondem <em>Service Suspended</em>.</p>
+        <p>Retomá-las exige decidir entre reativar o plano ou migrá-las para a mesma infraestrutura dos sistemas maiores.</p>
+      </div>
+      <div class="bloco">
+        <h3>Próximo passo</h3>
+        <p>Concluir a análise aplicação por aplicação e classificar cada uma como <strong>produto, módulo, serviço compartilhado, biblioteca, ferramenta interna ou protótipo</strong>.</p>
+        <p>Só então definir a arquitetura da empresa e a estratégia comercial.</p>
+      </div>
+    </div>
+    ${rodape(DADOS.hub_url, DADOS.org + " · " + DADOS.data, n, t)}
+  </section>`);
+
+  const total = slides.length;
+  document.getElementById("deck").innerHTML = slides.map((f, i) => f(i + 1, total)).join("");
+  return total;
+}
+
+function diagrama() {
+  const cx = (x, y, w, h, cor2, nome, sub) => `
+    <g>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="#0c2939" stroke="${cor2}" stroke-width="1.5"></rect>
+      <rect x="${x}" y="${y}" width="4" height="${h}" fill="${cor2}"></rect>
+      <text class="nm" x="${x + 18}" y="${y + 30}">${nome}</text>
+      <text class="sub" x="${x + 18}" y="${y + 51}">${sub}</text>
+    </g>`;
+  const seta = (x1, y1, x2, y2, rotulo) => `
+    <g>
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1a465f" stroke-width="1.5" marker-end="url(#p)"></line>
+      <text class="lbl" x="${(x1 + x2) / 2}" y="${(y1 + y2) / 2 - 8}" text-anchor="middle">${rotulo}</text>
+    </g>`;
+  return `<svg viewBox="0 0 980 470" role="img" aria-label="Diagrama de integração entre as aplicações do PLI">
+    <defs>
+      <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a465f"></path>
+      </marker>
+    </defs>
+    <text class="lbl" x="0" y="14">SENSORES E COLETA</text>
+    ${cx(0, 30, 268, 74, "#3aa6d9", "PLI-HazardTrack", "chuva MERGE/INPE → risco por trecho")}
+    ${cx(0, 150, 268, 74, "#3aa6d9", "PLI Reporta", "relato do cidadão → incidente verificado")}
+
+    <text class="lbl" x="356" y="14">OPERAÇÃO</text>
+    ${cx(356, 90, 268, 74, "#3aa6d9", "PLI Smart Router", "rota que desvia do risco")}
+
+    ${seta(268, 67, 356, 110, "camadas de risco")}
+    ${seta(268, 187, 356, 144, "GeoJSON")}
+
+    <text class="lbl" x="0" y="290">PLATAFORMA CENTRAL</text>
+    ${cx(0, 306, 268, 74, "#3ec26e", "SIGMA-PLI", "metadados, identidade e grafo")}
+
+    <text class="lbl" x="356" y="290">DECISÃO</text>
+    ${cx(356, 306, 268, 74, "#3aa6d9", "SICARD", "carteira hierarquizada por AHP")}
+
+    ${seta(268, 343, 356, 343, "autenticação e cadastros")}
+
+    <text class="lbl" x="712" y="290">MÉTODO</text>
+    ${cx(712, 306, 268, 74, "#3ec26e", "AHP Tool Calculator", "pesos e consistência")}
+    ${seta(712, 343, 624, 343, "método multicritério")}
+
+    <text class="lbl" x="712" y="14">LEITURA DO TERRITÓRIO</text>
+    ${cx(712, 30, 268, 74, "#3aa6d9", "FAD-Stats 2.0", "IBGE · SECEX · MTE · ANTT")}
+    ${cx(712, 150, 268, 74, "#e0a33a", "Análises Exploratórias", "sinistralidade e densidade da malha")}
+  </svg>`;
+}
+
+const total = build();
+const deck = document.getElementById("deck");
+const barra = document.getElementById("progresso");
+
+function slideAtual() {
+  return Math.round(deck.scrollTop / deck.clientHeight);
+}
+function irPara(i) {
+  const alvo = Math.max(0, Math.min(total - 1, i));
+  deck.scrollTo({ top: alvo * deck.clientHeight, behavior: "smooth" });
+}
+function atualizarBarra() {
+  const p = total > 1 ? (slideAtual() / (total - 1)) * 100 : 100;
+  barra.style.width = p + "%";
+}
+
+deck.addEventListener("scroll", atualizarBarra, { passive: true });
+document.getElementById("btnNext").addEventListener("click", () => irPara(slideAtual() + 1));
+document.getElementById("btnPrev").addEventListener("click", () => irPara(slideAtual() - 1));
+document.addEventListener("keydown", (e) => {
+  if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); irPara(slideAtual() + 1); }
+  if (["ArrowUp", "ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); irPara(slideAtual() - 1); }
+  if (e.key === "Home") { e.preventDefault(); irPara(0); }
+  if (e.key === "End") { e.preventDefault(); irPara(total - 1); }
+});
+atualizarBarra();
+</script>
